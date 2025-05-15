@@ -15,21 +15,39 @@ public class Ticketek {
 		this.entradasRegistrada = cantidad;
 	}
 	
-	/*14. Agregar función, luego de registrar un espectáculo, se le deben poder agregar las
-	funciones de a una. Para identificar al espectáculo se usa el nombre del mismo que es
-	único. y para identificar una función se usa el nombre del espectáculo y la fecha.*/
-	public void agregarFunciones(String nombres, Funciones funciones) {
-		
+	@Override
+	public void registrarSede(String nombre, String direccion, int capacidadMaxima) {
+
+        // Verificar si el nombre ya está registrado
+        if (sedes.containsKey(nombre)) {
+            throw new RuntimeException("El nombre de la sede ya está registrado");
+        }
+
+        // Crear y registrar el estadio
+        Sede estadio = new Estadio(nombre, direccion, capacidadMaxima);
+
+        funcionesPorSede.put(estadio, new HashMap<>());
 	}
-	
+
+-//--------------------------
+
+@Override
 	public void registrarUsuario(String email, String nombre, String apellido, String contrasenia) {
+		if (usuarios.containsKey(email))
+            throw new RuntimeException("Ya existe un usuario con ese email.");
+        usuarios.put(email, new Usuario(email, nombre, apellido, contrasenia));
 		
 	}
-	
-	/*Al registrar un espectáculo solo se indica el nombre que no puede repetirse.
-	Este nombre se usará para identificar el espectáculo. Para definir las funciones del
-	espectáculo se agregó el punto 14.*/
-	public void registrarEspectaculo(Sede sede, String fecha, double precioBase, String nombre) {
+
+	@Override
+	public void registrarEspectaculo(String nombre) {
+		if (espectaculos.containsKey(nombre)) {
+            throw new RuntimeException("El espectáculo " + nombre + " ya está registrado");
+        }
+        Espectaculo espectaculo = new Espectaculo(nombre);
+        espectaculos.put(nombre, espectaculo);
+	}
+	(String email, String nombre, String apellido, String contrasenia) {
 		
 	}
 	

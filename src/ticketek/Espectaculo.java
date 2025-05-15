@@ -1,27 +1,20 @@
 package ticketek;
 
 public class Espectaculo {
-	private Sede sede;
-	private String fecha;
-	private double precioBase;
-	private String codigo;
 	private String nombre;
-	
-	public Espectaculo(Sede sede, String fecha, double precioBase, String codigo, String nombre) {
-		this.sede = sede;
-		this.fecha = fecha;
-		this.precioBase = precioBase;
-		this.codigo = codigo;
-		this.nombre = nombre;
-	}
-	
-	public void crearFuncion(Sede sede, String fecha, double precio, String nombre) {
-		
-	}
-	
-	public Sede consultarSede() {
-		return sede;
-	}
+    private List<Funcion> funciones;
+
+    public Espectaculo(String nombre) {
+    	if (nombre == null || nombre.isEmpty()) {
+            throw new RuntimeException("El nombre del espectáculo no puede ser nulo o vacío");
+        }
+        this.nombre = nombre;
+        this.funciones = new ArrayList<>();
+    }
+
+    public void agregarFuncion(Funcion funcion) {
+        funciones.add(funcion);
+    }
 	
 	public double consultarPrecioBase() {
 		return 1;

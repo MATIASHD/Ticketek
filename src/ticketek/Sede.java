@@ -1,9 +1,9 @@
 package ticketek;
 
 public abstract class Sede {
-	private String nombre;
-	private String direccion;
-	private int capacidadMaxima;
+	protected String nombre;
+	protected String direccion;
+	protected int capacidadMaxima;
 	private int sector;
 	
 	public Sede(String nombre, String direccion, int capacidadMaxima, int sector) {

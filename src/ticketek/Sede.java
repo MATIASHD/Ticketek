@@ -34,4 +34,8 @@ public abstract class Sede {
 	public String obtenerNombre() {
 		return "";
 	}
+	@Override
+	public String toString() {
+		return "Sede [nombre=" + nombre + ", direccion=" + direccion + ", capacidadMaxima=" + capacidadMaxima + "]";
+	}
 }

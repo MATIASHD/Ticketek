@@ -3,6 +3,7 @@ package ticketek;
 import java.util.ArrayList;
 
 public class Entrada {
+	private String codEntrada;
 	private Funcion funcion;
 	private Sede sede;
 	private String fecha;
@@ -36,6 +37,10 @@ public class Entrada {
 	
 	public String codigoEntrada() {
 		return "hola";
+	}
+	
+	public boolean compararCodEntrada(String codEntrada) {
+		return this.codEntrada == codEntrada;
 	}
 	
 }

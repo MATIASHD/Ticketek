@@ -2,7 +2,7 @@ package ticketek;
 
 import java.util.ArrayList;
 
-public class Entrada {
+public class Entrada implements IEntrada{
 	private String codEntrada;
 	private Funcion funcion;
 	private Sede sede;

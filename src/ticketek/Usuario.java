@@ -32,7 +32,6 @@ public class Usuario {
 	
 	public Entrada[] obtenerEntradasVencidas() {
 		//definir como tratar la fecha
-		return [];
 	}
 	
 	public Entrada[] obtenerEntradasFuturas() {

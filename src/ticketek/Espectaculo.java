@@ -1,8 +1,9 @@
 package ticketek;
+import java.util.ArrayList;
 
 public class Espectaculo {
 	private String nombre;
-    private List<Funcion> funciones;
+    private ArrayList<Funcion> funciones;
 
     public Espectaculo(String nombre) {
     	if (nombre == null || nombre.isEmpty()) {
@@ -17,14 +18,18 @@ public class Espectaculo {
     }
 	
 	public double consultarPrecioBase() {
-		return 1;
+		return 1; //VER COMO ABORDARLO
+	}
+	
+	public String obtenerNombre() {
+		return this.nombre;
 	}
 	
 	public String consultarId() {
-		return "";
+		return ""; //Ver como abordarlo
 	}
 	
-	public void listaFunciones() {
-		//La lista de funciones ver como armarlo
+	public Funcion[] listaFunciones() {;
+		return this.funciones.toArray(new Funcion[0]);
 	}
 }

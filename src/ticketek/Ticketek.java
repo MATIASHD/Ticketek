@@ -8,11 +8,15 @@ public class Ticketek {
 	private Map<String, Usuario> usuarioRegistrado = new HashMap<>();
 	private Map<String, Integer> entradasRegistrada = new HashMap<>();
 	
-	public Ticketek(Sede sede, Espectaculo espectaculo, Usuario usuario, Integer cantidad) {
+	public Ticketek(
+			Map<String, Sede> sede, 
+			Map<String, Espectaculo> espectaculo,
+			Map<String, Usuario> usuario,
+			Map<String, Integer> entradas) {
 		this.sede = sede;
 		this.espectaculo = espectaculo;
 		this.usuarioRegistrado = usuario;
-		this.entradasRegistrada = cantidad;
+		this.entradasRegistrada = entradas;
 	}
 	
 	@Override

@@ -21,11 +21,11 @@ public class Teatro extends Sede{
 	}
 	
 	public double precioDeEntrada() {
-		return 1;
+		return 1; //VER COMO SEGUIR
 	}
 	
 	public int getAsiento() {
-		return 1;
+		return this.asiento;
 	}
 
 }

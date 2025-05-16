@@ -28,15 +28,16 @@ public class Entrada {
 	}
 	
 	public int calcularCosto() {
+		//Como deberia realizar el costo??
 		return 1;
 	}
 	
-	public void modificarSede(String sede) {
-		
+	public void modificarSede(Sede sede) {
+		this.sede = sede;
 	}
 	
 	public String codigoEntrada() {
-		return "hola";
+		return this.codEntrada;
 	}
 	
 	public boolean compararCodEntrada(String codEntrada) {

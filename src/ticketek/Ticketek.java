@@ -1,9 +1,10 @@
 package ticketek;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class Ticketek {
-	private Map<String, Sede> sede = new HashMap<>();
+public class Ticketek implements ITicketek {
+	private Map<String, Sede> sede = new HashMap<String, Sede>();
 	private Map<String, Espectaculo> espectaculo = new HashMap<>();
 	private Map<String, Usuario> usuarioRegistrado = new HashMap<>();
 	private Map<String, Integer> entradasRegistrada = new HashMap<>();
@@ -20,7 +21,7 @@ public class Ticketek {
 	}
 	
 	@Override
-	public void registrarSede(String nombre, String direccion, int capacidadMaxima) {
+	/*public void registrarSede(String nombre, String direccion, int capacidadMaxima) {
 
         // Verificar si el nombre ya está registrado
         if (sedes.containsKey(nombre)) {
@@ -31,9 +32,9 @@ public class Ticketek {
         Sede estadio = new Estadio(nombre, direccion, capacidadMaxima);
 
         funcionesPorSede.put(estadio, new HashMap<>());
-	}
+	}*/
 
--//--------------------------
+//--------------------------
 
 @Override
 	public void registrarUsuario(String email, String nombre, String apellido, String contrasenia) {
@@ -122,6 +123,125 @@ public class Ticketek {
 	//15. Listar todas las entradas vendidas de un espectáculo, es decir, de todas sus funciones. Devuelve una lista de IEntrada.
 	public double TotalRecaudadoPorEspectaculos(String idEspectaculo) {
 		return 1;
+	}
+
+	/*
+	 * 
+	 * Implementacion de la interfaz
+	 * 
+	 * */
+	
+	
+	@Override
+	public void registrarSede(java.lang.String nombre, java.lang.String direccion, int capacidadMaxima,
+			int asientosPorFila, java.lang.String[] sectores, int[] capacidad, int[] porcentajeAdicional) {
+		  
+		// Verificar si el nombre ya está registrado
+        if (sedes.containsKey(nombre)) {
+            throw new RuntimeException("El nombre de la sede ya está registrado");
+        }
+
+        // Crear y registrar el estadio
+        Sede estadio = new Estadio(nombre, direccion, capacidadMaxima);
+
+        funcionesPorSede.put(nombre, new Sede());
+		
+	}
+
+	@Override
+	public void registrarSede(java.lang.String nombre, java.lang.String direccion, int capacidadMaxima,
+			int asientosPorFila, int cantidadPuestos, double precioConsumicion, java.lang.String[] sectores,
+			int[] capacidad, int[] porcentajeAdicional) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void agregarFuncion(java.lang.String nombreEspectaculo, java.lang.String fecha, java.lang.String sede,
+			double precioBase) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<IEntrada> venderEntrada(java.lang.String nombreEspectaculo, java.lang.String fecha,
+			java.lang.String email, java.lang.String contrasenia, int cantidadEntradas) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<IEntrada> venderEntrada(java.lang.String nombreEspectaculo, java.lang.String fecha,
+			java.lang.String email, java.lang.String contrasenia, java.lang.String sector, int[] asientos) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public java.lang.String listarFunciones(java.lang.String nombreEspectaculo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<IEntrada> listarEntradasEspectaculo(java.lang.String nombreEspectaculo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<IEntrada> listarEntradasFuturas(java.lang.String email, java.lang.String contrasenia) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<IEntrada> listarTodasLasEntradasDelUsuario(java.lang.String email, java.lang.String contrasenia) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean anularEntrada(IEntrada entrada, java.lang.String contrasenia) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public IEntrada cambiarEntrada(IEntrada entrada, java.lang.String contrasenia, java.lang.String fecha,
+			java.lang.String sector, int asiento) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IEntrada cambiarEntrada(IEntrada entrada, java.lang.String contrasenia, java.lang.String fecha) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public double costoEntrada(java.lang.String nombreEspectaculo, java.lang.String fecha) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double costoEntrada(java.lang.String nombreEspectaculo, java.lang.String fecha, java.lang.String sector) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double totalRecaudado(java.lang.String nombreEspectaculo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double totalRecaudadoPorSede(java.lang.String nombreEspectaculo, java.lang.String nombreSede) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	//Usar StringBuilder

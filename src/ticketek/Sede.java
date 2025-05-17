@@ -32,7 +32,7 @@ public abstract class Sede {
 	}
 	
 	public String obtenerNombre() {
-		return "";
+		return this.nombre;
 	}
 	@Override
 	public String toString() {

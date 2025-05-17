@@ -43,5 +43,25 @@ public class Entrada implements IEntrada{
 	public boolean compararCodEntrada(String codEntrada) {
 		return this.codEntrada == codEntrada;
 	}
+
+	@Override
+	public double precio() {
+		// TODO Auto-generated method stub
+		return this.precio;
+	}
+
+	@Override
+	public String ubicacion() {
+		if(this.sede.obtenerNombre() == "campo") {
+			return "CAMPO";
+		} else {			
+			return this.sector + " Fila: " + this.fila + " asiento: " + this.asientos ;
+		}
+	}
+	
+	@Override
+	public String toString() {
+		return this.codEntrada + " - " + this.funcion.obtenerNombreDeLaFuncion() + " - " + this.fecha + " - " + this.sede.obtenerNombre() + " - " + this.ubicacion();
+	}
 	
 }

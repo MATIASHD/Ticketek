@@ -21,4 +21,8 @@ public class Funcion {
 		//Ver como agregar sector
 		return true;
 	}
+	
+	public String obtenerNombreDeLaFuncion() {
+		return this.espectaculos.obtenerNombre();
+	}
 }

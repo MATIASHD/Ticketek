@@ -1,13 +1,16 @@
 package ticketek;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 public class Ticketek implements ITicketek {
 	private Map<String, Sede> sede = new HashMap<String, Sede>();
+	private Map<String, Funcion> funcion = new HashMap<>();
 	private Map<String, Espectaculo> espectaculo = new HashMap<>();
 	private Map<String, Usuario> usuarioRegistrado = new HashMap<>();
 	private Map<String, Integer> entradasRegistrada = new HashMap<>();
+	
 	
 	public Ticketek(
 			Map<String, Sede> sede, 
@@ -21,7 +24,126 @@ public class Ticketek implements ITicketek {
 	}
 	
 	@Override
-	/*public void registrarSede(String nombre, String direccion, int capacidadMaxima) {
+	public void registrarSede(java.lang.String nombre, java.lang.String direccion, int capacidadMaxima) {
+		// Verificar si el nombre ya está registrado
+        if (sede.containsKey(nombre)) {
+            throw new RuntimeException("El nombre de la sede ya está registrado");
+        }
+		// TODO Auto-generated method stub
+		sede.put(nombre, new Estadio(nombre, direccion, capacidadMaxima));
+		
+	}
+	
+	@Override
+	public void registrarSede(java.lang.String nombre, java.lang.String direccion, int capacidadMaxima,
+			int asientosPorFila, java.lang.String[] sectores, int[] capacidad, int[] porcentajeAdicional) {
+		  
+		// Verificar si el nombre ya está registrado
+        if (sede.containsKey(nombre)) {
+            throw new RuntimeException("El nombre de la sede ya está registrado");
+        }
+
+        // Crear y registrar el estadio
+        sede.put(nombre, new Teatro(nombre, direccion, capacidadMaxima, asientosPorFila, sectores, capacidad, porcentajeAdicional));
+		
+	}
+	
+	@Override
+	public void registrarSede(java.lang.String nombre, java.lang.String direccion, int capacidadMaxima,
+			int asientosPorFila,int cantidadPuestos, double precioConsumicion, java.lang.String[] sectores, int[] capacidad, int[] porcentajeAdicional) {
+		  
+		// Verificar si el nombre ya está registrado
+        if (sede.containsKey(nombre)) {
+            throw new RuntimeException("El nombre de la sede ya está registrado");
+        }
+
+        // Crear y registrar el estadio
+        sede.put(nombre, new Miniestadio(nombre, direccion, capacidadMaxima, asientosPorFila, cantidadPuestos, precioConsumicion, sectores, capacidad, porcentajeAdicional));
+		
+	}
+	
+	@Override
+	public void registrarUsuario(String email, String nombre, String apellido, String contrasenia) {
+		if (usuarioRegistrado.containsKey(email))
+            throw new RuntimeException("Ya existe un usuario con ese email.");
+		
+		usuarioRegistrado.put(email, new Usuario(email, nombre, apellido, contrasenia));
+		
+	}
+	
+	@Override
+	public void registrarEspectaculo(String nombre) {
+		if (espectaculo.containsKey(nombre)) {
+            throw new RuntimeException("El espectáculo " + nombre + " ya está registrado");
+        }
+        espectaculo.put(nombre, new Espectaculo(nombre));
+	}
+	
+	@Override
+	public void agregarFuncion(java.lang.String nombreEspectaculo, java.lang.String fecha, java.lang.String sede,
+			double precioBase) {
+		// Verificar si el nombre ya está registrado
+        if (!funcion.containsKey(nombreEspectaculo)) {
+            throw new RuntimeException("Espectaculo no registrada");
+        }
+        if (!funcion.containsKey(nombreEspectaculo)) {
+            throw new RuntimeException("Espectaculo no registrada");
+        }
+        
+        //Agrega una funcion a espectaculo
+        this.espectaculo.get(nombreEspectaculo).agregarFuncion(new Funcion(fecha, sede,precioBase));
+	}
+	
+
+	public void venderEntrada(String espectaculo, String fecha, String email, String sector, int[] asientos) {
+		if (!funcion.containsKey(espectaculo)) {
+            throw new RuntimeException("Espectaculo no registrada");
+        }
+		// Validar sector y asientos disponibles en la función  
+	    // Calcular precio con % adicional del sector  
+	    // Crear entrada vinculada al usuario y función  
+	}
+	
+	@Override
+	public List<IEntrada> venderEntrada(java.lang.String nombreEspectaculo, java.lang.String fecha,
+			java.lang.String email, java.lang.String contrasenia, java.lang.String sector, int[] asientos) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*@Override
+	public void registrarSede(String nombre, String direccion, int capacidadMaxima) {
 
         // Verificar si el nombre ya está registrado
         if (sedes.containsKey(nombre)) {
@@ -36,32 +158,15 @@ public class Ticketek implements ITicketek {
 
 //--------------------------
 
-@Override
-	public void registrarUsuario(String email, String nombre, String apellido, String contrasenia) {
-		if (usuarios.containsKey(email))
-            throw new RuntimeException("Ya existe un usuario con ese email.");
-        usuarios.put(email, new Usuario(email, nombre, apellido, contrasenia));
-		
-	}
-
-	@Override
-	public void registrarEspectaculo(String nombre) {
-		if (espectaculos.containsKey(nombre)) {
-            throw new RuntimeException("El espectáculo " + nombre + " ya está registrado");
-        }
-        Espectaculo espectaculo = new Espectaculo(nombre);
-        espectaculos.put(nombre, espectaculo);
-	}
-	(String email, String nombre, String apellido, String contrasenia) {
-		
-	}
 	
-	/*Vender entradas a un usuario debe recibir el nombre del espectáculo, la fecha y
-	la cantidad o el sector y números de asientos, dependiendo del tipo de sede de la
-	función. Además de la contraseña para autenticar al usuario. Devolverá una lista de
-	objetos de tipo IEntrada*/
-	public void venderEntrada(String email, String contrasenia, String codigoEspectaculo, String nombreSede, String sector, int fila, int asiento) {
-		
+
+	
+	
+	
+	
+	public void venderEntrada(String espectaculo, String fecha, String email, int cantidad) {
+		// Asignar asientos consecutivos (o lógica de campo)  
+	    // Precio base sin % adicional 
 	}
 	
 	/*
@@ -132,56 +237,58 @@ public class Ticketek implements ITicketek {
 	 * */
 	
 	
-	@Override
-	public void registrarSede(java.lang.String nombre, java.lang.String direccion, int capacidadMaxima,
-			int asientosPorFila, java.lang.String[] sectores, int[] capacidad, int[] porcentajeAdicional) {
-		  
-		// Verificar si el nombre ya está registrado
-        if (sedes.containsKey(nombre)) {
-            throw new RuntimeException("El nombre de la sede ya está registrado");
-        }
+	
 
-        // Crear y registrar el estadio
-        Sede estadio = new Estadio(nombre, direccion, capacidadMaxima);
 
-        funcionesPorSede.put(nombre, new Sede());
-		
-	}
+	
+	
+	
+	
 
-	@Override
-	public void registrarSede(java.lang.String nombre, java.lang.String direccion, int capacidadMaxima,
-			int asientosPorFila, int cantidadPuestos, double precioConsumicion, java.lang.String[] sectores,
-			int[] capacidad, int[] porcentajeAdicional) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void agregarFuncion(java.lang.String nombreEspectaculo, java.lang.String fecha, java.lang.String sede,
-			double precioBase) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	/*
+	 * 
+	 * 
+	 * */
+	
+	/*Vender entradas a un usuario debe recibir el nombre del espectáculo, la fecha y
+	la cantidad o el sector y números de asientos, dependiendo del tipo de sede de la
+	función. Además de la contraseña para autenticar al usuario. Devolverá una lista de
+	objetos de tipo IEntrada*/
+	
 	@Override
 	public List<IEntrada> venderEntrada(java.lang.String nombreEspectaculo, java.lang.String fecha,
 			java.lang.String email, java.lang.String contrasenia, int cantidadEntradas) {
 		// TODO Auto-generated method stub
+		if(!this.usuarioRegistrado.containsKey(email)) {
+			throw new RuntimeException("No se encuentra registrado");
+		}
+		if(!this.usuarioRegistrado.get(email).validarContrasenia(contrasenia)) {
+			throw new RuntimeException("La contraseña no es correcta");
+		}
+		
+		this.usuarioRegistrado.get(email).agregarEntradaALaLista(new Entrada()));
 		return null;
 	}
 
-	@Override
-	public List<IEntrada> venderEntrada(java.lang.String nombreEspectaculo, java.lang.String fecha,
-			java.lang.String email, java.lang.String contrasenia, java.lang.String sector, int[] asientos) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public java.lang.String listarFunciones(java.lang.String nombreEspectaculo) {
-		// TODO Auto-generated method stub
-		return null;
+		if(!this.espectaculo.containsKey(nombreEspectaculo)) {
+			throw new RuntimeException("No se encuentra ese espectaculo");
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		
 	}
+	
+	public String generarStringUsuarios(List<String> listaUsuarios) {  
+	    StringBuilder sb = new StringBuilder();  
+	    for (String usuario : listaUsuarios) {  
+	        sb.append(usuario).append("\n");  
+	    }  
+	    return sb.toString().trim(); // .trim() elimina el último salto de línea  
+	}  
 
 	@Override
 	public List<IEntrada> listarEntradasEspectaculo(java.lang.String nombreEspectaculo) {

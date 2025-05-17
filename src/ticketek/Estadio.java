@@ -2,8 +2,8 @@ package ticketek;
 
 public class Estadio extends Sede {
 	
-	public Estadio(String nombre, String direccion, int capacidadMaxima, int sector) {
-		super(nombre, direccion, capacidadMaxima, sector);
+	public Estadio(String nombre, String direccion, int capacidadMaxima) {
+		super(nombre, direccion, capacidadMaxima,new String[]{"CAMPO"});
 	}
 	
 	public double calcularPrecioEntrada(Funcion funcion, String sector, int fila, int asiento) {

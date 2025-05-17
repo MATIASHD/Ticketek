@@ -1,12 +1,15 @@
 package ticketek;
 
 public abstract class Sede {
-	protected String nombre;
-	protected String direccion;
-	protected int capacidadMaxima;
-	private int sector;
+	protected String nombre; //
+	protected String direccion; //
+	protected int capacidadMaxima; //
+	//protected int asientosPorFila;
+	protected String[] sectores; //
+	//protected int[] capacidad;
+	//protected int[] porcentajeAdicional;
 	
-	public Sede(String nombre, String direccion, int capacidadMaxima, int sector) {
+	public Sede(String nombre, String direccion, int capacidadMaxima, String[] sectores) {
 		// Validar datos
         if (nombre == null || nombre.isEmpty()) {
             throw new RuntimeException("El nombre no puede ser nulo o vacío");
@@ -16,12 +19,12 @@ public abstract class Sede {
         }
         if (capacidadMaxima <= 0) {
             throw new RuntimeException("La capacidad máxima debe ser positiva");
-	}
-		this.nombre = nombre;
+        }
+        this.nombre = nombre;
 		this.direccion = direccion;
 		this.capacidadMaxima = capacidadMaxima;
-		this.sector = sector;
-	}
+		this.sectores = sectores;
+	}	
 	
 	public double calcularPrecioEntrada(Funcion funcion, String sector, int fila, int asiento) {
 		return 1;

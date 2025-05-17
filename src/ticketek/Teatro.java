@@ -2,22 +2,16 @@ package ticketek;
 
 public class Teatro extends Sede{
 	private double precioBase;
-	private int recargoPlateaVIP;
-	private int recargoPlateaComun;
-	private int recargoPlateaBaja;
-	private int recargaPlateaAlta;
-	private int asiento;
+	private int asientosPorFila;
+	private int[] capacidad; //Capacidad de cada sector
+	private int[] porcentajeAdicional;
 
-	public Teatro(String nombre, String direccion, int capacidadMaxima, int sector, double precioBase, int recargoPlateaVIP,int recargoPlateaComun,
-			int recargoPlateaBaja, int recargoPlateaAlta, int asiento) {
-		super(nombre, direccion, capacidadMaxima, sector);
-		this.precioBase = precioBase;
-		this.recargoPlateaVIP = recargoPlateaVIP;
-		this.recargoPlateaComun = recargoPlateaComun;
-		this.recargoPlateaBaja = recargoPlateaBaja;
-		this.recargaPlateaAlta = recargoPlateaAlta;
-		this.asiento = asiento;
-		
+	public Teatro(String nombre, String direccion, int capacidadMaxima, int asientoPorFila, String[] sectores, int[] capacidad,
+			int [] porcentajeAdicional) {
+		super(nombre, direccion, capacidadMaxima, sectores);
+		this.asientosPorFila = asientoPorFila;
+		this.capacidad = capacidad;
+		this.porcentajeAdicional = porcentajeAdicional;
 	}
 	
 	public double precioDeEntrada() {
@@ -25,7 +19,7 @@ public class Teatro extends Sede{
 	}
 	
 	public int getAsiento() {
-		return this.asiento;
+		return 1;
 	}
 
 }

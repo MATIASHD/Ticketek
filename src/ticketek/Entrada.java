@@ -11,8 +11,10 @@ public class Entrada implements IEntrada{
 	private ArrayList<Integer> asientos;
 	private int fila;
 	private Usuario comprador;
-	private double precio; 
+	private double precio;
+	private boolean anulada;
 	
+	//Nombre del espectaculo, fecha, sector, asiento
 	public Entrada(Funcion funcion, Sede sede, String fecha, String sector, int fila, Usuario usuario, double precio) {
 		this.funcion = funcion;
 		this.sede = sede;
@@ -20,8 +22,10 @@ public class Entrada implements IEntrada{
 		this.sector = sector;
 		this.fila = fila;
 		this.comprador = usuario;
-		this.precio = precio;	
+		this.precio = precio;
+		this.anulada = true;
 	}
+	
 	
 	public boolean esFechaFutura() {
 		return true;
@@ -42,6 +46,19 @@ public class Entrada implements IEntrada{
 	
 	public boolean compararCodEntrada(String codEntrada) {
 		return this.codEntrada == codEntrada;
+	}
+	
+	public void anular() { //Marca la entrada como invalida no la elimina
+		this.anulada = true;
+	}
+	
+	public void cambiarEntrada(Entrada original, String nvaFecha) {
+		// Validar que la entrada no esté anulada  
+	    // Buscar la función correspondiente a nuevaFecha  
+	    // Validar disponibilidad en la nueva función  
+	    // Crear nueva entrada  
+	    // Anular entrada original (entradaOriginal.anular())  
+	    return nuevaEntrada;  
 	}
 
 	@Override

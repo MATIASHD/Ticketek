@@ -1,17 +1,20 @@
 package ticketek;
 
 public class Miniestadio extends Sede{
-	private int puestoComida;
-	private int puestoMerchandising;
-	private double valorComision;
+	private int cantidadDePuestos;
+	private int[] capacidad;
+	private int[] porcentajeAdicional;
+	private double precioConsumision;
 	private int asientoPorFila;
 	
-	public Miniestadio(String nombre, String direccion, int capacidadMaxima, int sector, int puestoComida, int puestoMerchandising, double valorComision,int asientoPorFila) {
-		super(nombre, direccion, capacidadMaxima, sector);
-		this.puestoComida = puestoComida;
-		this.puestoMerchandising = puestoMerchandising;
-		this.valorComision = valorComision;
-		this.asientoPorFila = asientoPorFila;
+	public Miniestadio(String nombre, String direccion, int capacidadMaxima, int asientosPorFila, int cantidadDePuestos, 
+			double precioConsumicion, String[] sectores, int[] capacidad, int[] porcentajeAdicional) {
+		super(nombre, direccion, capacidadMaxima, sectores);
+		this.asientoPorFila = asientosPorFila;
+		this.cantidadDePuestos = cantidadDePuestos;
+		this.precioConsumision = precioConsumicion;
+		this.capacidad = capacidad;
+		this.porcentajeAdicional = porcentajeAdicional;
 	}
 	
 	public double precioDeEntrada() {

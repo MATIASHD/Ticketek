@@ -1,9 +1,10 @@
 package ticketek;
 import java.util.ArrayList;
 
+
 public class Espectaculo {
 	private String nombre;
-    private ArrayList<Funcion> funciones;
+	private ArrayList<Funcion> funciones;
 
     public Espectaculo(String nombre) {
     	if (nombre == null || nombre.isEmpty()) {

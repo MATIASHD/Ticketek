@@ -1,28 +1,28 @@
 package ticketek;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Funcion {
-	private Sede sede;
 	private String fecha;
+	private String sede;
 	private double precioBase;
-	private ArrayList<Entrada> entradas;
-	private Espectaculo espectaculos;
-	private int entradaVendidas;
+	private Espectaculo espectaculo;
+	private HashMap<String, Sector> sectores;
 	
-	public Funcion(Sede sede, String fecha, double precioBase,Espectaculo espectaculo) {
+	
+	public Funcion(String fecha, String sede, double precioBase) {
 		this.sede = sede;
 		this.fecha = fecha;
 		this.precioBase = precioBase;
-		this.espectaculos = espectaculo;
+		this.sectores = new HashMap<String, Sector>();
 	}
 	
-	public boolean venderEntrada(Sector sector, int fila, int asiento) {
+	public boolean venderEntrada(String sector, int fila, int asiento) {
 		//Ver como agregar sector
 		return true;
 	}
 	
 	public String obtenerNombreDeLaFuncion() {
-		return this.espectaculos.obtenerNombre();
+		return this.nombreEspectaculo;
 	}
 }

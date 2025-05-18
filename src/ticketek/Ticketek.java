@@ -99,6 +99,13 @@ public class Ticketek implements ITicketek {
 		if (!funcion.containsKey(espectaculo)) {
             throw new RuntimeException("Espectaculo no registrada");
         }
+		if (this.espectaculo.get(espectaculo).buscarLaFuncion(fecha) == null) {
+			throw new RuntimeException("La funcion no existe");
+		}
+		if(!this.usuarioRegistrado.containsKey(email)) {
+			throw new RutimeException("No existe el usuario")
+		}
+		this.usuarioRegistrado.get(email).agregarEntradaALaLista(new Entrada());
 		// Validar sector y asientos disponibles en la función  
 	    // Calcular precio con % adicional del sector  
 	    // Crear entrada vinculada al usuario y función  

@@ -33,4 +33,15 @@ public class Espectaculo {
 	public Funcion[] listaFunciones() {;
 		return this.funciones.toArray(new Funcion[0]);
 	}
+	public Funcion buscarLaFuncion(String fecha) {
+		for(Funcion funciones : this.funciones) {
+			if(funciones.compararFecha(fecha) == 0) {
+				return funciones;
+			}
+		}
+		return null;
+	}
+	
+	
+	
 }

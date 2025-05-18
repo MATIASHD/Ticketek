@@ -10,7 +10,6 @@ public class Entrada implements IEntrada{
 	private String sector;
 	private ArrayList<Integer> asientos;
 	private int fila;
-	private Usuario comprador;
 	private double precio;
 	private boolean anulada;
 	

@@ -1,5 +1,7 @@
 package ticketek;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 public class Funcion {
@@ -22,7 +24,20 @@ public class Funcion {
 		return true;
 	}
 	
-	public String obtenerNombreDeLaFuncion() {
-		return this.nombreEspectaculo;
+	
+	public int compararFecha(String fecha) {
+		return compararDate(this.fecha, fecha);
 	}
+	
+	public int compararDate(String fecha1, String fecha2) {  
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");  
+	    LocalDate date1 = LocalDate.parse(fecha1, formatter);  
+	    LocalDate date2 = LocalDate.parse(fecha2, formatter);  
+	    return date1.compareTo(date2);
+	    // Uso:  
+		// int resultado = compararFechas("25/07/25", "28/07/25");  
+		// resultado < 0 → fecha1 es anterior  
+		// resultado == 0 → iguales  
+		// resultado > 0 → fecha1 es posterior 
+	}  
 }

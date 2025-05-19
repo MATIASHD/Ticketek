@@ -150,7 +150,34 @@ public class Ticketek implements ITicketek {
 		return sb.toString().trim();
 	}
 	
-	
+	@Override
+    public String listarFunciones(String nombreEspectaculo) {
+        Espectaculo espectaculo = espectaculos.get(nombreEspectaculo);
+        if (espectaculo == null) {
+            throw new IllegalArgumentException("El espectáculo no existe.");
+        }
+
+        StringBuilder resultado = new StringBuilder();
+
+        for (Funcion funcion : funcionList) {
+            Sede sede = funcion.getSede();
+            String fechaStr = funcion.getFecha();
+            resultado.append(String.format(" - (%s) %s - %d/%d\n",
+                    fechaStr, sede.nombre, funcion.getEntradasVendidas(), sede.capacidadMaxima));
+        }
+        return resultado.toString();
+    }
+
+    @Override
+    public List<IEntrada> listarEntradasEspectaculo(String nombreEspectaculo) {
+        List<IEntrada> entradas = new ArrayList<>();
+        Espectaculo espectaculo = espectaculos.get(nombreEspectaculo);
+        for (Funcion funcion : espectaculo.getFunciones()) {
+            entradas.addAll(funcion.getEntradasVendidas());
+        }
+
+        return entradas;
+    }
 	
 	
 	/*@Override

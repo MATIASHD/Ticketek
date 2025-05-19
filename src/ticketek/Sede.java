@@ -34,6 +34,10 @@ public abstract class Sede {
 		return true;
 	}
 	
+	public int obtenerCapacidadMaxima() {
+		return this.capacidadMaxima;
+	}
+	
 	public String obtenerNombre() {
 		return this.nombre;
 	}

@@ -94,7 +94,11 @@ public class Ticketek implements ITicketek {
         this.espectaculo.get(nombreEspectaculo).agregarFuncion(new Funcion(fecha, sede,precioBase));
 	}
 	
-
+	/*
+	 * 
+	 * Pendiente
+	 * 
+	 * */
 	public void venderEntrada(String espectaculo, String fecha, String email, String sector, int[] asientos) {
 		if (!funcion.containsKey(espectaculo)) {
             throw new RuntimeException("Espectaculo no registrada");
@@ -103,9 +107,9 @@ public class Ticketek implements ITicketek {
 			throw new RuntimeException("La funcion no existe");
 		}
 		if(!this.usuarioRegistrado.containsKey(email)) {
-			throw new RutimeException("No existe el usuario")
+			throw new RuntimeException("No existe el usuario");
 		}
-		this.usuarioRegistrado.get(email).agregarEntradaALaLista(new Entrada());
+		
 		// Validar sector y asientos disponibles en la función  
 	    // Calcular precio con % adicional del sector  
 	    // Crear entrada vinculada al usuario y función  
@@ -118,33 +122,33 @@ public class Ticketek implements ITicketek {
 		return null;
 	}
 	
+	public void venderEntrada(String espectaculo, String fecha, String email, int cantidad) {
+		// Asignar asientos consecutivos (o lógica de campo)  
+	    // Precio base sin % adicional 
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	public java.lang.String listarFunciones(java.lang.String nombreEspectaculo) {
+		if(!this.espectaculo.containsKey(nombreEspectaculo)) {
+			throw new RuntimeException("No se encuentra ese espectaculo");
+		}
+		
+		Funcion[] funciones = this.espectaculo.get(nombreEspectaculo).listaFunciones();
+		StringBuilder sb = new StringBuilder();
+		
+		for (Funcion show : funciones) {
+			//for (Funcion funcion : funciones) {
+				//Si es estadio: " - ({FECHA}) {NOMBRE SEDE} - {ENTRADAS VENDIDAS} / {CAPACIDAD SEDE}"
+				if (show.obtenerSede() instanceof Estadio) {  				  
+					sb.append(show.obtenerFecha()).append(" ").append(show.obtenerSede().obtenerNombre()).append(" - ").append(show.obtenerSede().obtenerCapacidadMaxima()).append("\n");
+				} else {
+					// si no es estadio: " - ({FECHA}) {NOMBRE SEDE} - {NOMBRE SECTOR1}: {ENTRADAS VENDIDAS 1} / {CAPACIDAD SECTOR} | {NOMBRE SECTOR 2}: {ENTRADAS VENDIDAS 2} / {CAPACIDAD SECTOR 2} ..."
+					sb.append(show.obtenerFecha()).append(" ").append(show.obtenerSede().obtenerNombre()).append(" - ").append(show.obtenerSede().obtenerCapacidadMaxima()).append("\n"); //FALTA
+				}
+			//}
+		}
+		return sb.toString().trim();
+	}
 	
 	
 	
@@ -165,16 +169,8 @@ public class Ticketek implements ITicketek {
 
 //--------------------------
 
-	
 
 	
-	
-	
-	
-	public void venderEntrada(String espectaculo, String fecha, String email, int cantidad) {
-		// Asignar asientos consecutivos (o lógica de campo)  
-	    // Precio base sin % adicional 
-	}
 	
 	/*
 	 * Punto 5. Donde dice listar sedes cambia a listar funciones. devuelve un String con el
@@ -279,23 +275,7 @@ public class Ticketek implements ITicketek {
 
 	
 
-	@Override
-	public java.lang.String listarFunciones(java.lang.String nombreEspectaculo) {
-		if(!this.espectaculo.containsKey(nombreEspectaculo)) {
-			throw new RuntimeException("No se encuentra ese espectaculo");
-		}
-		
-		StringBuilder sb = new StringBuilder();
-		
-	}
 	
-	public String generarStringUsuarios(List<String> listaUsuarios) {  
-	    StringBuilder sb = new StringBuilder();  
-	    for (String usuario : listaUsuarios) {  
-	        sb.append(usuario).append("\n");  
-	    }  
-	    return sb.toString().trim(); // .trim() elimina el último salto de línea  
-	}  
 
 	@Override
 	public List<IEntrada> listarEntradasEspectaculo(java.lang.String nombreEspectaculo) {

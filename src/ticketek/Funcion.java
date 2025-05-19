@@ -29,6 +29,13 @@ public class Funcion {
 		return compararDate(this.fecha, fecha);
 	}
 	
+	public String obtenerFecha() {
+		return this.fecha;
+	}
+	public Sede obtenerSede() {
+		return this.sede;
+	}
+	
 	public int compararDate(String fecha1, String fecha2) {  
 	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");  
 	    LocalDate date1 = LocalDate.parse(fecha1, formatter);  

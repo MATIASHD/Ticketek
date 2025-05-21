@@ -9,7 +9,7 @@ public abstract class Sede {
 	//protected int[] capacidad;
 	//protected int[] porcentajeAdicional;
 	
-	public Sede(String nombre, String direccion, int capacidadMaxima, String[] sectores) {
+	public Sede(String nombre, String direccion, int capacidadMaxima) {
 		// Validar datos
         if (nombre == null || nombre.isEmpty()) {
             throw new RuntimeException("El nombre no puede ser nulo o vacío");
@@ -23,7 +23,6 @@ public abstract class Sede {
         this.nombre = nombre;
 		this.direccion = direccion;
 		this.capacidadMaxima = capacidadMaxima;
-		this.sectores = sectores;
 	}	
 	
 	public double calcularPrecioEntrada(Funcion funcion, String sector, int fila, int asiento) {
@@ -33,7 +32,11 @@ public abstract class Sede {
 	public boolean esUbicacionValida(String sector, int fila, int asiento) {
 		return true;
 	}
-	
+
+        public abstract void reservarAsiento(String sector, int asiento);
+        public abstract boolean esSectorValido(String sector);
+        public abstract Set<Integer> getAsientosDisponibles(String sector);
+
 	public int obtenerCapacidadMaxima() {
 		return this.capacidadMaxima;
 	}

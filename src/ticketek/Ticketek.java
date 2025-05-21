@@ -12,15 +12,14 @@ public class Ticketek implements ITicketek {
 	private Map<String, Integer> entradasRegistrada = new HashMap<>();
 	
 	
-	public Ticketek(
-			Map<String, Sede> sede, 
-			Map<String, Espectaculo> espectaculo,
-			Map<String, Usuario> usuario,
-			Map<String, Integer> entradas) {
-		this.sede = sede;
-		this.espectaculo = espectaculo;
-		this.usuarioRegistrado = usuario;
-		this.entradasRegistrada = entradas;
+	public Ticketek() {
+	       this.sedes = new HashMap<>();
+               this.usuarios = new HashMap<>();;
+               this.espectaculos = new HashMap<>();
+               this.entradas = new HashMap<>();
+               this.contadorEntradas = 1000;
+               this.funcionList = new ArrayList<>();
+               this.funciones = new HashMap<>();
 	}
 	
 	@Override
@@ -99,21 +98,37 @@ public class Ticketek implements ITicketek {
 	 * Pendiente
 	 * 
 	 * */
-	public void venderEntrada(String espectaculo, String fecha, String email, String sector, int[] asientos) {
-		if (!funcion.containsKey(espectaculo)) {
-            throw new RuntimeException("Espectaculo no registrada");
+	@Override
+    public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, int cantidadEntradas) {
+
+        Espectaculo espectaculo = espectaculos.get(nombreEspectaculo);
+        if (espectaculo == null) {
+            throw new IllegalArgumentException("Espectáculo no registrado.");
         }
-		if (this.espectaculo.get(espectaculo).buscarLaFuncion(fecha) == null) {
-			throw new RuntimeException("La funcion no existe");
-		}
-		if(!this.usuarioRegistrado.containsKey(email)) {
-			throw new RuntimeException("No existe el usuario");
-		}
-		
-		// Validar sector y asientos disponibles en la función  
-	    // Calcular precio con % adicional del sector  
-	    // Crear entrada vinculada al usuario y función  
-	}
+
+        //LocalDate fecha = parsearFecha(fechaStr);
+        Funcion funcion = espectaculo.getFuncion(fecha);
+        if (funcion == null) {
+            throw new IllegalArgumentException("No hay función en esa fecha.");
+        }
+
+        Sede sede = sedes.get(cantidadEntradas);
+        if (sede instanceof Teatro) {
+            throw new IllegalArgumentException("La sede es numerada, no se puede usar este método.");
+        }
+
+        List<IEntrada> entradasVendidas = new ArrayList<>();
+        for (int i = 0; i < cantidadEntradas; i++) {
+            String codEntrada = generarCodigo4Digitos();
+            //int codigo, Espectaculo espectaculo, String fecha, Sede sede, String ubicacion, double precio
+            Entrada entrada = new Entrada(codEntrada, nombreEspectaculo, fecha, funcion.getSede().nombre, funcion.getPrecio());
+            funcion.agregarEntrada(entrada);
+            funcion.incrementarEntradasCampoVendidas(1);
+            entradasVendidas.add(entrada);
+     }
+
+        return entradasVendidas;
+    }
 	
 	@Override
 	public List<IEntrada> venderEntrada(java.lang.String nombreEspectaculo, java.lang.String fecha,

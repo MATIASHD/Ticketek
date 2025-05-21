@@ -194,48 +194,27 @@ public class Ticketek implements ITicketek {
         return entradas;
     }
 	
-	
-	/*@Override
-	public void registrarSede(String nombre, String direccion, int capacidadMaxima) {
-
-        // Verificar si el nombre ya está registrado
-        if (sedes.containsKey(nombre)) {
-            throw new RuntimeException("El nombre de la sede ya está registrado");
+	@Override
+    public List<IEntrada> listarEntradasFuturas(String email, String contrasenia) {
+        List<IEntrada> entradasFuturas = new ArrayList<>();
+        Usuario usuario = usuarios.get(email);
+        for (IEntrada entrada : usuario.listarEntradasFuturas()) {
+            entradasFuturas.add(entrada);
         }
+        return entradasFuturas;
+    }
 
-        // Crear y registrar el estadio
-        Sede estadio = new Estadio(nombre, direccion, capacidadMaxima);
-
-        funcionesPorSede.put(estadio, new HashMap<>());
-	}*/
-
-//--------------------------
-
-
+    @Override
+    public List<IEntrada> listarTodasLasEntradasDelUsuario(String email, String contrasenia) {
+        List<IEntrada> entradasUsuario = new ArrayList<>();
+        Usuario usuario = usuarios.get(email);
+        for (IEntrada entrada : usuario.listarTodasLasEntradas()) {
+            entradasUsuario.add(entrada);
+        }
+        return entradasUsuario;
+    }
 	
 	
-	/*
-	 * Punto 5. Donde dice listar sedes cambia a listar funciones. devuelve un String con el
-	 * listado de funciones con un formato en particular (ver ejemplos en la interfaz).
-	 * ○ Si es estadio:
-	 * "({FECHA}) {NOMBRE SEDE} - {ENTRADAS VENDIDAS} / {CAPACIDAD SEDE}
-	 * ○ si no es estadio:
-	 * "({FECHA}) {NOMBRE SEDE} - {NOMBRE SECTOR 1}: {ENTRADAS VENDIDAS 1} /
-	 * {CAPACIDAD SECTOR} | {NOMBRE SECTOR 2}: {ENTRADAS VENDIDAS 2} /
-	 * {CAPACIDAD SECTOR 2} ..."
-	 */
-		//TOSTRING
-	public Espectaculo[] listaSedePorEspectaculos(String codEspectaculos) {
-		return espectaculo;
-	}
-	
-	public Entrada[] listaDeEntradaPorUsuario(Usuario usuario) {
-		return entradas;
-	}
-	
-	public Entrada[] listaDeEntradaFuturaPorUsuario(Usuario usuario) {
-		return entrada;
-	}
 	
 	/*
 	 * Punto 8. Anular una entrada, dada la entrada (de tipo IEntrada) y la contraseña del

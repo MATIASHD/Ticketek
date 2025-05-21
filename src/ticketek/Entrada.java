@@ -4,26 +4,24 @@ import java.util.ArrayList;
 
 public class Entrada implements IEntrada{
 	private String codEntrada;
-	private Funcion funcion;
-	private Sede sede;
-	private String fecha;
-	private String sector;
-	private ArrayList<Integer> asientos;
-	private int fila;
-	private double precio;
-	private boolean anulada;
-	
-	//Nombre del espectaculo, fecha, sector, asiento
-	public Entrada(Funcion funcion, Sede sede, String fecha, String sector, int fila, Usuario usuario, double precio) {
-		this.funcion = funcion;
-		this.sede = sede;
-		this.fecha = fecha;
-		this.sector = sector;
-		this.fila = fila;
-		this.comprador = usuario;
-		this.precio = precio;
-		this.anulada = true;
-	}
+    private String nombreEspectaculo;
+    private String fecha;
+    private String nombreSede;
+    private boolean esEstadio;
+    private String sector;
+    private Integer nroFila;
+    private Integer nroAsiento;
+    private double precio;
+
+    public Entrada(String codEntrada, String nombreEspectaculo, String fecha, String nombreSede, double precio) {
+        this.codEntrada = codEntrada;
+        this.nombreEspectaculo = nombreEspectaculo;
+        this.fecha = fecha;
+        this.nombreSede = nombreSede;
+        this.esEstadio = true;
+        this.precio = precio;
+    }
+
 	
 	
 	public boolean esFechaFutura() {
@@ -66,18 +64,45 @@ public class Entrada implements IEntrada{
 		return this.precio;
 	}
 
-	@Override
-	public String ubicacion() {
-		if(this.sede.obtenerNombre() == "campo") {
-			return "CAMPO";
-		} else {			
-			return this.sector + " Fila: " + this.fila + " asiento: " + this.asientos ;
-		}
-	}
-	
-	@Override
-	public String toString() {
-		return this.codEntrada + " - " + this.funcion.obtenerNombreDeLaFuncion() + " - " + this.fecha + " - " + this.sede.obtenerNombre() + " - " + this.ubicacion();
-	}
-	
+    @Override
+    public String ubicacion() {
+        String ubicacion;
+        // Determinar la ubicación
+        if (esEstadio) {
+            return "CAMPO";
+        }
+        return sector + " f: " + nroFila + " a: " + nroAsiento;//String.format("%s f:%d a:%d", sector, nroFila, nroAsiento);
+    }
+
+    @Override
+    public String toString() {
+        String fechaStr = fecha;
+        String fechaFormateada = esFechaPasada(fecha) ? fechaStr + " P" : fechaStr;
+        return codEntrada +" - "+ nombreEspectaculo +" - "+ fecha +" - "+ nombreSede +" - "+ ubicacion();//String.format("%s - %s - %s - %s - %s", codEntrada, nombreEspectaculo, fechaFormateada, nombreSede, ubicacion());
+    }
+    public boolean esFechaPasada(String fecha) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+            LocalDate fechaFuncion = LocalDate.parse(fecha, formatter);
+            return fechaFuncion.isBefore(LocalDate.now());
+        } catch (Exception e) {
+            throw new RuntimeException("Fecha mal formada: " + fecha);
+        }
+    }
+
+    public boolean esFechaFutura(String fecha) {
+        // Definimos el formato de la fecha
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        try {
+            // Parseamos la fecha de la cadena
+            LocalDate fechaIngresada = LocalDate.parse(fecha, formato);
+            // Comparamos con la fecha actual
+            return fechaIngresada.isAfter(LocalDate.now());
+        } catch (DateTimeParseException e) {
+            // Manejo de excepciones si la fecha no tiene el formato correcto
+            System.out.println("Formato de fecha incorrecto: " + fecha);
+            return false; // O lanzar una excepción según tu lógica
+        }
+    }
 }

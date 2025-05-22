@@ -9,6 +9,7 @@ public class Usuario {
 	private String apellido;
 	private String contrasenia;
 	private ArrayList<Entrada> entradas;
+	private Map<String, Entrada> entradasCompradas;
 	
 	public Usuario(String email, String nombre, String apellido, String contrasenia) {
 		this.email = email;
@@ -16,6 +17,7 @@ public class Usuario {
 		this.apellido = apellido;
 		this.contrasenia = contrasenia;
 		this.entradas = new ArrayList<>();
+		this.entradasCompradas = new HashMap<>();
 	}
 	
 	public void agregarEntradaALaLista(Entrada entrada) {
@@ -33,11 +35,16 @@ public class Usuario {
 	public Entrada[] obtenerEntradasVencidas() {
 		//definir como tratar la fecha
 	}
-	
-	public Entrada[] obtenerEntradasFuturas() {
-		//definir como tratar la fecha
-		
-	}
+	public List<IEntrada> listarEntradasFuturas() {
+        String hoy = "";// = LocalDate.now();
+        List<IEntrada> entradasFuturas = new ArrayList<>();
+        for (Entrada entrada : entradasCompradas.values()) {
+            if (entrada.esFechaFutura(hoy)) {
+                entradasFuturas.add(entrada);
+            }
+        }
+        return entradasFuturas;
+        }
 	
 	public void borrarEntrada(String codEntrada) {
 		Iterator<Entrada> entrada = this.entradas.iterator();
@@ -64,6 +71,10 @@ public class Usuario {
 	
 	public void anularEntrada(String codEntrada) {
 		this.borrarEntrada(codEntrada);
+	}
+	
+        public List<IEntrada> getEntradas() {
+             return entradas;
 	}
 	
 }

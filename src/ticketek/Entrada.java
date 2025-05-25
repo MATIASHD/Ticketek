@@ -1,12 +1,14 @@
 package ticketek;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Entrada implements IEntrada{
 	private String codEntrada;
     private String nombreEspectaculo;
     private String fecha;
-    private String nombreSede;
+    private String sede;
     private boolean esEstadio;
     private String sector;
     private Integer nroFila;
@@ -17,12 +19,23 @@ public class Entrada implements IEntrada{
         this.codEntrada = codEntrada;
         this.nombreEspectaculo = nombreEspectaculo;
         this.fecha = fecha;
-        this.nombreSede = nombreSede;
+        this.sede = nombreSede;
         this.esEstadio = true;
         this.precio = precio;
     }
 
-	
+    public Entrada(String codEntrada, String nombreEspectaculo, String fecha, String nombreSede,
+                   String sector, int nroFila, int nroAsiento, double precio) {
+        this.codEntrada = codEntrada;
+        this.nombreEspectaculo = nombreEspectaculo;
+        this.fecha = fecha;
+        this.sede = nombreSede;
+        this.esEstadio = false;
+        this.sector = sector;
+        this.nroFila = nroFila;
+        this.nroAsiento = nroAsiento;
+        this.precio = precio;
+    }
 	
 	public boolean esFechaFutura() {
 		return true;
@@ -33,9 +46,9 @@ public class Entrada implements IEntrada{
 		return 1;
 	}
 	
-	public void modificarSede(Sede sede) {
-		this.sede = sede;
-	}
+	//public void modificarSede(Sede sede) {
+		//this.sede = sede;
+	//}
 	
 	public String codigoEntrada() {
 		return this.codEntrada;
@@ -45,18 +58,18 @@ public class Entrada implements IEntrada{
 		return this.codEntrada == codEntrada;
 	}
 	
-	public void anular() { //Marca la entrada como invalida no la elimina
-		this.anulada = true;
-	}
+	//public void anular() { //Marca la entrada como invalida no la elimina
+		//this.anulada = true;
+	//}
 	
-	public void cambiarEntrada(Entrada original, String nvaFecha) {
+	//public void cambiarEntrada(Entrada original, String nvaFecha) {
 		// Validar que la entrada no esté anulada  
 	    // Buscar la función correspondiente a nuevaFecha  
 	    // Validar disponibilidad en la nueva función  
 	    // Crear nueva entrada  
 	    // Anular entrada original (entradaOriginal.anular())  
-	    return nuevaEntrada;  
-	}
+	  //  return nuevaEntrada;  
+	//}
 
 	@Override
 	public double precio() {
@@ -78,7 +91,7 @@ public class Entrada implements IEntrada{
     public String toString() {
         String fechaStr = fecha;
         String fechaFormateada = esFechaPasada(fecha) ? fechaStr + " P" : fechaStr;
-        return codEntrada +" - "+ nombreEspectaculo +" - "+ fecha +" - "+ nombreSede +" - "+ ubicacion();//String.format("%s - %s - %s - %s - %s", codEntrada, nombreEspectaculo, fechaFormateada, nombreSede, ubicacion());
+        return codEntrada +" - "+ nombreEspectaculo +" - "+ fecha +" - "+ sede +" - "+ ubicacion();//String.format("%s - %s - %s - %s - %s", codEntrada, nombreEspectaculo, fechaFormateada, nombreSede, ubicacion());
     }
     public boolean esFechaPasada(String fecha) {
         try {
@@ -99,7 +112,7 @@ public class Entrada implements IEntrada{
             LocalDate fechaIngresada = LocalDate.parse(fecha, formato);
             // Comparamos con la fecha actual
             return fechaIngresada.isAfter(LocalDate.now());
-        } catch (DateTimeParseException e) {
+        } catch (Exception e) {
             // Manejo de excepciones si la fecha no tiene el formato correcto
             System.out.println("Formato de fecha incorrecto: " + fecha);
             return false; // O lanzar una excepción según tu lógica

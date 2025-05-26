@@ -1,0 +1,25 @@
+package ticketek;
+
+public class Teatro extends EstadiosConSecciones{
+	private double precioBase;
+	private int asientosPorFila;
+	private int[] capacidad; //Capacidad de cada sector
+	private int[] porcentajeAdicional;
+
+	public Teatro(String nombre, String direccion, int capacidadMaxima, int asientoPorFila, String[] sectores, int[] capacidad,
+			int [] porcentajeAdicional) {
+		super(nombre, direccion, capacidadMaxima, sectores);
+		this.asientosPorFila = asientoPorFila;
+		this.capacidad = capacidad;
+		this.porcentajeAdicional = porcentajeAdicional;
+	}
+	
+	public double precioDeEntrada() {
+		return 1; //VER COMO SEGUIR
+	}
+	
+	public int getAsiento() {
+		return 1;
+	}
+
+}

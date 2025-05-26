@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="ticketek.Estadio"/>
+    <fullyQualifiedTypeName name="ticketek.Teatro"/>
+    <fullyQualifiedTypeName name="ticketek.Usuario"/>
+    <fullyQualifiedTypeName name="ticketek.Espectaculo"/>
+    <fullyQualifiedTypeName name="ticketek.Funcion"/>
+    <fullyQualifiedTypeName name="java.lang.IllegalArgumentException"/>
+    <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
+    <fullyQualifiedTypeName name="java.text.CollationElementIterator"/>
+    <fullyQualifiedTypeName name="java.time.format.DateTimeFormatter"/>
+    <fullyQualifiedTypeName name="java.time.LocalDate"/>
+    <fullyQualifiedTypeName name="java.util.NoSuchElementException"/>
+    <fullyQualifiedTypeName name="ticketek.Miniestadio"/>
+    <fullyQualifiedTypeName name="ticketek.Sede"/>
+    <fullyQualifiedTypeName name="ticketek.EstadiosConSecciones"/>
+</qualifiedTypeNameHistroy>

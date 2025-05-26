@@ -1,0 +1,48 @@
+package ticketek;
+import java.util.ArrayList;
+import java.util.Map;
+
+
+public class Espectaculo {
+	private String nombre;
+	private Map<String,Funcion> funciones;
+
+    public Espectaculo(String nombre) {
+    	if (nombre == null || nombre.isEmpty()) {
+            throw new RuntimeException("El nombre del espectáculo no puede ser nulo o vacío");
+        }
+        this.nombre = nombre;
+        this.funciones = new Map<String, Funcion>();
+    }
+
+    public void agregarFuncion(String fecha,Funcion funcion) {
+        funciones.put(funcion);
+    }
+	
+	public double consultarPrecioBase() {
+		return 1; //VER COMO ABORDARLO
+	}
+	
+	public String obtenerNombre() {
+		return this.nombre;
+	}
+	
+	public String consultarId() {
+		return ""; //Ver como abordarlo
+	}
+	
+	public Funcion[] listaFunciones() {;
+		return this.funciones.toArray(new Funcion[0]);
+	}
+	public Funcion buscarLaFuncion(String fecha) {
+		for(Funcion funciones : this.funciones) {
+			if(funciones.compararFecha(fecha) == 0) {
+				return funciones;
+			}
+		}
+		return null;
+	}
+	
+	
+	
+}

@@ -1,0 +1,17 @@
+package ticketek;
+
+public class Miniestadio extends EstadiosConSecciones{
+	
+	
+	public double precioDeEntrada() {
+		return 1;
+	}
+	
+	public int obtenerCantMaxPuesto() {
+		return 1;
+	}
+	
+	public int getAsientosPorFila() {
+		return 1;
+	}
+}

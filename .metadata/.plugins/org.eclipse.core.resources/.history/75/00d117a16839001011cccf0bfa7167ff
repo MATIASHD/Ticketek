@@ -1,0 +1,68 @@
+package ticketek;
+
+public abstract class Sede {
+	protected String nombre;
+	protected String direccion;
+	protected int capacidadMaxima;
+	protected String[] sector;
+	protected int[] capacidadOriginal;
+	protected int[] capacidadPorSector;
+	
+	public Sede(String nombre, String direccion, int capacidadMaxima, String[] sector, int[] capacidadPorSector) {
+		// Validar datos
+        if (nombre == null || nombre.isEmpty()) {
+            throw new RuntimeException("El nombre no puede ser nulo o vacío");
+        }
+        if (direccion == null || direccion.isEmpty()) {
+            throw new RuntimeException("La dirección no puede ser nula o vacía");
+        }
+        if (capacidadMaxima <= 0) {
+            throw new RuntimeException("La capacidad máxima debe ser positiva");
+        }
+        this.nombre = nombre;
+		this.direccion = direccion;
+		this.capacidadMaxima = capacidadMaxima;
+		this.capacidadPorSector = capacidadPorSector;
+		this.capacidadOriginal = capacidadPorSector;
+	}	
+	
+	public String[] obtenerSector() {
+		return this.obtenerSector();
+	}
+	
+	public int obtenerCapcidadMaxima() {
+		return this.capacidadMaxima;
+	}
+	
+	public string devolver capacidadDelSector(int sector) {
+		StringBuilder sb = new StringBuilder(); 
+		sb.append(this.sector[sector]).append()
+	}
+	
+	
+	
+	/*public double calcularPrecioEntrada(Funcion funcion, String sector, int fila, int asiento) {
+		return 1;
+	}
+	
+	public boolean esUbicacionValida(String sector, int fila, int asiento) {
+		return true;
+	}
+
+        public abstract void reservarAsiento(String sector, int asiento);
+        public abstract boolean esSectorValido(String sector);
+        //public abstract Set<Integer> getAsientosDisponibles(String sector);
+
+	public int obtenerCapacidadMaxima() {
+		return this.capacidadMaxima;
+	}
+	
+	public String obtenerNombre() {
+		return this.nombre;
+	}
+	
+	@Override
+	public String toString() {
+		return "Sede [nombre=" + nombre + ", direccion=" + direccion + ", capacidadMaxima=" + capacidadMaxima + "]";
+	}*/
+}

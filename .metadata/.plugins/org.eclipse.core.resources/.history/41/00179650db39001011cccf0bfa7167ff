@@ -1,0 +1,31 @@
+package ticketek;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Sector {
+	private String nombre;
+	private int capacidadMaxima;
+	private List<Integer> asientosOcupados;
+	private double porcentajeAdicional;
+	
+	//Estadio/miniestadio
+	public Sector(String nombre, int capacidadMaxima) {
+		this.nombre = nombre;
+		this.capacidadMaxima = capacidadMaxima;
+		this.asientosOcupados = new ArrayList<>();
+	}
+	
+	//para teatros
+	public Sector(String nombre, int capacidadMaxima, double porcentajeAdicional) {
+		this.nombre = nombre;
+		this.capacidadMaxima = capacidadMaxima;
+		this.asientosOcupados = new ArrayList<>();
+		this.porcentajeAdicional = porcentajeAdicional;
+	}
+	
+	public int CantidadAsientosDisponibles() {
+		return this.capacidadMaxima - this.asientosOcupados.size();
+	}
+	
+}

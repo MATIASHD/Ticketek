@@ -1,0 +1,36 @@
+package ar.edu.ungs.prog2.ticketek;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import ticketek.Funcion;
+
+public class Espectaculo {
+	private String nombre;
+	private Map<String,Funcion> funcion;
+
+    public Espectaculo(String nombre) {
+    	if (nombre == null || nombre.isEmpty()) {
+            throw new RuntimeException("El nombre del espectáculo no puede ser nulo o vacío");
+        }
+        this.nombre = nombre;
+        this.funcion = new HashMap<String, Funcion>();
+    }
+
+    public void agregarFuncion(String fecha,Funcion funcion) {
+        this.funcion.put(fecha, funcion);
+    }
+	
+	public Map<String, Funcion> ListaDeFunciones(){
+		return this.funcion;
+	}
+	
+	public Funcion buscarLaFuncion(String fecha) {
+		return funcion.get(fecha);
+	}
+	
+	public String obtenerNombre() {
+		return this.nombre;
+	}
+	
+}

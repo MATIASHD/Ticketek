@@ -1,0 +1,32 @@
+package ticketek;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class Fecha {
+
+	private LocalDate fechaActual;
+	private static final DateTimeFormatter FORMATO = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	
+	public Fecha(String fechaSrt){
+		this.fechaActual = LocalDate.parse(fechaSrt, FORMATO);
+	}
+	
+	public boolean esPasada() {
+        return fechaActual.isBefore(LocalDate.now());
+    }
+
+    public boolean esFutura() {
+        return fechaActual.isAfter(LocalDate.now());
+    }
+
+    public boolean esHoy() {
+        return fechaActual.isEqual(LocalDate.now());
+    }	
+    
+    public boolean compararFecha(String fechaStr) {
+        LocalDate otraFecha = LocalDate.parse(fechaStr, FORMATTER);
+        return this.fecha.isEqual(otraFecha);
+    }
+	
+}

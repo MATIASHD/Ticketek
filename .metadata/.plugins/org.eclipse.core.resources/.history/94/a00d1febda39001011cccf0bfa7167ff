@@ -1,0 +1,338 @@
+package ticketek;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+
+public class Ticketek implements ITicketek {
+	private Map<String, Sede> sede;
+	private Map<String, Funcion> funcion;
+	private Map<String, Espectaculo> espectaculo;
+	private Map<String, Usuario> usuario;
+	private Map<String, Entrada> entradasRegistradas;
+	
+	
+	public Ticketek() {
+		this.sede = new HashMap<String, Sede>();
+        this.usuario = new HashMap<String, Usuario>();
+        this.espectaculo = new HashMap<String, Espectaculo>();
+        this.entradasRegistradas = new HashMap<String, Entrada>();
+        this.funcion = new HashMap<String,Funcion>();
+	}
+
+
+	@Override
+	public void registrarSede(String nombre, String direccion, int capacidadMaxima) {
+		// TODO Auto-generated method stub
+		sede.put(nombre, new Estadio(nombre, direccion, capacidadMaxima));
+	}
+
+
+	@Override
+	public void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila,
+			String[] sectores, int[] capacidad, int[] porcentajeAdicional) {
+		// TODO Auto-generated method stub
+		sede.put(nombre, new Teatro(nombre, direccion, capacidadMaxima, asientosPorFila, sectores, capacidad, porcentajeAdicional));
+	}
+
+
+	@Override
+	public void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila,
+			int cantidadPuestos, double precioConsumicion, String[] sectores, int[] capacidad,
+			int[] porcentajeAdicional) {
+		// TODO Auto-generated method stub
+		sede.put(nombre, new Miniestadio(nombre, direccion, capacidadMaxima, asientosPorFila, cantidadPuestos, precioConsumicion, sectores, capacidad, porcentajeAdicional));
+		
+	}
+
+
+	@Override
+	public void registrarUsuario(String email, String nombre, String apellido, String contrasenia) {
+		// TODO Auto-generated method stub
+		usuario.put(email, new Usuario(email, nombre, apellido, contrasenia));
+		
+	}
+
+
+	@Override
+	public void registrarEspectaculo(String nombre) {
+		// TODO Auto-generated method stub
+		espectaculo.put(nombre, new Espectaculo(nombre));
+	}
+
+
+	@Override
+	public void agregarFuncion(String nombreEspectaculo, String fecha, String sede, double precioBase) {
+		// TODO Auto-generated method stub
+		Espectaculo show = espectaculo.get(nombreEspectaculo);
+		if(show != null) {
+			show.agregarFuncion(fecha, new Funcion(fecha, sede, precioBase));
+		} else {
+			throw new NoSuchElementException("El espectaculo no ha sido encontrado" + nombreEspectaculo);
+		}
+	}
+
+
+	@Override
+	public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia,
+			int cantidadEntradas) {
+		// TODO Auto-generated method stub
+		Usuario user = usuario.get(email);
+		Espectaculo show = espectaculo.get(nombreEspectaculo);
+		Sede sede = this.sede.get(show.buscarLaFuncion(fecha).obtenerSede());
+		Entrada ticket;
+		if (user != null && show != null) {
+			if (user.validarContrasenia(contrasenia)) {
+				ticket = new Entrada(nombreEspectaculo, fecha, cantidadEntradas);
+				this.entradasRegistradas.put(email, ticket);
+				if (sede instanceof Estadio) {
+					Estadio estadio = (Estadio) sede;
+					estadio.descontarAsiento(cantidadEntradas);
+					
+					//ver
+				} else {
+					throw new NoSuchElementException("Error al tipo de dato");
+				}
+			} else {
+				throw new IllegalArgumentException("No es valida la contraseña");
+			}
+		} else {
+			throw new NoSuchElementException("No se ha encontrado algunas de las siguientes opciones: " + email + " y/0 " + nombreEspectaculo);
+		}
+		return Collections.singletonList(ticket);
+	}
+
+
+	@Override
+	public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia,
+			String sector, int[] asientos) {
+		Usuario user = usuario.get(email);
+		Espectaculo show = espectaculo.get(nombreEspectaculo);
+		Sede sede = this.sede.get(show.buscarLaFuncion(fecha).obtenerSede());
+		Entrada ticket;
+		
+		if (user != null && show != null) {
+			if (user.validarContrasenia(contrasenia)) {
+				ticket = new Entrada(nombreEspectaculo, fecha, sector, asientos);
+				this.entradasRegistradas.put(email, ticket);
+				if (sede instanceof Teatro) {
+					Teatro estadio = (Teatro) sede;
+					estadio.descontarAsiento(sector, asientos);
+					//falta
+				} else {
+					Miniestadio estadio = (Miniestadio) sede;
+					estadio.descontarAsiento(sector, asientos);
+				}	//falta
+			} else {
+				throw new IllegalArgumentException("No es valida la contraseña");
+			}
+		} else {
+			throw new NoSuchElementException("No se ha encontrado algunas de las siguientes opciones: " + email + " y/0 " + nombreEspectaculo);
+		}
+		return Collections.singletonList(ticket);
+	}
+
+
+	@Override
+	public String listarFunciones(String nombreEspectaculo) {
+		// TODO Auto-generated method stub
+		StringBuilder sb = new StringBuilder();
+		if(this.espectaculo.get(nombreEspectaculo) != null) {
+			Map<String,Funcion> funciones = espectaculo.get(nombreEspectaculo).ListaDeFunciones();
+			for (Map.Entry<String, Funcion> todasLasFunciones : funciones.entrySet()) {
+				if (sede.get(todasLasFunciones.getValue().obtenerSede()).obtenerSector().length == 1 ) {
+					Estadio estadioActual = (Estadio) sede.get(todasLasFunciones.getValue().obtenerSede());
+					sb.append(todasLasFunciones.getValue().obtenerFecha()).append( " ").append(todasLasFunciones.getValue().obtenerSede()).append(" - ").append(estadioActual.totalVendidadas()).append(" / ").append(estadioActual.capacidadMaxima).append("\n");
+					// Si es estadio: " - ({FECHA}) {NOMBRE SEDE} - {ENTRADAS VENDIDAS} / {CAPACIDAD SEDE}"
+				} else {
+					// si no es estadio: " - ({FECHA}) {NOMBRE SEDE} - {NOMBRE SECTOR1}: {ENTRADAS VENDIDAS 1} / {CAPACIDAD SECTOR} | {NOMBRE SECTOR 2}: {ENTRADAS VENDIDAS 2} / {CAPACIDAD SECTOR 2} ..."
+					Sede estadioActual = sede.get(todasLasFunciones.getValue().obtenerSede());
+					sb.append(todasLasFunciones.getValue().obtenerFecha()).append( " ").append(todasLasFunciones.getValue().obtenerSede()).append(" - ");
+					for (int i = 0; i < estadioActual.obtenerSector().length; i++) {
+						sb.append(estadioActual.devolverCapacidadPorSector(i)).append(" | ");
+					}
+					sb.append("\n");
+				}
+			}
+		} else {
+			throw new NoSuchElementException("El espectaculo no ha sido encontrado" + nombreEspectaculo);
+		}
+		return sb.toString();
+	}
+
+
+	@Override
+	public List<IEntrada> listarEntradasEspectaculo(String nombreEspectaculo) {
+		 List<IEntrada> listaEntradas = new ArrayList<>();
+		 Espectaculo show = espectaculo.get(nombreEspectaculo);
+		 
+		for (Map.Entry<String, Entrada> entrada : entradasRegistradas.entrySet()) {
+			if (show.obtenerNombre().equals(entrada.getValue().obtenerNombreDelEspectaculo())) {
+				//"{COD ENTRADA} - {NOMBRE ESPECTACULO} - {FECHA} - {NOMBRE SEDE} - {UBICACION}" 
+				listaEntradas.add(entrada.getValue()); //falta nombre de la sede
+				}
+			
+			}
+		// TODO Auto-generated method stub
+		return listaEntradas;
+	}
+
+
+	@Override
+	public List<IEntrada> listarEntradasFuturas(String email, String contrasenia) {
+		// TODO Auto-generated method stub
+		List<IEntrada> listaEntradas = new ArrayList<>();
+		
+		for (Map.Entry<String, Entrada> ticket : entradasRegistradas.entrySet()) {
+		    if (ticket.getKey().equals(email) && new Fecha(ticket.getValue().obtenerFecha()).esFutura() && usuario.get(email).validarContrasenia(contrasenia)) {
+		    	listaEntradas.add(ticket.getValue());
+		    } else {
+		    	throw new IllegalArgumentException("No es valida la contraseña o el usuario");
+		    }
+		}
+		return listaEntradas;
+	}
+
+
+	@Override
+	public List<IEntrada> listarTodasLasEntradasDelUsuario(String email, String contrasenia) {
+		// TODO Auto-generated method stub
+		List<IEntrada> listaEntradas = new ArrayList<>();
+		
+		for (Map.Entry<String, Entrada> ticket : entradasRegistradas.entrySet()) {
+		    if (ticket.getKey().equals(email) && usuario.get(email).validarContrasenia(contrasenia)) {
+		    	listaEntradas.add(ticket.getValue());
+		    } else {
+		    	throw new IllegalArgumentException("No es valida la contraseña o el usuario");
+		    }
+		}
+		return listaEntradas;
+	}
+
+	@Override
+	public boolean anularEntrada(IEntrada entrada, String contrasenia) {	
+		// TODO Auto-generated method stub
+		if (entrada == null) {
+			for (Map.Entry<String, Entrada> ticket : entradasRegistradas.entrySet()) {
+				if(ticket.equals(entrada)) {
+					ticket.getValue().anular();
+					return true;
+				}
+			}
+		} else {
+			throw new NoSuchElementException("La entrada no se encontro o no es valida");
+		}
+		return false;
+	}
+
+	@Override
+	public IEntrada cambiarEntrada(IEntrada entrada, String contrasenia, String fecha, String sector, int asiento) {
+		// TODO Auto-generated method stub
+		if (entrada == null) {
+			for (Map.Entry<String, Entrada> ticket : entradasRegistradas.entrySet()) {
+				if(ticket.equals(entrada) && usuario.get(ticket.getKey()).validarContrasenia(contrasenia)) {
+					ticket.getValue().cambiarFecha(fecha);
+					ticket.getValue().cambiarSector(sector);
+					ticket.getValue().cambiarAsiento(asiento);
+					
+					return ticket.getValue();
+				}
+			}
+		} else {
+			throw new NoSuchElementException("La entrada no se encontro o no es valida");
+		}
+		return null;
+	}
+
+
+	@Override
+	public IEntrada cambiarEntrada(IEntrada entrada, String contrasenia, String fecha) {
+		// TODO Auto-generated method stub
+		if (entrada == null) {
+			for (Map.Entry<String, Entrada> ticket : entradasRegistradas.entrySet()) {
+				if(ticket.getValue().compararFecha(fecha)&& usuario.get(ticket.getKey()).validarContrasenia(contrasenia)) {
+					if(new Fecha(ticket.getValue().obtenerFecha()).esPasada()) {
+						throw new NoSuchElementException("La entrada vencio");
+					}
+					entradasRegistradas.put(usuario.get(ticket.getKey()).obtenerEmail(), ticket.getValue());
+					return ticket.getValue();
+				}
+			}
+		}
+		return null;
+	}
+
+
+	@Override
+	public double costoEntrada(String nombreEspectaculo, String fecha) {
+		// TODO Auto-generated method stub
+		if (espectaculo.get(nombreEspectaculo) == null) {
+			throw new NoSuchElementException("No se encuentra este espectaculo");
+		}
+		Funcion funcionActual = espectaculo.get(nombreEspectaculo).buscarLaFuncion(fecha);
+		//Sede locacion = sede.get(espectaculo.get(nombreEspectaculo).buscarLaFuncion(fecha).obtenerSede());
+		return funcionActual.precioBase();
+	}
+
+
+	@Override
+	public double costoEntrada(String nombreEspectaculo, String fecha, String sector) {
+		// TODO Auto-generated method stub
+		if (espectaculo.get(nombreEspectaculo) == null) {
+			throw new NoSuchElementException("No se encuentra este espectaculo");
+		}
+		Funcion funcionActual = espectaculo.get(nombreEspectaculo).buscarLaFuncion(fecha);
+		EstadiosConSecciones locacion = (EstadiosConSecciones) sede.get(espectaculo.get(nombreEspectaculo).buscarLaFuncion(fecha).obtenerSede());
+		double recargo = 0;
+		if (locacion instanceof Miniestadio) {
+			recargo = ((Miniestadio) locacion).adicional();
+		}
+		return recargo + funcionActual.precioBase() + funcionActual.precioBase() * locacion.porcentajeRecargo(sector)  ;
+	}
+
+
+	@Override
+	public double totalRecaudado(String nombreEspectaculo) {
+		// TODO Auto-generated method stub
+		double total = 0;
+		if (espectaculo.get(nombreEspectaculo) == null) {
+			throw new NoSuchElementException("No se encuentra este espectaculo");
+		}
+		for (Map.Entry<String, Espectaculo> evento : espectaculo.entrySet()) {
+			for (Map.Entry<String, Funcion> show : evento.getValue().ListaDeFunciones().entrySet()) {
+				total += show.getValue().precioBase();
+			}
+		}
+		return total;
+	}
+
+
+	@Override
+	public double totalRecaudadoPorSede(String nombreEspectaculo, String nombreSede) {
+		// TODO Auto-generated method stub
+		double total = 0;
+		if (espectaculo.get(nombreEspectaculo) == null) {
+			throw new NoSuchElementException("No se encuentra este espectaculo");
+		}
+		for (Map.Entry<String, Espectaculo> evento : espectaculo.entrySet()) {
+			for (Map.Entry<String, Funcion> show : evento.getValue().ListaDeFunciones().entrySet()) {
+				if (sede.get(show.getValue().obtenerSede()).compararSede(nombreSede)) {
+					total += show.getValue().precioBase();
+					total += calcular(show.getValue().obtenerSede());					
+				}
+			}
+		}
+		return total;
+	}
+	public double calcular(String ubicacion) {
+		double total = 0;
+		Sede locacion = sede.get(ubicacion);
+		
+	}
+
+	
+	
+	
+}

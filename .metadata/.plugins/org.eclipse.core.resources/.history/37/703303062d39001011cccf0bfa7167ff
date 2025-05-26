@@ -1,0 +1,42 @@
+package ticketek;
+
+public class Estadio extends Sede {
+	
+	public Estadio(String nombre, String direccion, int capacidadMaxima) {
+		super(nombre, direccion, capacidadMaxima,new String[]{"CAMPO"}, new int[]{capacidadMaxima});
+	}
+	
+	
+	public double calcularPrecioEntrada(Funcion funcion, String sector, int fila, int asiento) {
+		return 1;
+	}
+	
+	public boolean esUbicacionValida(String sector, int fila, int asiento) {
+		return true;
+	}
+
+	@Override
+	public void reservarAsiento(String sector, int asiento) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean esSectorValido(String sector) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public void descontarAsiento(int cantAsiento) {
+		// TODO Auto-generated method stub
+		int[] capacidad = super.capacidadPorSector;
+		capacidad[0] -= cantAsiento;
+	}
+
+
+
+	
+}

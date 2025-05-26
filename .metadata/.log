@@ -1,0 +1,437 @@
+!SESSION 2025-05-24 21:42:11.876 -----------------------------------------------
+eclipse.buildId=4.35.0.20250306-0811
+java.version=21.0.6
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=es_ES
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY ch.qos.logback.classic 1 0 2025-05-24 21:42:12.822
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2025-05-24 21:43:54.003
+!MESSAGE Logback config file: /home/matias/Escritorio/Ticketek/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.7.0.20241001-1350.xml
+
+!ENTRY org.eclipse.equinox.p2.operations 4 0 2025-05-24 21:55:42.412
+!MESSAGE Operation details
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 10054 2025-05-24 21:55:42.412
+!MESSAGE Cannot complete the install because of a conflicting dependency.
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.412
+!MESSAGE Software being installed: Mylyn Task-Focused Interface 4.7.0.v20250326-1000 (org.eclipse.mylyn.context.feature.feature.group 4.7.0.v20250326-1000)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.412
+!MESSAGE Software currently installed: Mylyn Task List 4.6.0.v20241229-1209 (org.eclipse.mylyn.tasks.feature.feature.group 4.6.0.v20241229-1209)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 1 2025-05-24 21:55:42.412
+!MESSAGE Only one of the following can be installed at once: 
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.412
+!MESSAGE Mylyn Tasks 4.6.0.v20241229-1209 (org.eclipse.mylyn.tasks.activity.ui 4.6.0.v20241229-1209)
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.412
+!MESSAGE Mylyn Tasks 4.5.0.v20241002-1142 (org.eclipse.mylyn.tasks.activity.ui 4.5.0.v20241002-1142)
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.412
+!MESSAGE Mylyn Tasks 4.7.0.v20250326-1000 (org.eclipse.mylyn.tasks.activity.ui 4.7.0.v20250326-1000)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 1 2025-05-24 21:55:42.412
+!MESSAGE Cannot satisfy dependency:
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.412
+!MESSAGE From: Mylyn Task-Focused Interface 4.7.0.v20250326-1000 (org.eclipse.mylyn.context.feature.feature.group 4.7.0.v20250326-1000)
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.412
+!MESSAGE To: org.eclipse.equinox.p2.iu; org.eclipse.mylyn.tasks.feature.feature.group [4.7.0,4.8.0), filter=(!(org.eclipse.equinox.p2.exclude.import=true))
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 1 2025-05-24 21:55:42.412
+!MESSAGE Cannot satisfy dependency:
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.412
+!MESSAGE From: Mylyn Task List 4.6.0.v20241229-1209 (org.eclipse.mylyn.tasks.feature.feature.group 4.6.0.v20241229-1209)
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.412
+!MESSAGE To: org.eclipse.equinox.p2.iu; org.eclipse.mylyn.tasks.activity.ui [4.6.0.v20241229-1209,4.6.0.v20241229-1209]
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 1 2025-05-24 21:55:42.412
+!MESSAGE Cannot satisfy dependency:
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.412
+!MESSAGE From: Mylyn Task List 4.7.0.v20250521-0822 (org.eclipse.mylyn.tasks.feature.feature.group 4.7.0.v20250521-0822)
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.412
+!MESSAGE To: org.eclipse.equinox.p2.iu; org.eclipse.mylyn.tasks.activity.ui [4.7.0.v20250326-1000,4.7.0.v20250326-1000]
+
+!ENTRY org.eclipse.equinox.p2.operations 4 0 2025-05-24 21:55:42.442
+!MESSAGE Operation details
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 10054 2025-05-24 21:55:42.442
+!MESSAGE Cannot complete the install because of a conflicting dependency.
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.442
+!MESSAGE Software being installed: Mylyn Task-Focused Interface 4.7.0.v20250326-1000 (org.eclipse.mylyn.context.feature.feature.group 4.7.0.v20250326-1000)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.442
+!MESSAGE Software currently installed: Mylyn Task List 4.6.0.v20241229-1209 (org.eclipse.mylyn.tasks.feature.feature.group 4.6.0.v20241229-1209)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 1 2025-05-24 21:55:42.442
+!MESSAGE Only one of the following can be installed at once: 
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.442
+!MESSAGE Mylyn Tasks 4.6.0.v20241229-1209 (org.eclipse.mylyn.tasks.activity.ui 4.6.0.v20241229-1209)
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.442
+!MESSAGE Mylyn Tasks 4.5.0.v20241002-1142 (org.eclipse.mylyn.tasks.activity.ui 4.5.0.v20241002-1142)
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.442
+!MESSAGE Mylyn Tasks 4.7.0.v20250326-1000 (org.eclipse.mylyn.tasks.activity.ui 4.7.0.v20250326-1000)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 1 2025-05-24 21:55:42.442
+!MESSAGE Cannot satisfy dependency:
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.442
+!MESSAGE From: Mylyn Task-Focused Interface 4.7.0.v20250326-1000 (org.eclipse.mylyn.context.feature.feature.group 4.7.0.v20250326-1000)
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.442
+!MESSAGE To: org.eclipse.equinox.p2.iu; org.eclipse.mylyn.tasks.feature.feature.group [4.7.0,4.8.0), filter=(!(org.eclipse.equinox.p2.exclude.import=true))
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 1 2025-05-24 21:55:42.442
+!MESSAGE Cannot satisfy dependency:
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.442
+!MESSAGE From: Mylyn Task List 4.6.0.v20241229-1209 (org.eclipse.mylyn.tasks.feature.feature.group 4.6.0.v20241229-1209)
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.442
+!MESSAGE To: org.eclipse.equinox.p2.iu; org.eclipse.mylyn.tasks.activity.ui [4.6.0.v20241229-1209,4.6.0.v20241229-1209]
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 1 2025-05-24 21:55:42.442
+!MESSAGE Cannot satisfy dependency:
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.442
+!MESSAGE From: Mylyn Task List 4.7.0.v20250521-0822 (org.eclipse.mylyn.tasks.feature.feature.group 4.7.0.v20250521-0822)
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2025-05-24 21:55:42.442
+!MESSAGE To: org.eclipse.equinox.p2.iu; org.eclipse.mylyn.tasks.activity.ui [4.7.0.v20250326-1000,4.7.0.v20250326-1000]
+
+!ENTRY org.eclipse.ui 4 0 2025-05-24 21:58:07.797
+!MESSAGE Unhandled event loop exception
+!STACK 0
+org.eclipse.swt.SWTException: Widget is disposed
+	at org.eclipse.swt.SWT.error(SWT.java:4932)
+	at org.eclipse.swt.SWT.error(SWT.java:4847)
+	at org.eclipse.swt.SWT.error(SWT.java:4818)
+	at org.eclipse.swt.widgets.Widget.error(Widget.java:598)
+	at org.eclipse.swt.widgets.Widget.checkWidget(Widget.java:513)
+	at org.eclipse.swt.widgets.Widget.setData(Widget.java:1854)
+	at org.eclipse.equinox.internal.p2.ui.dialogs.RemediationGroup.update(RemediationGroup.java:374)
+	at org.eclipse.equinox.internal.p2.ui.dialogs.RemediationPage.updateStatus(RemediationPage.java:74)
+	at org.eclipse.equinox.internal.p2.ui.dialogs.ProvisioningOperationWizard.planChanged(ProvisioningOperationWizard.java:288)
+	at org.eclipse.equinox.internal.p2.ui.dialogs.WizardWithLicenses.planChanged(WizardWithLicenses.java:95)
+	at org.eclipse.equinox.internal.p2.ui.dialogs.ProvisioningOperationWizard.recomputePlan(ProvisioningOperationWizard.java:362)
+	at org.eclipse.equinox.internal.p2.ui.dialogs.ProvisioningOperationWizard.getNextPage(ProvisioningOperationWizard.java:161)
+	at org.eclipse.equinox.internal.p2.ui.dialogs.WizardWithLicenses.getNextPage(WizardWithLicenses.java:78)
+	at org.eclipse.equinox.internal.p2.ui.dialogs.UpdateWizard.getStartingPage(UpdateWizard.java:169)
+	at org.eclipse.jface.wizard.WizardDialog.showStartingPage(WizardDialog.java:1265)
+	at org.eclipse.jface.wizard.WizardDialog.createContents(WizardDialog.java:639)
+	at org.eclipse.jface.window.Window.create(Window.java:431)
+	at org.eclipse.jface.dialogs.Dialog.create(Dialog.java:1092)
+	at org.eclipse.equinox.p2.ui.ProvisioningUI.openUpdateWizard(ProvisioningUI.java:315)
+	at org.eclipse.equinox.internal.p2.ui.sdk.UpdateHandler$2.lambda$0(UpdateHandler.java:66)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:132)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:5047)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:4527)
+	at org.eclipse.jface.window.Window.runEventLoop(Window.java:823)
+	at org.eclipse.jface.window.Window.open(Window.java:799)
+	at org.eclipse.ui.internal.actions.NewWizardShortcutAction.run(NewWizardShortcutAction.java:130)
+	at org.eclipse.jface.action.Action.runWithEvent(Action.java:474)
+	at org.eclipse.jface.action.ActionContributionItem.handleWidgetSelection(ActionContributionItem.java:581)
+	at org.eclipse.jface.action.ActionContributionItem.lambda$4(ActionContributionItem.java:415)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:91)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:5862)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1652)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:5072)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:4524)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1151)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1042)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:153)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:668)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:576)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:178)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:670)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:607)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1492)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1465)
+
+!ENTRY org.eclipse.jdt.core 4 4 2025-05-25 23:04:15.812
+!MESSAGE Exception occurred during compilation unit conversion:
+----------------------------------- SOURCE BEGIN -------------------------------------
+package ticketek;
+
+public class Miniestadio extends EstadiosConSecciones{
+		private int puestosDeComida;
+		private double AdicionalLibre;
+
+	public Miniestadio(String nombre, String direccion, int capacidadMaxima, int asientoPorFila,int puestosDeComida, double adicionalLibre, String[] sector,
+			int[] capacidadSector, int[] porcentajeAdicional) {
+		super(nombre, direccion, capacidadMaxima, asientoPorFila, sector, capacidadSector, porcentajeAdicional);
+		this.puestosDeComida = puestosDeComida;
+		this.AdicionalLibre = adicionalLibre;
+		// TODO Auto-generated constructor stub
+	}
+
+	/*@Override
+	public void reservarAsiento(String sector, int asiento) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean esSectorValido(String sector) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Set<Integer> getAsientosDisponibles(String sector) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void descontarAsiento(String sector, int[] asientos) {
+		// TODO Auto-generated method stub
+		super.descontarAsiento(sector, asientos);
+	}*/
+	
+	public int adicional()
+
+	@Override
+	public int porcentajeRecargo(String sector) {
+		// TODO Auto-generated method stub
+		return super.porcentajeRecargo(sector);
+	}
+	
+	
+	
+}
+
+----------------------------------- SOURCE END -------------------------------------
+!STACK 0
+java.lang.IllegalArgumentException: negative length=-3 startPosition= 584
+	at org.eclipse.jdt.core.dom.ASTNode.setSourceRange(ASTNode.java:3446)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:759)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:179)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3489)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1566)
+	at org.eclipse.jdt.core.dom.AST.convertCompilationUnit(AST.java:670)
+	at org.eclipse.jdt.internal.core.CompilationUnit.buildStructure(CompilationUnit.java:283)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:250)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:569)
+	at org.eclipse.jdt.internal.core.CompilationUnit.makeConsistent(CompilationUnit.java:1256)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:182)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:108)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:751)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:816)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1430)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:132)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:94)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:91)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:158)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:94)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:78)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
+
+!ENTRY org.eclipse.jdt.ui 4 2 2025-05-25 23:04:15.812
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.jdt.ui".
+!STACK 0
+java.lang.IllegalArgumentException: negative length=-3 startPosition= 584
+	at org.eclipse.jdt.core.dom.ASTNode.setSourceRange(ASTNode.java:3446)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:759)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:179)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3489)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1566)
+	at org.eclipse.jdt.core.dom.AST.convertCompilationUnit(AST.java:670)
+	at org.eclipse.jdt.internal.core.CompilationUnit.buildStructure(CompilationUnit.java:283)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:250)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:569)
+	at org.eclipse.jdt.internal.core.CompilationUnit.makeConsistent(CompilationUnit.java:1256)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:182)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:108)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:751)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:816)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1430)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:132)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:94)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:91)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:158)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:94)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:78)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
+
+!ENTRY org.eclipse.jdt.ui 4 0 2025-05-25 23:04:15.812
+!MESSAGE Error in JDT Core during reconcile
+!STACK 0
+java.lang.IllegalArgumentException: negative length=-3 startPosition= 584
+	at org.eclipse.jdt.core.dom.ASTNode.setSourceRange(ASTNode.java:3446)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:759)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:179)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3489)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1566)
+	at org.eclipse.jdt.core.dom.AST.convertCompilationUnit(AST.java:670)
+	at org.eclipse.jdt.internal.core.CompilationUnit.buildStructure(CompilationUnit.java:283)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:250)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:569)
+	at org.eclipse.jdt.internal.core.CompilationUnit.makeConsistent(CompilationUnit.java:1256)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:182)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:108)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:751)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:816)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1430)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:132)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:94)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:91)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:158)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:94)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:78)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
+
+!ENTRY org.eclipse.jdt.core 4 4 2025-05-25 23:20:55.583
+!MESSAGE Exception occurred during compilation unit conversion:
+----------------------------------- SOURCE BEGIN -------------------------------------
+package ticketek;
+
+public class Miniestadio extends EstadiosConSecciones{
+		private int puestosDeComida;
+		private double AdicionalLibre;
+
+	public Miniestadio(String nombre, String direccion, int capacidadMaxima, int asientoPorFila,int puestosDeComida, double adicionalLibre, String[] sector,
+			int[] capacidadSector, int[] porcentajeAdicional) {
+		super(nombre, direccion, capacidadMaxima, asientoPorFila, sector, capacidadSector, porcentajeAdicional);
+		this.puestosDeComida = puestosDeComida;
+		this.AdicionalLibre = adicionalLibre;
+		// TODO Auto-generated constructor stub
+	}
+
+	/*@Override
+	public void reservarAsiento(String sector, int asiento) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean esSectorValido(String sector) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Set<Integer> getAsientosDisponibles(String sector) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void descontarAsiento(String sector, int[] asientos) {
+		// TODO Auto-generated method stub
+		super.descontarAsiento(sector, asientos);
+	}*/
+	
+	public double adicional() {
+		return this.AdicionalLibre;
+	}
+	public int puesto()
+
+	@Override
+	public int porcentajeRecargo(String sector) {
+		// TODO Auto-generated method stub
+		return super.porcentajeRecargo(sector);
+	}
+	
+	
+	
+}
+
+----------------------------------- SOURCE END -------------------------------------
+!STACK 0
+java.lang.IllegalArgumentException: negative length=-21 startPosition= 1187
+	at org.eclipse.jdt.core.dom.ASTNode.setSourceRange(ASTNode.java:3446)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:772)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:179)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3489)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1566)
+	at org.eclipse.jdt.core.dom.AST.convertCompilationUnit(AST.java:670)
+	at org.eclipse.jdt.internal.core.CompilationUnit.buildStructure(CompilationUnit.java:283)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:250)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:569)
+	at org.eclipse.jdt.internal.core.CompilationUnit.makeConsistent(CompilationUnit.java:1256)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:182)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:108)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:751)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:816)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1430)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:132)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:94)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:91)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:158)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:94)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:78)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
+
+!ENTRY org.eclipse.jdt.ui 4 2 2025-05-25 23:20:55.584
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.jdt.ui".
+!STACK 0
+java.lang.IllegalArgumentException: negative length=-21 startPosition= 1187
+	at org.eclipse.jdt.core.dom.ASTNode.setSourceRange(ASTNode.java:3446)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:772)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:179)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3489)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1566)
+	at org.eclipse.jdt.core.dom.AST.convertCompilationUnit(AST.java:670)
+	at org.eclipse.jdt.internal.core.CompilationUnit.buildStructure(CompilationUnit.java:283)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:250)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:569)
+	at org.eclipse.jdt.internal.core.CompilationUnit.makeConsistent(CompilationUnit.java:1256)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:182)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:108)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:751)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:816)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1430)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:132)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:94)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:91)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:158)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:94)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:78)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
+
+!ENTRY org.eclipse.jdt.ui 4 0 2025-05-25 23:20:55.584
+!MESSAGE Error in JDT Core during reconcile
+!STACK 0
+java.lang.IllegalArgumentException: negative length=-21 startPosition= 1187
+	at org.eclipse.jdt.core.dom.ASTNode.setSourceRange(ASTNode.java:3446)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:772)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:179)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3489)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1566)
+	at org.eclipse.jdt.core.dom.AST.convertCompilationUnit(AST.java:670)
+	at org.eclipse.jdt.internal.core.CompilationUnit.buildStructure(CompilationUnit.java:283)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:250)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:569)
+	at org.eclipse.jdt.internal.core.CompilationUnit.makeConsistent(CompilationUnit.java:1256)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:182)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:108)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:751)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:816)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1430)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:132)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:94)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:91)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:158)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:94)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:78)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
+!SESSION 2025-05-26 00:15:43.345 -----------------------------------------------
+eclipse.buildId=4.35.0.20250306-0811
+java.version=21.0.6
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=es_ES
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY ch.qos.logback.classic 1 0 2025-05-26 00:15:46.388
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2025-05-26 00:15:52.053
+!MESSAGE Logback config file: /home/matias/Escritorio/Ticketek/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.7.0.20241001-1350.xml

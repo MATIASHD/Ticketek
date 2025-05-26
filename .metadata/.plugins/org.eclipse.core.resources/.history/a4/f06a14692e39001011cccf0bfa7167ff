@@ -1,0 +1,16 @@
+package ticketek;
+
+public abstract class EstadiosConSecciones extends Sede {
+	protected int asientoPorFila;
+	protected int[] portentajeAdicional;
+	
+	public EstadiosConSecciones(String nombre, String direccion, int capacidadMaxima,int asientoPorFila, String[] sector,int[] capacidadSector, int[] porcentajeAdicional) {
+		super(nombre, direccion, capacidadMaxima, sector, capacidadSector);
+		this.asientoPorFila = asientoPorFila;
+		this.portentajeAdicional = porcentajeAdicional;
+		// TODO Auto-generated constructor stub
+	}
+	
+	public abstract void descontarAsiento(String sector, int[] asientos);
+	
+}

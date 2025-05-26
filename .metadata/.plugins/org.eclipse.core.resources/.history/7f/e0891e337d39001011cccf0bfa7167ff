@@ -1,0 +1,147 @@
+package ticketek;
+
+public class Entrada implements IEntrada{
+	private String codEntrada;
+    private String nombreEspectaculo;
+    private String fecha;
+    private String sector;
+    private int[] ubicacion;
+
+    public Entrada(String nombreDelESpectaculo, String fecha, String sector, int[] asiento) {
+        this.nombreEspectaculo = nombreDelESpectaculo;
+        this.fecha = fecha;
+        this.sector = sector;
+        this.ubicacion = asiento;
+    }
+    public Entrada(String nombreDelESpectaculo, String fecha, int cantEntrada) {
+        this.nombreEspectaculo = nombreDelESpectaculo;
+        this.fecha = fecha;
+        this.sector = "CAMPO";
+        this.ubicacion = new int[]{cantEntrada};
+    }
+
+	@Override
+	public double precio() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String ubicacion() {
+		// TODO Auto-generated method stub
+		String asientos;
+		if(sector.equals("CAMPO")) {
+			return this.sector;
+		}
+		for (int i = 0; i < ubicacion.length; i++) {
+			asientos += "a: " + ubicacion[i];
+		}
+		return asientos;;
+	}
+	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		if (this.sector.equals("CAMPO")) {			
+			sb.append(this.codEntrada).append(" - ").append(this.nombreEspectaculo).append(" - ").append(this.fecha).append(" - ").append(this.sector);
+		} else {
+			sb.append(this.codEntrada).append(" - ").append(this.nombreEspectaculo).append(" - ").append(this.fecha).append(" - ").append(this.sector);
+			for (int i = 0; i < ubicacion.length; i++) {				
+				sb.append(" a:").append(this.ubicacion[i]).append(" ");
+			}
+		}
+		return sb.toString();
+	}
+	
+	public String obtenerNombreDelEspectaculo() {
+		return this.nombreEspectaculo; 
+	}
+	
+	public String obtenerCodigoDelEspectaculo() {
+		return this.codEntrada; 
+	}
+	
+
+	
+	
+	/*public boolean esFechaFutura() {
+		return true;
+	}
+	
+	public int calcularCosto() {
+		//Como deberia realizar el costo??
+		return 1;
+	}
+	
+	public void modificarSede(Sede sede) {
+		this.sede = sede;
+	}
+	
+	public String codigoEntrada() {
+		return this.codEntrada;
+	}
+	
+	public boolean compararCodEntrada(String codEntrada) {
+		return this.codEntrada == codEntrada;
+	}
+	
+	public void anular() { //Marca la entrada como invalida no la elimina
+		this.anulada = true;
+	}
+	
+	public void cambiarEntrada(Entrada original, String nvaFecha) {
+		// Validar que la entrada no esté anulada  
+	    // Buscar la función correspondiente a nuevaFecha  
+	    // Validar disponibilidad en la nueva función  
+	    // Crear nueva entrada  
+	    // Anular entrada original (entradaOriginal.anular())  
+	    return nuevaEntrada;  
+	}
+
+	@Override
+	public double precio() {
+		// TODO Auto-generated method stub
+		return this.precio;
+	}
+
+    @Override
+    public String ubicacion() {
+        String ubicacion;
+        // Determinar la ubicación
+        if (esEstadio) {
+            return "CAMPO";
+        }
+        return sector + " f: " + nroFila + " a: " + nroAsiento;//String.format("%s f:%d a:%d", sector, nroFila, nroAsiento);
+    }
+
+    @Override
+    public String toString() {
+        String fechaStr = fecha;
+        String fechaFormateada = esFechaPasada(fecha) ? fechaStr + " P" : fechaStr;
+        return codEntrada +" - "+ nombreEspectaculo +" - "+ fecha +" - "+ nombreSede +" - "+ ubicacion();//String.format("%s - %s - %s - %s - %s", codEntrada, nombreEspectaculo, fechaFormateada, nombreSede, ubicacion());
+    }
+    public boolean esFechaPasada(String fecha) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+            LocalDate fechaFuncion = LocalDate.parse(fecha, formatter);
+            return fechaFuncion.isBefore(LocalDate.now());
+        } catch (Exception e) {
+            throw new RuntimeException("Fecha mal formada: " + fecha);
+        }
+    }
+
+    public boolean esFechaFutura(String fecha) {
+        // Definimos el formato de la fecha
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        try {
+            // Parseamos la fecha de la cadena
+            LocalDate fechaIngresada = LocalDate.parse(fecha, formato);
+            // Comparamos con la fecha actual
+            return fechaIngresada.isAfter(LocalDate.now());
+        } catch (DateTimeParseException e) {
+            // Manejo de excepciones si la fecha no tiene el formato correcto
+            System.out.println("Formato de fecha incorrecto: " + fecha);
+            return false; // O lanzar una excepción según tu lógica
+        }
+    }*/
+}

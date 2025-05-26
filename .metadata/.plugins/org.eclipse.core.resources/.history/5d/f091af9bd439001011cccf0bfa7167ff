@@ -1,0 +1,68 @@
+package ticketek;
+
+public abstract class EstadiosConSecciones extends Sede {
+	protected int asientoPorFila;
+	protected int[] portentajeAdicional;
+	
+	public EstadiosConSecciones(String nombre, String direccion, int capacidadMaxima,int asientoPorFila, String[] sector,int[] capacidadSector, int[] porcentajeAdicional) {
+		super(nombre, direccion, capacidadMaxima, sector, capacidadSector);
+		this.asientoPorFila = asientoPorFila;
+		this.portentajeAdicional = porcentajeAdicional;
+		// TODO Auto-generated constructor stub
+	}
+	
+	public void descontarAsiento(String sector, int[] asientos) {
+		String[] sectores = super.sector;
+		int[] cantPorSector = super.capacidadPorSector;
+		for (int i = 0; i < sectores.length; i++) {
+			if (sectores[i].equals(sector) && cantPorSector.length == asientos.length) {
+				for (int j = 0; j < cantPorSector.length; j++) {
+					cantPorSector[j] -= asientos[j];
+				}
+			}
+		}
+	}
+	
+	public int porcentajeRecargo(String sector) {
+		if (porcentajeAdicional == null) {
+			return 0; // o lanza una excepción si prefieres
+		}
+		switch (sector) {
+			case "VIP":
+				return porcentajeAdicional[0];
+		    case "Comun":
+		        return porcentajeAdicional[1];
+		    case "Baja":
+		        return porcentajeAdicional[2];
+		    case "Alta":
+		        return porcentajeAdicional[3];
+		    default:
+		            return 0; // o lanza una excepción si el sector no es válido
+		    }
+		}
+		
+		
+		
+		int porcentaje = 0;
+		if (sector.equals("VIP")) {
+			if (this.portentajeAdicional != null) {				
+				porcentaje = porcentajeAdicional[0]; //70%
+			}
+		}
+		if (sector.equals("Comun")) {
+			if (this.portentajeAdicional != null) {				
+				return porcentajeAdicional[1]; //70%
+			}
+		}
+		if (sector.equals("Baja")) {
+			if (this.portentajeAdicional != null) {				
+				return porcentajeAdicional[2]; //70%
+			}
+		}
+		if (sector.equals("Alta")) {
+			if (this.portentajeAdicional != null) {				
+				return porcentajeAdicional[3]; //70%
+			}
+		}
+	}
+}

@@ -1,0 +1,21 @@
+package ticketek;
+
+public class Teatro extends EstadiosConSecciones{
+	
+	
+	
+	public Teatro(String nombre, String direccion, int capacidadMaxima, int asientoPorFila, String[] sector,
+			int[] capacidadSector, int[] porcentajeAdicional) {
+		super(nombre, direccion, capacidadMaxima, asientoPorFila, sector, capacidadSector, porcentajeAdicional);
+		// TODO Auto-generated constructor stub
+	}
+
+	public double precioDeEntrada() {
+		return 1; //VER COMO SEGUIR
+	}
+	
+	public int getAsiento() {
+		return 1;
+	}
+
+}

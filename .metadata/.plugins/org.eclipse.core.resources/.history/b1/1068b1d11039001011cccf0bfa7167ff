@@ -1,0 +1,11 @@
+package ticketek;
+
+public abstract EstadiosConSecciones extends Sede {
+	protected int asientoPorFila;
+	protected int[] portentajeAdicional;
+	
+	public EstadiosConSecciones() {
+		
+	}
+	
+}

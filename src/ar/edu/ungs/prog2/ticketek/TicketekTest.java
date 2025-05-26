@@ -1,13 +1,10 @@
-package ticketek;
+package ar.edu.ungs.prog2.ticketek;
 
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 
-import junit.framework.Test;
-
 import static org.junit.Assert.*;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

@@ -1,4 +1,4 @@
-package ticketek;
+package ar.edu.ungs.prog2.ticketek;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,12 @@ public class Sector {
 		this.asientosOcupados = new ArrayList<>();
 	}
 	
+	public String obtenerNombre() {
+		return this.nombre;
+	}
+	public double obtenerAdicional() {
+		return this.porcentajeAdicional;
+	}
 	//para teatros
 	public Sector(String nombre, int capacidadMaxima, double porcentajeAdicional) {
 		this.nombre = nombre;

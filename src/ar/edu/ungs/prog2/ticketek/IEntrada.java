@@ -1,4 +1,4 @@
-package ticketek;
+package ar.edu.ungs.prog2.ticketek;
 
 public interface IEntrada {
 

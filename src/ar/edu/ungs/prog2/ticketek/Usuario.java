@@ -1,41 +1,51 @@
-package ticketek;
+package ar.edu.ungs.prog2.ticketek;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Usuario {
 	private String email;
 	private String nombre;
 	private String apellido;
 	private String contrasenia;
-	private ArrayList<Entrada> entradas;
-	private Map<String, Entrada> entradasCompradas;
+	//private ArrayList<Entrada> entradas;
+	//private Map<String, Entrada> entradasCompradas;
 	
 	public Usuario(String email, String nombre, String apellido, String contrasenia) {
 		this.email = email;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.contrasenia = contrasenia;
-		this.entradas = new ArrayList<>();
-		this.entradasCompradas = new HashMap<>();
+		//this.entradas = new ArrayList<>();
+		//this.entradasCompradas = new HashMap<>();
 	}
 	
-	public void agregarEntradaALaLista(Entrada entrada) {
+	/*public void agregarEntradaALaLista(Entrada entrada) {
 		this.entradas.add(entrada);
-	}
+	}*/
 	
 	public boolean validarContrasenia(String contrasenia) {	
 		return this.contrasenia == contrasenia;
 	}
 	
-	public Entrada[] obtenerTodasLasEntradas() {
-		return this.entradas.toArray(new Entrada[0]);
+	public String obtenerNombre() {
+		return this.nombre;
 	}
 	
-	public Entrada[] obtenerEntradasVencidas() {
-		//definir como tratar la fecha
+	public String obtenerEmail() {
+		return this.email;
 	}
-	public List<IEntrada> listarEntradasFuturas() {
+	
+	public String obtenerApellido() {
+		return this.apellido;
+	}
+	
+	/*public Entrada[] obtenerTodasLasEntradas() {
+		return this.entradas.toArray(new Entrada[0]);
+	}*/
+	
+	/*public Entrada[] obtenerEntradasVencidas() {
+		//definir como tratar la fecha
+	}*/
+	/*public List<IEntrada> listarEntradasFuturas() {
         String hoy = "";// = LocalDate.now();
         List<IEntrada> entradasFuturas = new ArrayList<>();
         for (Entrada entrada : entradasCompradas.values()) {
@@ -75,6 +85,6 @@ public class Usuario {
 	
         public List<IEntrada> getEntradas() {
              return entradas;
-	}
+	}*/
 	
 }

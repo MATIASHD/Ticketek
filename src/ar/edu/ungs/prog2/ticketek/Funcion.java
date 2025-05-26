@@ -1,29 +1,25 @@
-package ticketek;
+package ar.edu.ungs.prog2.ticketek;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 
 public class Funcion {
 	private String fecha;
 	private String sede;
 	private double precioBase;
-	private Espectaculo espectaculo;
-	private HashMap<String, Sector> sectores;
+
 	
 	
 	public Funcion(String fecha, String sede, double precioBase) {
 		this.sede = sede;
 		this.fecha = fecha;
 		this.precioBase = precioBase;
-		this.sectores = new HashMap<String, Sector>();
 	}
 	
 	public boolean venderEntrada(String sector, int fila, int asiento) {
 		//Ver como agregar sector
 		return true;
 	}
-	
 	
 	public int compararFecha(String fecha) {
 		return compararDate(this.fecha, fecha);
@@ -32,8 +28,12 @@ public class Funcion {
 	public String obtenerFecha() {
 		return this.fecha;
 	}
-	public Sede obtenerSede() {
+	public String obtenerSede() {
 		return this.sede;
+	}
+	
+	public double precioBase() {
+		return this.precioBase;
 	}
 	
 	public int compararDate(String fecha1, String fecha2) {  

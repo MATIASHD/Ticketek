@@ -7,34 +7,40 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class Ticketek implements ITicketek {
-	private Map<String, Sede> sede;
+	private Map<String, Sede> sedes;
 	private Map<String, Funcion> funcion;
-	private Map<String, Espectaculo> espectaculo;
-	private Map<String, Usuario> usuario;
+	private Map<String, Espectaculo> espectaculos;
+	private Map<String, Usuario> usuarios;
 	private Map<String, Entrada> entradasRegistradas;
-	
+	private Map<String, IEntrada> entradasPorCodigo;
+        private int contadorEntradas;
 	
 	public Ticketek() {
-		this.sede = new HashMap<String, Sede>();
-        this.usuario = new HashMap<String, Usuario>();
-        this.espectaculo = new HashMap<String, Espectaculo>();
-        this.entradasRegistradas = new HashMap<String, Entrada>();
-        this.funcion = new HashMap<String,Funcion>();
+		this.sedes = new HashMap<>();
+        this.usuarios = new HashMap<>();
+        this.espectaculos = new HashMap<>();
+        this.entradasRegistradas = new HashMap<>();
+        this.funcion = new HashMap<>();
+		contadorEntradas = 1;
 	}
 
 
 	@Override
 	public void registrarSede(String nombre, String direccion, int capacidadMaxima) {
-		// TODO Auto-generated method stub
-		sede.put(nombre, new Estadio(nombre, direccion, capacidadMaxima));
+		if (sedes.containsKey(nombre)) {
+                    throw new IllegalArgumentException("Sede ya registrada");
+                }
+		sedes.put(nombre, new Estadio(nombre, direccion, capacidadMaxima));
 	}
 
 
 	@Override
 	public void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila,
 			String[] sectores, int[] capacidad, int[] porcentajeAdicional) {
-		// TODO Auto-generated method stub
-		sede.put(nombre, new Teatro(nombre, direccion, capacidadMaxima, asientosPorFila, sectores, capacidad, porcentajeAdicional));
+		if (sedes.containsKey(nombre)) {
+                    throw new IllegalArgumentException("Sede ya registrada");
+                }
+		sedes.put(nombre, new Teatro(nombre, direccion, capacidadMaxima, asientosPorFila, sectores, capacidad, porcentajeAdicional));
 	}
 
 
@@ -42,66 +48,71 @@ public class Ticketek implements ITicketek {
 	public void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila,
 			int cantidadPuestos, double precioConsumicion, String[] sectores, int[] capacidad,
 			int[] porcentajeAdicional) {
-		// TODO Auto-generated method stub
-		sede.put(nombre, new Miniestadio(nombre, direccion, capacidadMaxima, asientosPorFila, cantidadPuestos, precioConsumicion, sectores, capacidad, porcentajeAdicional));
+		if (sedes.containsKey(nombre)) {
+                    throw new IllegalArgumentException("Sede ya registrada");
+                }
+		sedes.put(nombre, new Miniestadio(nombre, direccion, capacidadMaxima, asientosPorFila, cantidadPuestos, precioConsumicion, sectores, capacidad, porcentajeAdicional));
 		
 	}
 
 
 	@Override
 	public void registrarUsuario(String email, String nombre, String apellido, String contrasenia) {
-		// TODO Auto-generated method stub
-		usuario.put(email, new Usuario(email, nombre, apellido, contrasenia));
+		if (usuarios.containsKey(email)) {
+                    throw new IllegalArgumentException("Usuario ya registrado");
+                }
+		usuarios.put(email, new Usuario(email, nombre, apellido, contrasenia));
 		
 	}
 
 
 	@Override
 	public void registrarEspectaculo(String nombre) {
-		// TODO Auto-generated method stub
-		espectaculo.put(nombre, new Espectaculo(nombre));
+		if (espectaculos.containsKey(nombre)) {
+                    throw new IllegalArgumentException("Espectáculo ya registrado");
+                }
+		espectaculos.put(nombre, new Espectaculo(nombre));
 	}
 
 
 	@Override
 	public void agregarFuncion(String nombreEspectaculo, String fecha, String sede, double precioBase) {
-		// TODO Auto-generated method stub
-		Espectaculo show = espectaculo.get(nombreEspectaculo);
-		if(show != null) {
-			show.agregarFuncion(fecha, new Funcion(fecha, sede, precioBase));
-		} else {
-			throw new NoSuchElementException("El espectaculo no ha sido encontrado" + nombreEspectaculo);
+		Espectaculo show = espectaculos.get(nombreEspectaculo);
+		Sede sedeObj = sedes.get(sede);
+		if(show == null || sedeObj == null) {
+			throw new IllegalArgumentException("Espectáculo o sede no existen");
 		}
+		show.agregarFuncion(fecha, sedeObj, precioBase);
 	}
 
 
 	@Override
 	public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia,
 			int cantidadEntradas) {
-		// TODO Auto-generated method stub
-		Usuario user = usuario.get(email);
-		Espectaculo show = espectaculo.get(nombreEspectaculo);
-		Sede sede = this.sede.get(show.buscarLaFuncion(fecha).obtenerSede());
-		Entrada ticket;
-		if (user != null && show != null) {
-			if (user.validarContrasenia(contrasenia)) {
-				ticket = new Entrada(nombreEspectaculo, fecha, cantidadEntradas);
-				this.entradasRegistradas.put(email, ticket);
-				if (sede instanceof Estadio) {
-					Estadio estadio = (Estadio) sede;
-					estadio.descontarAsiento(cantidadEntradas);
-					
-					//ver
-				} else {
-					throw new NoSuchElementException("Error al tipo de dato");
-				}
-			} else {
-				throw new IllegalArgumentException("No es valida la contraseña");
-			}
-		} else {
-			throw new NoSuchElementException("No se ha encontrado algunas de las siguientes opciones: " + email + " y/0 " + nombreEspectaculo);
-		}
-		return Collections.singletonList(ticket);
+		Usuario user = usuarios.get(email);
+		Espectaculo show = espectaculos.get(nombreEspectaculo);
+		if (show == null || user == null || !user.validarContrasenia(contrasenia)) {
+                    throw new IllegalArgumentException("Espectáculo, usuario o contraseña no válidos");
+                }
+        Funcion funcion = show.getFuncion(fecha);
+        if (funcion == null || funcion.obtenerSede().esNumerada()) {
+            throw new IllegalArgumentException("Función no existe o sede es numerada");
+        }
+        Estadio estadio = (Estadio) funcion.obtenerSede();
+        List<IEntrada> entradas = new ArrayList<>();
+        for (int i = 0; i < cantidadEntradas; i++) {
+            if (estadio.asignarEntrada()) {
+                String codEntrada = generarCodigo4Digitos();
+                Entrada entrada = new Entrada(nombreEspectaculo, fecha, cantidadEntradas);
+                entradas.add(entrada);
+                funcion.agregarEntrada(entrada);
+                user.agregarEntrada(entrada);
+                //entradasPorCodigo.put(entrada.getCodEntrada(), entrada);
+            } else {
+                throw new IllegalArgumentException("No hay capacidad suficiente");
+            }
+        }
+        return entradas;
 	}
 
 
@@ -110,82 +121,74 @@ public class Ticketek implements ITicketek {
 			String sector, int[] asientos) {
 		Usuario user = usuario.get(email);
 		Espectaculo show = espectaculo.get(nombreEspectaculo);
-		if (show == null) {
-			throw new NoSuchElementException("Elemento vacio");
-		}
-		Sede sede = this.sede.get(show.buscarLaFuncion(fecha).obtenerSede());
-		Entrada ticket;
-		
-		if (user != null && show != null) {
-			if (user.validarContrasenia(contrasenia)) {
-				ticket = new Entrada(nombreEspectaculo, fecha, sector, asientos);
-				this.entradasRegistradas.put(email, ticket);
-				if (sede instanceof Teatro) {
-					Teatro estadio = (Teatro) sede;
-					estadio.descontarAsiento(sector, asientos);
-					//falta
-				} else {
-					Miniestadio estadio = (Miniestadio) sede;
-					estadio.descontarAsiento(sector, asientos);
-				}	//falta
-			} else {
-				throw new IllegalArgumentException("No es valida la contraseña");
-			}
-		} else {
-			throw new NoSuchElementException("No se ha encontrado algunas de las siguientes opciones: " + email + " y/0 " + nombreEspectaculo);
-		}
-		return Collections.singletonList(ticket);
+		if (show == null || user == null || !user.validarContrasenia(contrasenia)) {
+                    throw new IllegalArgumentException("Espectáculo, usuario o contraseña no válidos");
+                }
+        Funcion funcion = show.getFuncion(fecha);
+        if (funcion == null || funcion.obtenerSede().esNumerada()) {
+            throw new IllegalArgumentException("Función no existe o sede es numerada");
+        }
+        Teatro teatro = (Teatro) funcion.obtenerSede();
+        double precio = calcularPrecioEntrada(funcion, sector);
+        List<IEntrada> entradas = new ArrayList<>();
+        for (int asiento : asientos) {
+            if (teatro.asignarAsiento(sector, asiento)) {
+                String codEntrada = generarCodigo4Digitos();
+                Entrada entrada = new Entrada(nombreEspectaculo, fecha, sector, asientos);
+                entradas.add(entrada);
+                funcion.agregarEntrada(entrada);
+                user.agregarEntrada(entrada);
+                //entradasPorCodigo.put(entrada.getCodEntrada(), entrada);
+            } else {
+                throw new IllegalArgumentException("No hay capacidad suficiente");
+            }
+        }
+        return entradas;
 	}
 
 
 	@Override
 	public String listarFunciones(String nombreEspectaculo) {
-		// TODO Auto-generated method stub
-		StringBuilder sb = new StringBuilder();
-		if(this.espectaculo.get(nombreEspectaculo) != null) {
-			Map<String,Funcion> funciones = espectaculo.get(nombreEspectaculo).ListaDeFunciones();
-			for (Map.Entry<String, Funcion> todasLasFunciones : funciones.entrySet()) {
-				if (sede.get(todasLasFunciones.getValue().obtenerSede()).obtenerSector().length == 1 ) {
-					Estadio estadioActual = (Estadio) sede.get(todasLasFunciones.getValue().obtenerSede());
-					sb.append(todasLasFunciones.getValue().obtenerFecha()).append( " ").append(todasLasFunciones.getValue().obtenerSede()).append(" - ").append(estadioActual.totalVendidadas()).append(" / ").append(estadioActual.capacidadMaxima).append("\n");
-					// Si es estadio: " - ({FECHA}) {NOMBRE SEDE} - {ENTRADAS VENDIDAS} / {CAPACIDAD SEDE}"
-				} else {
-					// si no es estadio: " - ({FECHA}) {NOMBRE SEDE} - {NOMBRE SECTOR1}: {ENTRADAS VENDIDAS 1} / {CAPACIDAD SECTOR} | {NOMBRE SECTOR 2}: {ENTRADAS VENDIDAS 2} / {CAPACIDAD SECTOR 2} ..."
-					Sede estadioActual = sede.get(todasLasFunciones.getValue().obtenerSede());
-					sb.append(todasLasFunciones.getValue().obtenerFecha()).append( " ").append(todasLasFunciones.getValue().obtenerSede()).append(" - ");
-					for (int i = 0; i < estadioActual.obtenerSector().length; i++) {
-						sb.append(estadioActual.devolverCapacidadPorSector(i)).append(" | ");
-					}
-					sb.append("\n");
-				}
-			}
-		} else {
-			throw new NoSuchElementException("El espectaculo no ha sido encontrado" + nombreEspectaculo);
-		}
-		return sb.toString();
+		Espectaculo espectaculo = espectaculos.get(nombreEspectaculo);
+        if (espectaculo == null) {
+            throw new IllegalArgumentException("Espectáculo no existe");
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Funcion funcion : espectaculo.ListaDeFunciones().values()) {
+            Sede sede = funcion.obtenerSede();
+            sb.append(" - (").append(funcion.obtenerFecha()).append(") ").append(sede.getNombre());
+            if (sede instanceof Estadio) {
+                Estadio estadio = (Estadio) sede;
+                sb.append(" - ").append(estadio.getEntradasVendidas()).append("/").append(estadio.capacidadMaxima);
+            } else {
+                Teatro teatro = (Teatro) sede;
+                for (Sector sector : teatro.sectores.values()) {
+                    sb.append(" - ").append(sector.getNombre()).append(": ")
+                            .append(sector.getEntradasVendidas()).append("/").append(sector.getCapacidad());
+                }
+            }
+            sb.append("\n");
+        }
+        return sb.toString().trim()
 	}
 
 
 	@Override
 	public List<IEntrada> listarEntradasEspectaculo(String nombreEspectaculo) {
-		 List<IEntrada> listaEntradas = new ArrayList<>();
-		 Espectaculo show = espectaculo.get(nombreEspectaculo);
-		 
-		for (Map.Entry<String, Entrada> entrada : entradasRegistradas.entrySet()) {
-			if (show.obtenerNombre().equals(entrada.getValue().obtenerNombreDelEspectaculo())) {
-				//"{COD ENTRADA} - {NOMBRE ESPECTACULO} - {FECHA} - {NOMBRE SEDE} - {UBICACION}" 
-				listaEntradas.add(entrada.getValue()); //falta nombre de la sede
-				}
-			
-			}
-		// TODO Auto-generated method stub
-		return listaEntradas;
+		 Espectaculo espectaculo = espectaculos.get(nombreEspectaculo);
+        if (espectaculo == null) {
+            throw new IllegalArgumentException("Espectáculo no existe");
+        }
+        List<IEntrada> entradas = new ArrayList<>();
+        for (Funcion funcion : espectaculo.ListaDeFunciones().values()) {
+            entradas.addAll(funcion.getEntradasVendidas());
+        }
+        return entradas;
 	}
 
 
 	@Override
 	public List<IEntrada> listarEntradasFuturas(String email, String contrasenia) {
-		// TODO Auto-generated method stub
 		List<IEntrada> listaEntradas = new ArrayList<>();
 		
 		for (Map.Entry<String, Entrada> ticket : entradasRegistradas.entrySet()) {
@@ -201,17 +204,11 @@ public class Ticketek implements ITicketek {
 
 	@Override
 	public List<IEntrada> listarTodasLasEntradasDelUsuario(String email, String contrasenia) {
-		// TODO Auto-generated method stub
-		List<IEntrada> listaEntradas = new ArrayList<>();
-		
-		for (Map.Entry<String, Entrada> ticket : entradasRegistradas.entrySet()) {
-		    if (ticket.getKey().equals(email) && usuario.get(email).validarContrasenia(contrasenia)) {
-		    	listaEntradas.add(ticket.getValue());
-		    } else {
-		    	throw new IllegalArgumentException("No es valida la contraseña o el usuario");
-		    }
-		}
-		return listaEntradas;
+		Usuario usuario = usuarios.get(email);
+        if (usuario == null || !usuario.validarContrasenia(contrasenia)) {
+            throw new IllegalArgumentException("Usuario o contraseña no válidos");
+        }
+        return new ArrayList<>(usuario.getEntradas());
 	}
 
 	@Override
@@ -329,13 +326,71 @@ public class Ticketek implements ITicketek {
 		}
 		return total;
 	}
+
+// Métodos auxiliares
+	
 	public double calcular(String ubicacion) {
 		double total = 0;
 		//Sede locacion =  sede.get(ubicacion);
 		return total;
 	}
 
-	
+private static String generarCodigo4Digitos(){
+        Random r = new Random();
+        int numero = 1000 + r.nextInt(8000);
+        StringBuilder sb = new StringBuilder();
+        sb.append(numero);
+        return sb.toString();
+    }
+    private double calcularPrecioEntrada(Funcion funcion, String sector) {
+        double precioBase = funcion.precioBase();
+        Sede sede = funcion.obtenerSede();
+
+        if (sede instanceof Estadio) {
+            return precioBase;
+        }
+
+        double precio;
+        switch (sector.toLowerCase()) {
+            case "platea vip":
+                precio = precioBase * 1.7;
+                break;
+            case "platea común":
+                precio = precioBase * 1.4;
+                break;
+            case "platea baja":
+                precio = precioBase * 1.5;
+                break;
+            case "platea alta":
+                precio = precioBase;
+                break;
+            default:
+                throw new IllegalArgumentException("Sector inválido");
+        }
+
+        if (sede instanceof Miniestadio) {
+            precio += ((Miniestadio) sede).getPrecioConsumicion();
+        }
+
+        return precio;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Sistema Ticketek:\n");
+        sb.append("Sedes registradas (").append(sedes.size()).append("):\n");
+        for (Sede sede : sedes.values()) {
+            sb.append(" - ").append(sede.toString()).append("\n");
+        }
+        sb.append("Espectáculos registrados (").append(espectaculos.size()).append("):\n");
+        for (Espectaculo espectaculo : espectaculos.values()) {
+            sb.append(" - ").append(espectaculo.toString()).append("\n");
+        }
+        sb.append("Usuarios registrados: ").append(usuarios.size()).append("\n");
+        sb.append("Entradas vendidas: ").append(entradasPorCodigo.size()).append("\n");
+        return sb.toString().trim();
+    }	
 	
 	
 }

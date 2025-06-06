@@ -1,5 +1,6 @@
 package ar.edu.ungs.prog2.ticketek;
-
+import java.util.HashMap;
+import java.util.Map;
 public class Miniestadio extends EstadiosConSecciones{
 	private int cantidadPuestos;
     private double precioConsumicion;

@@ -1,50 +1,38 @@
 package ar.edu.ungs.prog2.ticketek;
 
 public class Estadio extends Sede {
-	
-	public Estadio(String nombre, String direccion, int capacidadMaxima) {
-		super(nombre, direccion, capacidadMaxima,new String[]{"CAMPO"}, new int[]{capacidadMaxima});
-	}
-	
-	
-	public double calcularPrecioEntrada(Funcion funcion, String sector, int fila, int asiento) {
-		return 1;
-	}
-	
-	public boolean esUbicacionValida(String sector, int fila, int asiento) {
-		return true;
-	}
+	private int entradasVendidas;
 
-	/*@Override
-	public void reservarAsiento(String sector, int asiento) {
-		// TODO Auto-generated method stub
-		
-	}
+    public Estadio(String nombre, String direccion, int capacidadMaxima) {
+        super(nombre, direccion, capacidadMaxima);
+        this.entradasVendidas = 0;
+    }
 
-	@Override
-	public boolean esSectorValido(String sector) {
-		// TODO Auto-generated method stub
-		return false;
-	}*/
+    public boolean asignarEntrada() {
+        if (entradasVendidas < capacidadMaxima) {
+            entradasVendidas++;
+            return true;
+        }
+        return false;
+    }
 
-	public void descontarAsiento(int cantAsiento) {
-		// TODO Auto-generated method stub
-		int[] capacidad = super.capacidadPorSector;
-		capacidad[0] -= cantAsiento;
-	}
-	public int totalVendidadas() {
-		return this.capacidadMaxima - this.capacidadPorSector[0];
-	}
+    public void liberarEntrada() {
+        if (entradasVendidas > 0) {
+            entradasVendidas--;
+        }
+    }
 
+    @Override
+    public boolean esNumerada() {
+        return false;
+    }
 
-	@Override
-	public int obtenerCapcidadMaxima() {
-		// TODO Auto-generated method stub
-		return super.obtenerCapcidadMaxima();
-	}
-	
-	
+    public int getEntradasVendidas() {
+        return entradasVendidas;
+    }
 
-
-	
+    @Override
+    public String toString() {
+        return nombre + " (Estadio, Capacidad: " + capacidadMaxima + ")";
+    }
 }

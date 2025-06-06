@@ -12,7 +12,7 @@ public class Sector {
 
     public Sector(String nombre, int capacidad, int asientosPorFila, int porcentajeAdicional) {
         if (nombre == null || nombre.isEmpty() || capacidad <= 0 || asientosPorFila <= 0 || porcentajeAdicional < 0) {
-            throw new IllegalArgumentException("Datos de sector no válidos");
+            throw new RuntimeException("Datos de sector no válidos");
         }
         this.nombre = nombre;
         this.capacidad = capacidad;

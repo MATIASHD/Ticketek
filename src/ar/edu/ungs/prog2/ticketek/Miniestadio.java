@@ -14,7 +14,7 @@ public class Miniestadio extends EstadiosConSecciones{
         if (asientosPorFila <= 0 || cantidadPuestos <= 0 || precioConsumicion < 0 ||
                 nombresSectores == null || capacidades == null || porcentajes == null ||
                 nombresSectores.length != capacidades.length || capacidades.length != porcentajes.length) {
-            throw new IllegalArgumentException("Datos de miniestadio no válidos");
+            throw new RuntimeException("Datos de miniestadio no válidos");
         }
         this.cantidadPuestos = cantidadPuestos;
         this.precioConsumicion = precioConsumicion;
@@ -26,7 +26,7 @@ public class Miniestadio extends EstadiosConSecciones{
             totalCapacidad += capacidades[i];
         }
         if (totalCapacidad > capacidadMaxima) {
-            throw new IllegalArgumentException("Capacidad de sectores excede capacidad máxima");
+            throw new RuntimeException("Capacidad de sectores excede capacidad máxima");
         }
     }
 

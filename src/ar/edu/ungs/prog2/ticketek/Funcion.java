@@ -5,25 +5,19 @@ import java.time.format.DateTimeFormatter;
 
 public class Funcion {
 	private String fecha;
-	private String sede;
-	private double precioBase;
+    private Sede sede;
+    private double precioBase;
+    private List<IEntrada> entradasVendidas;
 
-	
-	
-	public Funcion(String fecha, String sede, double precioBase) {
-		this.sede = sede;
-		this.fecha = fecha;
-		this.precioBase = precioBase;
-	}
-	
-	public boolean venderEntrada(String sector, int fila, int asiento) {
-		//Ver como agregar sector
-		return true;
-	}
-	
-	public int compararFecha(String fecha) {
-		return compararDate(this.fecha, fecha);
-	}
+    public Funcion(String fecha, Sede sede, double precioBase) {
+        if (!validarFecha(fecha) || sede == null || precioBase < 0) {
+            throw new RuntimeException("Datos de función no válidos");
+        }
+        this.fecha = fecha;
+        this.sede = sede;
+        this.precioBase = precioBase;
+        this.entradasVendidas = new ArrayList<>();
+    }
 	
 	public String obtenerFecha() {
 		return this.fecha;
@@ -35,16 +29,42 @@ public class Funcion {
 	public double precioBase() {
 		return this.precioBase;
 	}
-	
-	public int compararDate(String fecha1, String fecha2) {  
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");  
-	    LocalDate date1 = LocalDate.parse(fecha1, formatter);  
-	    LocalDate date2 = LocalDate.parse(fecha2, formatter);  
-	    return date1.compareTo(date2);
-	    // Uso:  
-		// int resultado = compararFechas("25/07/25", "28/07/25");  
-		// resultado < 0 → fecha1 es anterior  
-		// resultado == 0 → iguales  
-		// resultado > 0 → fecha1 es posterior 
-	}  
+
+	public List<IEntrada> getEntradasVendidas() {
+        return entradasVendidas;
+    }
+
+    public void agregarEntrada(IEntrada entrada) {
+        entradasVendidas.add(entrada);
+    }
+
+    public void removerEntrada(IEntrada entrada) {
+        entradasVendidas.remove(entrada);
+    }
+
+    private boolean validarFecha(String fecha) {
+        LocalDate f;
+        try {
+            f = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("dd/MM/yy"));
+            return true;
+        }catch (Exception e) {
+            throw new RuntimeException("formato de fecha invalido. Use dd/MM/yy");
+        }
+    }
+
+    public boolean esFutura() {
+        // Definimos el formato de la fecha
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        try {
+            // Parseamos la fecha de la cadena
+            LocalDate fechaIngresada = LocalDate.parse(fecha, formato);
+            // Comparamos con la fecha actual
+            return fechaIngresada.isAfter(LocalDate.now());
+        } catch (Exception e) {
+            // Manejo de excepciones si la fecha no tiene el formato correcto
+            System.out.println("Formato de fecha incorrecto: " + fecha);
+            return false; // O lanzar una excepción según tu lógica
+        }
+    }
 }

@@ -1,90 +1,43 @@
 package ar.edu.ungs.prog2.ticketek;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class Usuario {
 	private String email;
 	private String nombre;
 	private String apellido;
 	private String contrasenia;
-	//private ArrayList<Entrada> entradas;
-	//private Map<String, Entrada> entradasCompradas;
+	private List<IEntrada> entradas;
 	
 	public Usuario(String email, String nombre, String apellido, String contrasenia) {
+		if (email == null || email.isEmpty() || nombre == null || nombre.isEmpty() ||
+                    apellido == null || apellido.isEmpty() || contrasenia == null || contrasenia.isEmpty()) {
+                    throw new IllegalArgumentException("Datos de usuario no válidos");
+                }
 		this.email = email;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.contrasenia = contrasenia;
-		//this.entradas = new ArrayList<>();
-		//this.entradasCompradas = new HashMap<>();
+		this.entradas = new ArrayList<>();
 	}
 	
-	/*public void agregarEntradaALaLista(Entrada entrada) {
-		this.entradas.add(entrada);
-	}*/
-	
-	public boolean validarContrasenia(String contrasenia) {	
-		return this.contrasenia == contrasenia;
-	}
-	
-	public String obtenerNombre() {
-		return this.nombre;
-	}
-	
-	public String obtenerEmail() {
-		return this.email;
-	}
-	
-	public String obtenerApellido() {
-		return this.apellido;
-	}
-	
-	/*public Entrada[] obtenerTodasLasEntradas() {
-		return this.entradas.toArray(new Entrada[0]);
-	}*/
-	
-	/*public Entrada[] obtenerEntradasVencidas() {
-		//definir como tratar la fecha
-	}*/
-	/*public List<IEntrada> listarEntradasFuturas() {
-        String hoy = "";// = LocalDate.now();
-        List<IEntrada> entradasFuturas = new ArrayList<>();
-        for (Entrada entrada : entradasCompradas.values()) {
-            if (entrada.esFechaFutura(hoy)) {
-                entradasFuturas.add(entrada);
-            }
-        }
-        return entradasFuturas;
-        }
-	
-	public void borrarEntrada(String codEntrada) {
-		Iterator<Entrada> entrada = this.entradas.iterator();
-		while(entrada.hasNext()) {
-			Entrada boleto = entrada.next();
-			if(boleto.compararCodEntrada(codEntrada)) {
-				entrada.remove();
-			}
-		}
-	}
-	
-	public int entradasTotales() {
-		//Cant de entrada o precio de la entrada?
-		return this.entradas.size();
-	}
-	
-	public void remplazarEntradas(String codEntrada, Entrada nvaEntrada) {
-		for (int i = 0; i < this.entradas.size() ; i++) {
-			if(entradas.get(i).compararCodEntrada(codEntrada)) {
-				this.entradas.set(i, nvaEntrada);
-			}
-		}
-	}
-	
-	public void anularEntrada(String codEntrada) {
-		this.borrarEntrada(codEntrada);
-	}
-	
-        public List<IEntrada> getEntradas() {
-             return entradas;
-	}*/
-	
+	public boolean validarContrasenia(String contrasenia) {
+        return this.contrasenia.equals(contrasenia);
+    }
+
+    public void agregarEntrada(IEntrada entrada) {
+        entradas.add(entrada);
+    }
+
+    public void removerEntrada(IEntrada entrada) {
+        entradas.remove(entrada);
+    }
+
+    public List<IEntrada> getEntradas() {
+        return entradas;
+    }
+    public String obtenerEmail() {
+        return this.email;
+    }
 }

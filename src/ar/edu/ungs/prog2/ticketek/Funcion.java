@@ -6,19 +6,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Funcion {
+	private String nombre;
 	private String fecha;
-    private Sede sede;
+    private String sede;
     private double precioBase;
-    private List<IEntrada> entradasVendidas;
+    //private List<IEntrada> entradasVendidas;
 
-    public Funcion(String fecha, Sede sede, double precioBase) {
+    public Funcion(String nombre,String fecha, String sede, double precioBase) {
         if (!validarFecha(fecha) || sede == null || precioBase < 0) {
             throw new RuntimeException("Datos de función no válidos");
         }
+        this.nombre = nombre;
         this.fecha = fecha;
         this.sede = sede;
         this.precioBase = precioBase;
-        this.entradasVendidas = new ArrayList<>();
+        //this.entradasVendidas = new ArrayList<>();
     }
 	
 	public String obtenerFecha() {

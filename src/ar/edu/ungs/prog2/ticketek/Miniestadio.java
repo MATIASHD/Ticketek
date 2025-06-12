@@ -5,20 +5,18 @@ public class Miniestadio extends EstadiosConSecciones{
 	private int cantidadPuestos;
     private double precioConsumicion;
     private Map<String, Sector> sectores;
-    private int asientosPorFila;
 
     public Miniestadio(String nombre, String direccion, int capacidadMaxima, int asientosPorFila,
                        int cantidadPuestos, double precioConsumicion, String[] nombresSectores,
                        int[] capacidades, int[] porcentajes) {
-        super(nombre, direccion, capacidadMaxima);
-        if (asientosPorFila <= 0 || cantidadPuestos <= 0 || precioConsumicion < 0 ||
-                nombresSectores == null || capacidades == null || porcentajes == null ||
-                nombresSectores.length != capacidades.length || capacidades.length != porcentajes.length) {
+        super(nombre, direccion, capacidadMaxima, asientosPorFila, nombresSectores, capacidades, porcentajes);
+        
+        if (cantidadPuestos <= 0 || precioConsumicion < 0) {
             throw new RuntimeException("Datos de miniestadio no válidos");
         }
+        
         this.cantidadPuestos = cantidadPuestos;
         this.precioConsumicion = precioConsumicion;
-        this.asientosPorFila = asientosPorFila;
         this.sectores = new HashMap<>();
         int totalCapacidad = 0;
         for (int i = 0; i < nombresSectores.length; i++) {
@@ -63,7 +61,7 @@ public class Miniestadio extends EstadiosConSecciones{
         StringBuilder sb = new StringBuilder(nombre + " (MiniEstadio, Capacidad: " + capacidadMaxima +
                 ", Puestos: " + cantidadPuestos + ", Sectores: ");
         for (Sector s : sectores.values()) {
-            sb.append(s.getNombre()).append(", ");
+            sb.append(s.obtenerNombre()).append(", ");
         }
         return sb.toString().substring(0, sb.length() - 2) + ")";
     }

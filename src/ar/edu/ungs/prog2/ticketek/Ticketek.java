@@ -28,7 +28,7 @@ public class Ticketek implements ITicketek {
 	@Override
 	public void registrarSede(String nombre, String direccion, int capacidadMaxima) {
 		if (sedes.containsKey(nombre)) {
-                    throw new IllegalArgumentException("Sede ya registrada");
+                    throw new IllegalArgumentException("Estadio ya registrada");
                 }
 		sedes.put(nombre, new Estadio(nombre, direccion, capacidadMaxima));
 	}
@@ -38,7 +38,7 @@ public class Ticketek implements ITicketek {
 	public void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila,
 			String[] sectores, int[] capacidad, int[] porcentajeAdicional) {
 		if (sedes.containsKey(nombre)) {
-                    throw new IllegalArgumentException("Sede ya registrada");
+                    throw new IllegalArgumentException("Teatro ya registrada");
                 }
 		sedes.put(nombre, new Teatro(nombre, direccion, capacidadMaxima, asientosPorFila, sectores, capacidad, porcentajeAdicional));
 	}
@@ -49,10 +49,9 @@ public class Ticketek implements ITicketek {
 			int cantidadPuestos, double precioConsumicion, String[] sectores, int[] capacidad,
 			int[] porcentajeAdicional) {
 		if (sedes.containsKey(nombre)) {
-                    throw new IllegalArgumentException("Sede ya registrada");
+                    throw new IllegalArgumentException("Miniestadio ya registrada");
                 }
 		sedes.put(nombre, new Miniestadio(nombre, direccion, capacidadMaxima, asientosPorFila, cantidadPuestos, precioConsumicion, sectores, capacidad, porcentajeAdicional));
-		
 	}
 
 
@@ -64,26 +63,33 @@ public class Ticketek implements ITicketek {
 		usuarios.put(email, new Usuario(email, nombre, apellido, contrasenia));
 		
 	}
-
-
+	
 	@Override
 	public void registrarEspectaculo(String nombre) {
+		if (this.espectaculos.containsKey(nombre)) {
+            throw new IllegalArgumentException("Espectáculo ya registrado");
+        }
+		espectaculos.put(nombre, new Espectaculo(nombre));
+	}
+
+	@Override
+	public void agregarFuncion(String nombre, String fecha, String sede, double precio) {
 		if (espectaculos.containsKey(nombre)) {
                     throw new IllegalArgumentException("Espectáculo ya registrado");
-                }
+        }
 		espectaculos.put(nombre, new Espectaculo(nombre));
 	}
 
 
 	@Override
-	public void agregarFuncion(String nombreEspectaculo, String fecha, String sede, double precioBase) {
+	/*public void agregarFuncion(String nombreEspectaculo, String fecha, String sede, double precioBase) {
 		Espectaculo show = espectaculos.get(nombreEspectaculo);
 		Sede sedeObj = sedes.get(sede);
 		if(show == null || sedeObj == null) {
 			throw new IllegalArgumentException("Espectáculo o sede no existen");
 		}
-		show.agregarFuncion(fecha, sedeObj, precioBase);
-	}
+		show.agregarFuncion(nombreEspectaculo,fecha, sede, precioBase);
+	}*/
 
 
 	@Override
@@ -117,7 +123,7 @@ public class Ticketek implements ITicketek {
 
 
 	@Override
-	public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia,
+	public void venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia,
 			String sector, int[] asientos) {
 		Usuario user = usuario.get(email);
 		Espectaculo show = espectaculo.get(nombreEspectaculo);
@@ -143,7 +149,7 @@ public class Ticketek implements ITicketek {
                 throw new IllegalArgumentException("No hay capacidad suficiente");
             }
         }
-        return entradas;
+        //return entradas;
 	}
 
 
@@ -169,7 +175,7 @@ public class Ticketek implements ITicketek {
             }
             sb.append("\n");
         }
-        return sb.toString().trim()
+        return sb.toString().trim();
 	}
 
 
@@ -227,7 +233,7 @@ public class Ticketek implements ITicketek {
 		return false;
 	}
 
-	@Override
+	/*@Override
 	public IEntrada cambiarEntrada(IEntrada entrada, String contrasenia, String fecha, String sector, int asiento) {
 		// TODO Auto-generated method stub
 		if (entrada == null) {
@@ -244,7 +250,7 @@ public class Ticketek implements ITicketek {
 			throw new NoSuchElementException("La entrada no se encontro o no es valida");
 		}
 		return null;
-	}
+	}*/
 
 
 	@Override

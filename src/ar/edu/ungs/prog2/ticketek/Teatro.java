@@ -3,15 +3,10 @@ import java.util.HashMap;
 import java.util.Map;
 public class Teatro extends EstadiosConSecciones{
 	protected Map<String, Sector> sectores;
-    protected int asientosPorFila;
 
     public Teatro(String nombre, String direccion, int capacidadMaxima, int asientosPorFila, String[] nombresSectores, int[] capacidades, int[] porcentajes) {
-        super(nombre, direccion, capacidadMaxima);
-        if (asientosPorFila <= 0 || nombresSectores == null || capacidades == null || porcentajes == null ||
-                nombresSectores.length != capacidades.length || capacidades.length != porcentajes.length) {
-            throw new RuntimeException("Datos de sectores no válidos");
-        }
-        this.asientosPorFila = asientosPorFila;
+    	super(nombre, direccion, capacidadMaxima, asientosPorFila, nombresSectores, capacidades, porcentajes);
+       
         this.sectores = new HashMap<>();
         int totalCapacidad = 0;
         for (int i = 0; i < nombresSectores.length; i++) {
@@ -51,7 +46,7 @@ public class Teatro extends EstadiosConSecciones{
     public String toString() {
         StringBuilder sb = new StringBuilder(nombre + " (Teatro, Capacidad: " + capacidadMaxima + ", Sectores: ");
         for (Sector s : sectores.values()) {
-            sb.append(s.getNombre()).append(", ");
+            sb.append(s.obtenerNombre()).append(", ");
         }
         return sb.toString().substring(0, sb.length() - 2) + ")";
     }

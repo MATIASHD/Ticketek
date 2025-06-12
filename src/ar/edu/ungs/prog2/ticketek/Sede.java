@@ -4,9 +4,9 @@ public abstract class Sede {
 	protected String nombre;
 	protected String direccion;
 	protected int capacidadMaxima;
-	protected String[] sector;
+	/*protected String[] sector;
 	protected int[] capacidadOriginal;
-	protected int[] capacidadPorSector;
+	protected int[] capacidadPorSector;*/
 	
 	public Sede(String nombre, String direccion, int capacidadMaxima) {
 		// Validar datos
@@ -27,13 +27,13 @@ public abstract class Sede {
     public abstract boolean esNumerada();
     public abstract String toString();
 
-    public int[] obtenerSector() {
+    /*public int[] obtenerSector() {
         return new int[0];
     }
 	
 	public String[] obtenerSector() {
 		return this.obtenerSector();
-	}
+	}*/
 	
 	public int obtenerCapcidadMaxima() {
 		return this.capacidadMaxima;
@@ -43,11 +43,11 @@ public abstract class Sede {
 		return this.nombre.equals(sede);
 	}
 	
-	public String devolverCapacidadPorSector(int sector) {
+	/*public String devolverCapacidadPorSector(int sector) {
 		StringBuilder sb = new StringBuilder(); 
 		// Platea VIP: 30/50 
 		sb.append(this.sector[sector]).append(": ").append(this.capacidadPorSector[sector]).append(" / ").append(this.capacidadOriginal[sector]);
 		String capacidad = sb.toString();
 		return capacidad;
-	}
+	}*/
 }

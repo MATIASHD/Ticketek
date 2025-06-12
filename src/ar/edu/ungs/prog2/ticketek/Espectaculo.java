@@ -6,22 +6,26 @@ import java.util.Map;
 
 public class Espectaculo {
 	private String nombre;
+	/*private String[] fecha;
+	private String[] sede;
+	private double precio;*/
 	private Map<String,Funcion> funciones;
-	private List<Funcion> funcion;
+	/*private Map<String,Funcion> funcion;*/
 
     public Espectaculo(String nombre) {
+    	
     	if (nombre == null || nombre.isEmpty()) {
             throw new RuntimeException("El nombre del espectáculo no puede ser nulo o vacío");
         }
         this.nombre = nombre;
-        this.funcion = new HashMap<String, Funcion>();
+        this.funciones = new HashMap<String, Funcion>();
     }
 
-    public void agregarFuncion(String fecha, Sede sede, double precioBase) {
-	if (funciones.containsKey(fecha)) {
-            throw new RuntimeException("Ya existe una función para esa fecha");
+    public void agregarFuncion(String nombre, String[] fecha, String[] sede, double precioBase) {
+	if (this.funciones.containsKey(nombre)) {
+            throw new RuntimeException("Esta función ya se encuentra");
         }
-        this.funciones.put(fecha, new Funcion(fecha, sede, precioBase));
+        this.funciones.put(, new Funcion(nombre, fecha, sede, precioBase));
     }
 	
 	public Map<String, Funcion> ListaDeFunciones(){
@@ -31,9 +35,9 @@ public class Espectaculo {
 	public Funcion buscarLaFuncion(String fecha) {
 		return funcion.get(fecha);
 	}
-	public List<Funcion> getFuncion() {
-            return funcion;
-        }
+	public Map<String, Funcion> getFuncion() {
+            return this.funcion;
+    }
 	public String obtenerNombre() {
 		return this.nombre;
 	}

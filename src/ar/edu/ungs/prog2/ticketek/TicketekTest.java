@@ -5,6 +5,7 @@ import org.junit.runners.MethodSorters;
 
 import static org.junit.Assert.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -288,8 +289,4 @@ public class TicketekTest{
         assertEquals(12, ticketek.listarEntradasEspectaculo("Stand up Comedy").size());
         assertEquals(6, ticketek.listarEntradasEspectaculo("Coldplay en vivo").size());
     }
-
-    
-   
-
 }

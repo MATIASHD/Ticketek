@@ -1,68 +1,34 @@
 package ar.edu.ungs.prog2.ticketek;
-import java.util.HashMap;
-import java.util.Map;
 public class Miniestadio extends EstadiosConSecciones{
 	private int cantidadPuestos;
     private double precioConsumicion;
-    private Map<String, Sector> sectores;
 
-    public Miniestadio(String nombre, String direccion, int capacidadMaxima, int asientosPorFila,
-                       int cantidadPuestos, double precioConsumicion, String[] nombresSectores,
-                       int[] capacidades, int[] porcentajes) {
+    public Miniestadio(String nombre, String direccion, int capacidadMaxima, int asientosPorFila,int cantidadPuestos, double precioConsumicion, String[] nombresSectores,int[] capacidades, int[] porcentajes) {
         super(nombre, direccion, capacidadMaxima, asientosPorFila, nombresSectores, capacidades, porcentajes);
         
-        if (cantidadPuestos <= 0 || precioConsumicion < 0) {
+        if (cantidadPuestos > 0 || precioConsumicion > 0) {
             throw new RuntimeException("Datos de miniestadio no válidos");
         }
         
         this.cantidadPuestos = cantidadPuestos;
         this.precioConsumicion = precioConsumicion;
-        this.sectores = new HashMap<>();
-        int totalCapacidad = 0;
-        for (int i = 0; i < nombresSectores.length; i++) {
-            sectores.put(nombresSectores[i], new Sector(nombresSectores[i], capacidades[i], asientosPorFila, porcentajes[i]));
-            totalCapacidad += capacidades[i];
-        }
-        if (totalCapacidad > capacidadMaxima) {
-            throw new RuntimeException("Capacidad de sectores excede capacidad máxima");
-        }
     }
 
-    public boolean asignarAsiento(String sector, int asiento) {
-        Sector s = sectores.get(sector);
-        if (s == null) {
-            throw new IllegalArgumentException("Sector no existe");
-        }
-        return s.asignarAsiento(asiento);
-    }
+    public int obtenerCantidadPuestos() {
+		return cantidadPuestos;
+	}
+    public double obtenerPrecioConsumicion() {
+		return precioConsumicion;
+	}
+	@Override
+	public boolean esNumerada() {
+		return false;
+	}
 
-    public void liberarAsiento(String sector, int asiento) {
-        Sector s = sectores.get(sector);
-        if (s != null) {
-            s.liberarAsiento(asiento);
-        }
-    }
+	@Override
+	public String toString() {
+		return null;
+	}
 
-    public Sector getSector(String sector) {
-        return sectores.get(sector);
-    }
-
-    public double getPrecioConsumicion() {
-        return precioConsumicion;
-    }
-
-    @Override
-    public boolean esNumerada() {
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder(nombre + " (MiniEstadio, Capacidad: " + capacidadMaxima +
-                ", Puestos: " + cantidadPuestos + ", Sectores: ");
-        for (Sector s : sectores.values()) {
-            sb.append(s.obtenerNombre()).append(", ");
-        }
-        return sb.toString().substring(0, sb.length() - 2) + ")";
-    }
+    
 }

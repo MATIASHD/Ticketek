@@ -1,111 +1,78 @@
 package ar.edu.ungs.prog2.ticketek;
 
 public class Entrada implements IEntrada{
-	private String codEntrada; //crear numero de entrada
-    private String nombreEspectaculo;
-    private String fecha;
+	private String codEntrada; 
+    private String espectaculo;
+    private Fecha fecha;
+    private String sede;
     private String sector;
-    private int[] ubicacion;
+    private int fila;
+    private int asiento;
     private boolean activa;
 
-    public Entrada(String nombreDelESpectaculo, String fecha, String sector, int[] asiento) {
-        this.nombreEspectaculo = nombreDelESpectaculo;
+    public Entrada(String espectaculo, Fecha fecha, String sede, String sector, int fila, int asiento) {
+		if (espectaculo == null || espectaculo.isEmpty()) {
+			throw new RuntimeException("El nombre del espectáculo no puede ser nulo o vacío");
+		}
+		if (fecha == null) {
+			throw new RuntimeException("La fecha no puede ser nula");
+		}
+		if (sede == null || sede.isEmpty()) {
+			throw new RuntimeException("La sede no puede ser nula o vacía");
+		}
+		if (sector == null || sector.isEmpty()) {
+			throw new RuntimeException("El sector no puede ser nulo o vacío");
+		}
+    	this.codEntrada = String.valueOf((int) (Math.random() * 10000)); // Genera un código de entrada aleatorio de 4 dígitos
+        this.espectaculo = espectaculo;
         this.fecha = fecha;
+        this.sede = sede;
         this.sector = sector;
-        this.ubicacion = asiento;
+        this.fila = fila;
+        this.asiento = asiento;
         this.activa = true;
     }
-    public Entrada(String nombreDelESpectaculo, String fecha, int cantEntrada) {
-        this.nombreEspectaculo = nombreDelESpectaculo;
-        this.fecha = fecha;
-        this.sector = "CAMPO";
-        this.ubicacion = new int[]{cantEntrada};
-        this.activa = true;
+    public Entrada(String espectaculo, Fecha fecha, String sede, String sector) {
+    	this(espectaculo, fecha, sede, sector, 0, 0);
     }
-
+    
 	@Override
 	public double precio() {
-		// TODO Auto-generated method stub
+		if (sector.equals("CAMPO")) {
+			return 0;
+		}
 		return 0;
 	}
 
 	@Override
 	public String ubicacion() {
-		// TODO Auto-generated method stub
-		String asientos = "";
-		if(sector.equals("CAMPO")) {
-			return this.sector;
+		if (sector.equals("CAMPO")) {
+			return "CAMPO";
+		} else if (fila > 0 && asiento > 0) {
+			return this.sector + " f:" + this.fila + " a:" + this.asiento;
 		}
-		for (int i = 0; i < ubicacion.length; i++) {
-			asientos += "a: " + ubicacion[i];
-		}
-		return asientos;
+		return null;
 	}
 	
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		if (this.sector.equals("CAMPO")) {			
-			sb.append(this.codEntrada).append(" - ").append(this.nombreEspectaculo).append(" - ").append(this.fecha).append(" - ").append(this.sector);
+		if(this.sector.equals("CAMPO")) {
+			sb.append(this.codEntrada).append(" - ").append(this.espectaculo).append(" - ").append(this.fecha).append(" - ").append(this.sede).append(" - CAMPO");
 		} else {
-			sb.append(this.codEntrada).append(" - ").append(this.nombreEspectaculo).append(" - ").append(this.fecha).append(" - ").append(this.sector);
-			for (int i = 0; i < ubicacion.length; i++) {				
-				sb.append(" a:").append(this.ubicacion[i]).append(" ");
-			}
+			sb.append(this.codEntrada).append(" - ").append(this.espectaculo).append(" - ").append(this.fecha).append(" - ").append(this.sede).append(" - ").append(this.sector)
+			  .append(" f:").append(this.fila).append(" a:").append(this.asiento);
 		}
 		return sb.toString();
 	}
 	
-	public String obtenerNombreDelEspectaculo() {
-		return this.nombreEspectaculo; 
+	public void activarEntrada() {
+		this.activa = true;
 	}
-	
-	public String obtenerCodigoDelEspectaculo() {
-		return this.codEntrada; 
-	}
-	
-	public String obtenerFecha() {
-		return this.fecha;
-	}
-	
-	public void anular() {
+	public void anularEntrada() {
 		this.activa = false;
 	}
-	
-	public void cambiarFecha(String fecha) {
-		this.fecha = fecha;
-	}
-	
-	public void cambiarSector(String sector) {
-		this.sector = sector;
-	}
-	
-	public void cambiarAsiento(int asiento) {
-		this.ubicacion[0] = asiento;
-	}
-	
-	public boolean compararFecha(String fecha) {
-		Fecha estaFecha = new Fecha(this.fecha);
-		return estaFecha.compararFecha(fecha);
-	}
-	
-	public boolean estadoDeLaEntrada() {
+	public boolean estaActiva() {
 		return this.activa;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {	
-	    if (obj == null || getClass() != obj.getClass()) {
-	    	return false;
-	    }
-	    
-	    Entrada entrada = (Entrada) obj;
-	    return this.codEntrada.equals(entrada.codEntrada) && fecha.equals(entrada.fecha);
-	}
-
-	@Override
-	public int hashCode() {
-	    int result = codEntrada.hashCode();
-	    result = 31 * result + fecha.hashCode();
-	    return result;
 	}
 }

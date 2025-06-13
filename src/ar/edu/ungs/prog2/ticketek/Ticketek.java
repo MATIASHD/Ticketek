@@ -2,6 +2,7 @@ package ar.edu.ungs.prog2.ticketek;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -16,7 +17,7 @@ public class Ticketek implements ITicketek {
         private int contadorEntradas;
 	
 	public Ticketek() {
-		this.sedes = new HashMap<>();
+		this.sedes = new HashMap<String, Sede>();
         this.usuarios = new HashMap<>();
         this.espectaculos = new HashMap<>();
         this.entradasRegistradas = new HashMap<>();
@@ -24,12 +25,171 @@ public class Ticketek implements ITicketek {
 		contadorEntradas = 1;
 	}
 
-
 	@Override
 	public void registrarSede(String nombre, String direccion, int capacidadMaxima) {
 		if (sedes.containsKey(nombre)) {
-                    throw new IllegalArgumentException("Estadio ya registrada");
-                }
+			throw new IllegalArgumentException("Sede ya registrada");
+		}
+		sedes.put(nombre, new Estadio(nombre, direccion, capacidadMaxima));
+	}
+
+	@Override
+	public void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila,
+			String[] sectores, int[] capacidad, int[] porcentajeAdicional) {
+		if (sedes.containsKey(nombre)) {
+			throw new IllegalArgumentException("Teatro ya registrado");
+		}
+		sedes.put(nombre, new Teatro(nombre, direccion, capacidadMaxima, asientosPorFila, sectores, capacidad, porcentajeAdicional));
+	}
+
+	@Override
+	public void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila,
+			int cantidadPuestos, double precioConsumicion, String[] sectores, int[] capacidad,
+			int[] porcentajeAdicional) {
+		if (sedes.containsKey(nombre)) {
+			throw new IllegalArgumentException("Miniestadio ya registrado");
+		}
+		sedes.put(nombre, new Miniestadio(nombre, direccion, capacidadMaxima, asientosPorFila, cantidadPuestos, precioConsumicion, sectores, capacidad, porcentajeAdicional));
+	}
+
+	@Override
+	public void registrarUsuario(String email, String nombre, String apellido, String contrasenia) {
+		if (usuarios.containsKey(email)) {
+			throw new IllegalArgumentException("Usuario ya registrado");
+		}
+		usuarios.put(email, new Usuario(email, nombre, apellido, contrasenia));
+	}
+
+	@Override
+	public void registrarEspectaculo(String nombre) {
+		if (this.espectaculos.containsKey(nombre)) {
+			throw new IllegalArgumentException("Espectáculo ya registrado");
+		}
+		espectaculos.put(nombre, new Espectaculo(nombre));		
+	}
+
+	@Override
+	public void agregarFuncion(String nombreEspectaculo, String fecha, String sede, double precioBase) {
+		if (!espectaculos.containsKey(nombreEspectaculo)) {
+			throw new IllegalArgumentException("Espectáculo no registrado");
+		}
+		Espectaculo espectaculo = espectaculos.get(nombreEspectaculo);
+		if(espectaculo != null) {
+			espectaculo.agregarFuncion(new Fecha(fecha), sede, precioBase);
+		} else {
+			throw new IllegalArgumentException("Espectáculo no encontrado");
+		}
+	}
+
+	@Override
+	public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia,
+			int cantidadEntradas) {
+		if (!espectaculos.containsKey(nombreEspectaculo)) {
+			throw new IllegalArgumentException("Espectáculo no registrado");
+		}
+		if (!usuarios.containsKey(email)) {
+			throw new IllegalArgumentException("Usuario no registrado");
+		}
+		if (!usuarios.get(email).validarContrasenia(contrasenia)) {
+			throw new IllegalArgumentException("Contraseña incorrecta");
+		}
+		if (espectaculos.get(nombreEspectaculo).buscarLaFuncion(fecha)) {
+			throw new IllegalArgumentException("Función no registrada");
+		}
+		
+		Usuario usuario = usuarios.get(email);
+		Espectaculo espectaculo = espectaculos.get(nombreEspectaculo);
+		List<IEntrada> entradasVendidas = new ArrayList<>();
+		Sede predio = sedes.get(espectaculo.buscarLaFuncion(fecha).obtenerSede());
+		
+		for (int i = 0; i < usuario.listaDeEntradas().size(); i++) {
+			usuario.comprarEntrada(new Entrada(espectaculo.obtenerNombre(), fecha, espectaculo.buscarLaFuncion(fecha).obtenerSede(), espectaculo.buscarLaFuncion(fecha),));
+			entradasVendidas.add(new Entrada(espectaculo.obtenerNombre(), fecha, sede, sector));
+		}
+		return entradasVendidas;
+	}
+
+	@Override
+	public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia,
+			String sector, int[] asientos) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String listarFunciones(String nombreEspectaculo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<IEntrada> listarEntradasEspectaculo(String nombreEspectaculo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<IEntrada> listarEntradasFuturas(String email, String contrasenia) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<IEntrada> listarTodasLasEntradasDelUsuario(String email, String contrasenia) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean anularEntrada(IEntrada entrada, String contrasenia) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public IEntrada cambiarEntrada(IEntrada entrada, String contrasenia, String fecha, String sector, int asiento) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IEntrada cambiarEntrada(IEntrada entrada, String contrasenia, String fecha) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public double costoEntrada(String nombreEspectaculo, String fecha) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double costoEntrada(String nombreEspectaculo, String fecha, String sector) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double totalRecaudado(String nombreEspectaculo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double totalRecaudadoPorSede(String nombreEspectaculo, String nombreSede) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
+
+
+	/*@Override
+	public void registrarSede(String nombre, String direccion, int capacidadMaxima) {
+		if (sedes.containsKey(nombre)) {
+			throw new IllegalArgumentException("Estadio ya registrada");
+        }
 		sedes.put(nombre, new Estadio(nombre, direccion, capacidadMaxima));
 	}
 
@@ -82,7 +242,7 @@ public class Ticketek implements ITicketek {
 
 
 	@Override
-	/*public void agregarFuncion(String nombreEspectaculo, String fecha, String sede, double precioBase) {
+	public void agregarFuncion(String nombreEspectaculo, String fecha, String sede, double precioBase) {
 		Espectaculo show = espectaculos.get(nombreEspectaculo);
 		Sede sedeObj = sedes.get(sede);
 		if(show == null || sedeObj == null) {
@@ -92,7 +252,7 @@ public class Ticketek implements ITicketek {
 	}*/
 
 
-	@Override
+	/*@Override
 	public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia,
 			int cantidadEntradas) {
 		Usuario user = usuarios.get(email);
@@ -253,7 +413,7 @@ public class Ticketek implements ITicketek {
 	}*/
 
 
-	@Override
+	/*@Override
 	public IEntrada cambiarEntrada(IEntrada entrada, String contrasenia, String fecha) {
 		// TODO Auto-generated method stub
 		if (entrada == null) {
@@ -383,7 +543,7 @@ private static String generarCodigo4Digitos(){
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+       StringBuilder sb = new StringBuilder();
         sb.append("Sistema Ticketek:\n");
         sb.append("Sedes registradas (").append(sedes.size()).append("):\n");
         for (Sede sede : sedes.values()) {
@@ -396,7 +556,7 @@ private static String generarCodigo4Digitos(){
         sb.append("Usuarios registrados: ").append(usuarios.size()).append("\n");
         sb.append("Entradas vendidas: ").append(entradasPorCodigo.size()).append("\n");
         return sb.toString().trim();
-    }	
+    }*/
 	
 	
 }

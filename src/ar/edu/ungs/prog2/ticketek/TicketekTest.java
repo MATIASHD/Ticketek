@@ -289,4 +289,8 @@ public class TicketekTest{
         assertEquals(12, ticketek.listarEntradasEspectaculo("Stand up Comedy").size());
         assertEquals(6, ticketek.listarEntradasEspectaculo("Coldplay en vivo").size());
     }
+
+    
+   
+
 }

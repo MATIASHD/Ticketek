@@ -32,6 +32,12 @@ public abstract class EstadiosConSecciones extends Sede {
 		}
 	}
 	
+	public String entradasVendidas(int index) {
+		int vendida = capacidadPorSector[index] - capacidadOriginal[index];
+		int entradaVendida =  ((vendida %  capacidadPorSector[index] + capacidadPorSector[index]) % capacidadPorSector[index]);
+		return this.sectores[index] + ": " + entradaVendida + "/" + capacidadOriginal[index]; 
+	}
+	
 	public int porcentajeRecargo(String sector) {
 		if (porcentajeAdicional == null) {
 			return 0; // o lanza una excepción si prefieres
@@ -54,14 +60,14 @@ public abstract class EstadiosConSecciones extends Sede {
 		return this.sectores;
 	}
 	
-	public String devolverCapacidadPorSector(int indiceSector) {
-		if(indiceSector < 0 || indiceSector >= this.sectores.length) {
-			throw new IllegalArgumentException("Indice del sector invalido");
-		}
-		StringBuilder sb = new StringBuilder();
-		sb.append(this.sectores[indiceSector]).append(": ").append(this.capacidadPorSector[indiceSector]).append(" / ").append(this.capacidadOriginal[indiceSector]);
-		String capacidad = sb.toString();
-		return capacidad;
+	public int[] obtenerCapacidadPorSector() {
+		return this.capacidadPorSector;
+	}
+	public int[] obtenerCapacidadOriginal() {
+		return this.capacidadOriginal;
+	}
+	public int[] obtenerPorcentajeAdicional() {
+		return this.porcentajeAdicional;
 	}
 	
 }

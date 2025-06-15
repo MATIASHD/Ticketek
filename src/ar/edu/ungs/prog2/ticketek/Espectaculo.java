@@ -18,11 +18,11 @@ public class Espectaculo {
         this.funciones = new HashMap<Fecha, Funcion>();
     }
 
-   public void agregarFuncion(Fecha fecha, String sede, double precioBase) {
+   public void agregarFuncion(String nombre,Fecha fecha, String sede, double precioBase) {
 	if (this.funciones.containsKey(fecha)) {
             throw new RuntimeException("Esta función ya se encuentra");
         }
-        this.funciones.put(fecha, new Funcion(fecha, sede, precioBase));
+        this.funciones.put(fecha, new Funcion(nombre, fecha, sede, precioBase));
     }
 	
    public int obtenerIdEntrada() {
@@ -45,6 +45,9 @@ public class Espectaculo {
 			}
 		}
 		return null;
+	}
+	public Map<Fecha, Funcion> obtenerFunciones() {
+		return this.funciones;
 	}
 
 	public String obtenerNombre() {

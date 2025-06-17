@@ -1,4 +1,4 @@
-package ar.edu.ungs.prog2.ticketek;
+/*package ar.edu.ungs.prog2.ticketek;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Espectaculo {
 	private int idEntrada;
 	private String nombre;
-	private Map<Fecha,Funcion> funciones;
+	private Map<String,Funcion> funciones;
 
     public Espectaculo(String nombre) {
     	if (nombre == null || nombre.isEmpty()) {
@@ -15,10 +15,10 @@ public class Espectaculo {
         }
     	this.idEntrada = ThreadLocalRandom.current().nextInt(1000, 10000); // 4-digit random number
         this.nombre = nombre;
-        this.funciones = new HashMap<Fecha, Funcion>();
+        this.funciones = new HashMap<String, Funcion>();
     }
 
-   public void agregarFuncion(String nombre,Fecha fecha, String sede, double precioBase) {
+   public void agregarFuncion(String nombre,String fecha, String sede, double precioBase) {
 	if (this.funciones.containsKey(fecha)) {
             throw new RuntimeException("Esta función ya se encuentra");
         }
@@ -30,8 +30,8 @@ public class Espectaculo {
 	}
 	
 	public boolean estaLaFuncion(String fecha) {
-		for (Fecha date : funciones.keySet()) {
-			if (date.compararFecha(fecha)) {
+		for (String date : funciones.keySet()) {
+			if (new Fecha(date).compararFecha(fecha)) {
 				return true;
 			}
 		}
@@ -39,14 +39,14 @@ public class Espectaculo {
 	}
 	
 	public Funcion buscarLaFuncion(String fecha) {
-		for(Map.Entry<Fecha, Funcion> date : funciones.entrySet()) {
-			if (date.getKey().compararFecha(fecha)) {
+		for(Map.Entry<String, Funcion> date : funciones.entrySet()) {
+			if (new Fecha(date.getKey()).compararFecha(fecha)) {
 				return date.getValue();
 			}
 		}
 		return null;
 	}
-	public Map<Fecha, Funcion> obtenerFunciones() {
+	public Map<String, Funcion> obtenerFunciones() {
 		return this.funciones;
 	}
 
@@ -57,4 +57,4 @@ public class Espectaculo {
         public String toString() {
             return "Espectáculo: " + nombre + ", Funciones: " + funciones.size();
    }
-}
+}*/

@@ -26,9 +26,11 @@ public class Funcion {
 	public String obtenerFecha() {
 		return this.fecha;
 	}
+	
 	public String obtenerSede() {
 		return this.sede;
 	}
+	
 	public double obtenerPrecioBase() {
 		return this.precioBase;
 	}
@@ -36,4 +38,5 @@ public class Funcion {
 	public String obtenerNombre() {
 		return this.nombre;
 	}
+	
 }

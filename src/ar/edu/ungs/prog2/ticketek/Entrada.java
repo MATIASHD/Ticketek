@@ -4,44 +4,56 @@ public class Entrada implements IEntrada{
 	private String codEntrada; 
     private String espectaculo;
     private String fecha;
+    private String nombreSede;
     private String sector;
-    private int []asiento;
+    private int fila;
+    private int asiento;
     private boolean activa;
     private Random random = new Random();
 
-    public Entrada(String espectaculo, String fecha, String sector, int[] asiento) {
-		if (espectaculo == null || espectaculo.isEmpty()) {
+    public Entrada(String espectaculo, String fecha, String sector, int asiento, String nombreSede, int fila) {
+		
+		if (espectaculo.isEmpty()) {
 			throw new RuntimeException("El nombre del espectáculo no puede ser nulo o vacío");
 		}
 		if (fecha == null) {
 			throw new RuntimeException("La fecha no puede ser nula");
 		}
-		if (sector == null || sector.isEmpty()) {
+		if (sector.isEmpty()) {
 			throw new RuntimeException("El sector no puede ser nulo o vacío");
 		}
-    	this.codEntrada = String.valueOf(random.nextInt(1000)); // Genera un código de entrada aleatorio de 4 dígitos
+		if (asiento < 0) {
+			throw new RuntimeException("El número de asiento no puede ser negativo");
+		}
+		if (nombreSede.isEmpty()) {
+			throw new RuntimeException("El nombre de la sede no puede ser nulo o vacío");
+		}
+		if (fila < 0) {
+			throw new RuntimeException("El número de fila no puede ser negativo");
+		}
+    	this.codEntrada = String.valueOf(random.nextInt(1000));
         this.espectaculo = espectaculo;
         this.fecha = fecha;
         this.sector = sector;
         this.asiento = asiento;
+        this.nombreSede = nombreSede;
+        this.fila = (asiento - 1) / fila + 1;
         this.activa = true;
     }
     
-    public Entrada(String espectaculo, String fecha, int cantAsientos) {
+    public Entrada(String espectaculo, String fecha, String sede) {
     	if (espectaculo == null || espectaculo.isEmpty()) {
 			throw new RuntimeException("El nombre del espectáculo no puede ser nulo o vacío");
 		}
 		if (fecha == null) {
 			throw new RuntimeException("La fecha no puede ser nula");
 		}
-		if (cantAsientos < 0) {
-			throw new RuntimeException("No puede ser cero o negativo la cantidad de Entradas");
-		}
     	this.codEntrada = String.valueOf(random.nextInt(1000));
         this.espectaculo = espectaculo;
         this.fecha = fecha;
+        this.nombreSede = sede;
         this.sector = "CAMPO";
-        this.asiento = new int[] {cantAsientos};
+        this.asiento = 0;
         this.activa = true;
     }
     
@@ -61,56 +73,28 @@ public class Entrada implements IEntrada{
 			throw new RuntimeException("Sector no válido");
 		}
 	}
-
-	@Override
-	/*public String ubicacion() {
-		if (sector.equals("CAMPO")) {
-			return "CAMPO";
-		} else if (fila > 0) {
-			return this.sector + " f:" + this.fila + " a:" + this.asiento;
-		}
-		return null;
-	}
 	
-	public String obtenerNombreEspectaculo() {
-		return this.espectaculo;
-	}
-	
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		if(this.sector.equals("CAMPO")) {
-			sb.append(this.codEntrada).append(" - ").append(this.espectaculo).append(" - ").append(this.fecha).append(" - ").append(this.sede).append(" - CAMPO");
-		} else {
-			sb.append(this.codEntrada).append(" - ").append(this.espectaculo).append(" - ").append(this.fecha).append(" - ").append(this.sede).append(" - ").append(this.sector)
-			  .append(" f:").append(this.fila).append(" a:").append(this.asiento);
-		}
-		return sb.toString();
-	}*/
-	
-	public boolean activarEntrada() {
-		this.activa = true;
-		return true;
-	}
-	public boolean anularEntrada() {
-		this.activa = false;
-		return false;
-	}
-	public boolean estaActiva() {
+	public boolean estadoEntrada() {
 		return this.activa;
 	}
 	public String obtenerFecha() {
 		return this.fecha;
 	}
-	/*public String obtenerSede() {
-		return this.sede;
-	}*/
-	/*public void cambiarSede(String sede) {
-		if (sede == null || sede.isEmpty()) {
-			throw new RuntimeException("La sede no puede ser nula o vacía");
-		}
-		this.sede = sede;
-	}*/
+	
+	public void activarEntrada() {
+		this.activa = true;
+	}
+	
+	public void anularEntrada() {
+		this.activa = false;
+	}
+	
+	public String obtenerSede() {
+		return this.nombreSede;
+	}
+	public String obtenerEspectaculo() {
+		return this.espectaculo;
+	}
 	public void cambiarSector(String sector) {
 		if (sector == null || sector.isEmpty()) {
 			throw new RuntimeException("El sector no puede ser nulo o vacío");
@@ -118,9 +102,64 @@ public class Entrada implements IEntrada{
 		this.sector = sector;
 	}
 	public void cambiarAsiento(int asiento) {
-		if (asiento <= 0) {
-			throw new RuntimeException("El asiento debe ser un número positivo");
+		if (asiento < 0) {
+			throw new RuntimeException("El número de asiento no puede ser negativo");
 		}
-		this.asiento = new int[] {asiento};
+		this.asiento = asiento;
+		this.fila = (asiento - 1) / this.fila + 1;
+	}
+	public void cambiarFecha(String fecha) {
+		if (fecha == null || fecha.isEmpty()) {
+			throw new RuntimeException("La fecha no puede ser nula o vacía");
+		}
+		this.fecha = fecha;
+	}
+	
+	@Override
+	public String ubicacion() {
+		if("CAMPO".equals(this.sector)) {
+			return "CAMPO";
+		} else {
+			return " f:"+ this.fila + " a:" + this.asiento;
+		}
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+	    sb.append("- ").append(this.codEntrada)
+	      .append(" - ").append(this.espectaculo)
+	      .append(" - ").append(this.fecha);
+	      if (new Fecha(this.fecha).esPasada()) {
+	          sb.append(" P");
+	      }
+	      sb.append(" - ").append(this.nombreSede)
+	      .append(" - ").append(ubicacion());
+	      return sb.toString();
+	}
+	
+	public String obtenerFuncion() {
+		StringBuilder sb = new StringBuilder();
+	      sb.append("- (").append(this.fecha)
+	        .append(") ").append(this.nombreSede);
+	      return sb.toString().trim();
+	}
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) return true;
+	    if (obj == null || getClass() != obj.getClass()) return false;
+	    Entrada other = (Entrada) obj;
+	    return this.espectaculo.equals(other.espectaculo) &&
+	    this.fecha.equals(other.fecha) &&
+	    this.nombreSede.equals(other.nombreSede);
+	}
+
+	@Override
+	public int hashCode() {
+		int result = 17;
+		result = 31 * result + espectaculo.hashCode();
+		result = 31 * result + fecha.hashCode();
+		result = 31 * result + nombreSede.hashCode();
+		return result;
 	}
 }

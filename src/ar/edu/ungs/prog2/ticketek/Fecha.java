@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class Fecha {
 
 	private LocalDate fechaActual;
-	private static final DateTimeFormatter FORMATO = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	private static final DateTimeFormatter FORMATO = DateTimeFormatter.ofPattern("dd/MM/yy");
 	
 	public Fecha(String fechaSrt){
 		this.fechaActual = LocalDate.parse(fechaSrt, FORMATO);
@@ -29,4 +29,8 @@ public class Fecha {
         return this.fechaActual.isEqual(otraFecha);
     }
 	
+    public void imprimirFecha() {
+    	System.out.println("Fecha: " + fechaActual.format(FORMATO));
+	}
+
 }

@@ -5,10 +5,29 @@ public class Teatro extends EstadiosConSecciones{
     	super(nombre, direccion, capacidadMaxima, asientosPorFila, nombresSectores, capacidades, porcentajes); 
     }
 
-	
 	@Override
-	public String toString() {
-		return null;
+	public String obtenerNombre() {
+		return super.obtenerNombre();
+	}
+
+	@Override
+	public String obtenerDireccion() {
+		return super.obtenerDireccion();
+	}
+
+	@Override
+	public int obtenerCapcidadMaxima() {
+		return super.obtenerCapcidadMaxima();
+	}
+
+	@Override
+	public String[] obtenerSectores() {
+		return super.obtenerSectores();
+	}
+
+	@Override
+	public int[] obtenerCapacidadOriginal() {
+		return super.obtenerCapacidadOriginal();
 	}
 
 	@Override
@@ -17,28 +36,24 @@ public class Teatro extends EstadiosConSecciones{
 	}
 
 	@Override
-	public int[] obtenerCapacidadOriginal() {
-		return super.obtenerCapacidadOriginal();
-	}
-
-
-	@Override
-	public String[] obtenerSector() {
-		return super.obtenerSector();
+	public int[] obtenerPorcentajeAdicional() {
+		return super.obtenerPorcentajeAdicional();
 	}
 
 	@Override
-	public String entradasVendidas(int index) {
-		return super.entradasVendidas(index);
+	public int obtenerAsientoPorFila() {
+		return super.obtenerAsientoPorFila();
 	}
-
 
 	@Override
-	public int porcentajeRecargo(String sector) {
-		return super.porcentajeRecargo(sector);
+	public String estadosSectores() {
+		return super.estadosSectores();
 	}
-	
 
+	@Override
+	public int obtenerPorcentajeAdicionalSector(String sector) {
+		return super.obtenerPorcentajeAdicionalSector(sector);
+	}
 
 	
 

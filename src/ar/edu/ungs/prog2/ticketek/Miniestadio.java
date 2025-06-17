@@ -1,4 +1,5 @@
 package ar.edu.ungs.prog2.ticketek;
+
 public class Miniestadio extends EstadiosConSecciones{
 	private int cantidadPuestos;
     private double precioConsumicion;
@@ -12,27 +13,68 @@ public class Miniestadio extends EstadiosConSecciones{
         this.precioConsumicion = precioConsumicion;
     }
 
-    public int obtenerCantidadPuestos() {
-		return cantidadPuestos;
+	@Override
+	public String obtenerNombre() {
+		return super.obtenerNombre();
 	}
-    public double obtenerPrecioConsumicion() {
-		return precioConsumicion;
+
+	@Override
+	public String obtenerDireccion() {
+		return super.obtenerDireccion();
+	}
+
+	@Override
+	public int obtenerCapcidadMaxima() {
+		return super.obtenerCapcidadMaxima();
+	}
+
+
+	@Override
+	public String[] obtenerSectores() {
+		return super.obtenerSectores();
+	}
+
+
+	@Override
+	public int[] obtenerCapacidadOriginal() {
+		return super.obtenerCapacidadOriginal();
+	}
+
+
+	@Override
+	public int[] obtenerCapacidadPorSector() {
+		return super.obtenerCapacidadPorSector();
+	}
+
+
+	@Override
+	public int[] obtenerPorcentajeAdicional() {
+		return super.obtenerPorcentajeAdicional();
+	}
+
+	@Override
+	public int obtenerAsientoPorFila() {
+		return super.obtenerAsientoPorFila();
 	}
 	
-
 	@Override
-	public String toString() {
-		return null;
-	}
-	@Override
-	public String[] obtenerSector() {
-		return super.obtenerSector();
+	public String estadosSectores() {S
+		return super.estadosSectores();
 	}
 
-	@Override
-	public int porcentajeRecargo(String sector) {
-		return super.porcentajeRecargo(sector);
+	public int obtenerCantidadPuestos() {
+		return this.cantidadPuestos;
+	}
+	
+	public double obtenerPrecioConsumicion() {
+		return this.precioConsumicion;
 	}
 
-    
+	@Override
+	public int obtenerPorcentajeAdicionalSector(String sector) {
+		// TODO Auto-generated method stub
+		return super.obtenerPorcentajeAdicionalSector(sector);
+	}
+	
+	
 }

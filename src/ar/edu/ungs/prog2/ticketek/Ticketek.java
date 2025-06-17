@@ -81,8 +81,8 @@ public class Ticketek implements ITicketek {
 	}
 
 
-	@Override
-	/*public void agregarFuncion(String nombreEspectaculo, String fecha, String sede, double precioBase) {
+	/*@Override
+	public void agregarFuncion(String nombreEspectaculo, String fecha, String sede, double precioBase) {
 		Espectaculo show = espectaculos.get(nombreEspectaculo);
 		Sede sedeObj = sedes.get(sede);
 		if(show == null || sedeObj == null) {
@@ -100,11 +100,11 @@ public class Ticketek implements ITicketek {
 		if (show == null || user == null || !user.validarContrasenia(contrasenia)) {
                     throw new IllegalArgumentException("Espectáculo, usuario o contraseña no válidos");
                 }
-        Funcion funcion = show.getFuncion(fecha);
-        if (funcion == null || funcion.obtenerSede().esNumerada()) {
+        Funcion funcion = show.buscarLaFuncion(fecha);
+        if (funcion == null || funcion.obtenerSede()) {
             throw new IllegalArgumentException("Función no existe o sede es numerada");
         }
-        Estadio estadio = (Estadio) funcion.obtenerSede();
+        Estadio estadio = (Estadio)funcion.obtenerSede();
         List<IEntrada> entradas = new ArrayList<>();
         for (int i = 0; i < cantidadEntradas; i++) {
             if (estadio.asignarEntrada()) {

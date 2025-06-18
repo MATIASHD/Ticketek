@@ -1,68 +1,103 @@
 package ar.edu.ungs.prog2.ticketek;
 
 public abstract class EstadiosConSecciones extends Sede {
-	protected String[] sector;
+	protected String[] sectores;
 	protected int[] capacidadOriginal;
 	protected int[] capacidadPorSector;
-	protected int asientoPorFila;
 	protected int[] porcentajeAdicional;
+	protected int asientoPorFila;
 	
 	public EstadiosConSecciones(String nombre, String direccion, int capacidadMaxima,int asientoPorFila, String[] NombresDeSectores,int[] capacidadesDeSectores, int[] porcentajeAdicional) {
 		super(nombre, direccion, capacidadMaxima);
+		
 		if(asientoPorFila <= 0 || NombresDeSectores == null || capacidadesDeSectores == null ||  porcentajeAdicional == null || 
 				NombresDeSectores.length != capacidadesDeSectores.length || capacidadesDeSectores.length != porcentajeAdicional.length) {
 			throw new RuntimeException("Datos de secciones no son validos");
 		}
+		this.sectores = NombresDeSectores.clone();
+		this.capacidadPorSector = capacidadesDeSectores.clone();
+		this.capacidadOriginal = capacidadesDeSectores.clone();
+		this.porcentajeAdicional = porcentajeAdicional.clone();
 		this.asientoPorFila = asientoPorFila;
-		this.porcentajeAdicional = porcentajeAdicional;
-		this.sector = NombresDeSectores;
-		this.capacidadOriginal = new int[capacidadesDeSectores.length];
-		this.capacidadPorSector = new int[capacidadesDeSectores.length];
 	}
 	
 	public void descontarAsiento(String sector, int[] asientos) {
-		String[] sectores = this.sector;
+		String[] sec = this.sectores;
 		int[] cantPorSector = this.capacidadPorSector;
 		
-		for (int i = 0; i < sectores.length; i++) {
-			if (sectores[i].equals(sector) && cantPorSector.length == asientos.length) {
+		for (int i = 0; i < sec.length; i++) {
+			if (sec[i].equals(sector) && cantPorSector.length == asientos.length) {
 				for (int j = 0; j < cantPorSector.length; j++) {
 					cantPorSector[j] -= asientos[j];
 				}
 			}
 		}
 	}
-	
-	public int porcentajeRecargo(String sector) {
-		if (porcentajeAdicional == null) {
-			return 0; // o lanza una excepción si prefieres
+	public int obtenerPorcentajeAdicionalSector(String sector) {
+		for (int i = 0; i < this.sectores.length; i++) {
+			if (this.sectores[i].equals(sector)) {
+				return this.porcentajeAdicional[i];
+			}
 		}
-		switch (sector) {
-			case "VIP":
-				return porcentajeAdicional[0];
-		    case "Comun":
-		        return porcentajeAdicional[1];
-		    case "Baja":
-		        return porcentajeAdicional[2];
-		    case "Alta":
-		        return porcentajeAdicional[3];
-		    default:
-		            return 0; // o lanza una excepción si el sector no es válido
+		throw new RuntimeException("Sector no encontrado");
+	}
+	public int obtenerRecargo(String sector) {
+		for (int i = 0; i < this.sectores.length; i++) {
+			if (this.sectores[i].equals(sector)) {
+				return this.porcentajeAdicional[i];
+			}
 		}
+		throw new RuntimeException("Sector no encontrado");
 	}
 	
-	public String[] obtenerSector() {
-		return this.sector;
+	@Override
+	public String obtenerNombre() {
+		return super.obtenerNombre();
+	}
+
+	@Override
+	public String obtenerDireccion() {
+		return super.obtenerDireccion();
+	}
+
+	@Override
+	public int obtenerCapcidadMaxima() {
+		return super.obtenerCapcidadMaxima();
 	}
 	
-	public String devolverCapacidadPorSector(int indiceSector) {
-		if(indiceSector < 0 || indiceSector >= this.sector.length) {
-			throw new IllegalArgumentException("Indice del sector invalido");
-		}
+	public String[] obtenerSectores() {
+		return this.sectores;
+	}
+	
+	public int[] obtenerCapacidadOriginal() {
+		return this.capacidadOriginal;
+	}
+	
+	public int[] obtenerCapacidadPorSector() {
+		return this.capacidadPorSector;
+	}
+	
+	public int[] obtenerPorcentajeAdicional() {
+		return this.porcentajeAdicional;
+	}
+	
+	public int obtenerAsientoPorFila() {
+		return this.asientoPorFila;
+	}
+	
+	public String estadosSectores() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(this.sector[indiceSector]).append(": ").append(this.capacidadPorSector[indiceSector]).append(" / ").append(this.capacidadOriginal[indiceSector]);
-		String capacidad = sb.toString();
-		return capacidad;
+		for (int i = 0; i < this.sectores.length; i++) {
+			sb.append("Platea ").append(this.sectores[i]).append(": ").append(this.capacidadPorSector[i] - this.capacidadOriginal[i]).append("/").append(this.capacidadOriginal[i]).append(" | ");
+		}
+		return sb.toString().trim();
 	}
+	public String entradasVendidas(int index) {
+		int vendida = capacidadPorSector[index] - capacidadOriginal[index];
+		int entradaVendida =  ((vendida %  capacidadPorSector[index] + capacidadPorSector[index]) % capacidadPorSector[index]);
+		return "Platea " + this.sectores[index] + ": " + entradaVendida + "/" + capacidadOriginal[index] + " "; 
+	}
+	
+	
 	
 }

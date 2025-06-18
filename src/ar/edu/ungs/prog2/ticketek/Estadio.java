@@ -1,38 +1,44 @@
 package ar.edu.ungs.prog2.ticketek;
 
 public class Estadio extends Sede {
-	private int entradasVendidas;
+	private String sector;
+	private int capacidadOriginal;
 
     public Estadio(String nombre, String direccion, int capacidadMaxima) {
         super(nombre, direccion, capacidadMaxima);
-        this.entradasVendidas = 0;
+        this.capacidadOriginal = capacidadMaxima;
+        this.sector = "CAMPO";
     }
-
-    public boolean asignarEntrada() {
-        if (entradasVendidas < capacidadMaxima) {
-            entradasVendidas++;
-            return true;
-        }
-        return false;
-    }
-
-    public void liberarEntrada() {
-        if (entradasVendidas > 0) {
-            entradasVendidas--;
-        }
-    }
+	
 
     @Override
-    public boolean esNumerada() {
-        return false;
-    }
-
-    public int getEntradasVendidas() {
-        return entradasVendidas;
-    }
+	public int obtenerCapcidadMaxima() {
+		return super.obtenerCapcidadMaxima();
+	}
 
     @Override
     public String toString() {
         return nombre + " (Estadio, Capacidad: " + capacidadMaxima + ")";
     }
+
+	@Override
+	public String obtenerNombre() {
+		return super.obtenerNombre();
+	}
+
+	@Override
+	public String obtenerDireccion() {
+		return super.obtenerDireccion();
+	}
+	
+	public String entradasVendidas() {
+		int vendida = super.obtenerCapcidadMaxima() - capacidadOriginal;
+		int entradaVendida =  ((vendida %  super.obtenerCapcidadMaxima() + super.obtenerCapcidadMaxima()) % super.obtenerCapcidadMaxima());
+		return this.sector + ": " + entradaVendida + "/" + capacidadOriginal; 
+	}
+	
+	public String obtenerSector() {
+		return this.sector;
+	}
+    
 }

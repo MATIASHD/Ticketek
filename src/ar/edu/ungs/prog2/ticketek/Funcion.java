@@ -1,74 +1,42 @@
 package ar.edu.ungs.prog2.ticketek;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Funcion {
 	private String nombre;
 	private String fecha;
     private String sede;
     private double precioBase;
-    //private List<IEntrada> entradasVendidas;
 
     public Funcion(String nombre,String fecha, String sede, double precioBase) {
-        if (!validarFecha(fecha) || sede == null || precioBase < 0) {
-            throw new RuntimeException("Datos de función no válidos");
-        }
-        this.nombre = nombre;
+    	if (nombre == null || nombre.isEmpty()) {
+			throw new RuntimeException("El nombre de la función no puede ser nulo o vacío");
+		}
+    	if (fecha == null) {
+			throw new RuntimeException("La fecha no puede ser nula");
+		}
+    	if (sede == null || sede.isEmpty()) {
+    		throw new RuntimeException("La sede no puede ser nula o vacía");			
+    	}
+    	if (precioBase <= 0) {
+    		throw new RuntimeException("El precio base debe ser mayor a cero");
+    	}
+    	this.nombre = nombre;
         this.fecha = fecha;
         this.sede = sede;
         this.precioBase = precioBase;
-        //this.entradasVendidas = new ArrayList<>();
     }
-	
 	public String obtenerFecha() {
 		return this.fecha;
 	}
+	
 	public String obtenerSede() {
 		return this.sede;
 	}
 	
-	public double precioBase() {
+	public double obtenerPrecioBase() {
 		return this.precioBase;
 	}
-
-	public List<IEntrada> getEntradasVendidas() {
-        return entradasVendidas;
-    }
-
-    public void agregarEntrada(IEntrada entrada) {
-        entradasVendidas.add(entrada);
-    }
-
-    public void removerEntrada(IEntrada entrada) {
-        entradasVendidas.remove(entrada);
-    }
-
-    private boolean validarFecha(String fecha) {
-        LocalDate f;
-        try {
-            f = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("dd/MM/yy"));
-            return true;
-        }catch (Exception e) {
-            throw new RuntimeException("formato de fecha invalido. Use dd/MM/yy");
-        }
-    }
-
-    public boolean esFutura() {
-        // Definimos el formato de la fecha
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-        try {
-            // Parseamos la fecha de la cadena
-            LocalDate fechaIngresada = LocalDate.parse(fecha, formato);
-            // Comparamos con la fecha actual
-            return fechaIngresada.isAfter(LocalDate.now());
-        } catch (Exception e) {
-            // Manejo de excepciones si la fecha no tiene el formato correcto
-            System.out.println("Formato de fecha incorrecto: " + fecha);
-            return false; // O lanzar una excepción según tu lógica
-        }
-    }
+	
+	public String obtenerNombre() {
+		return this.nombre;
+	}
+	
 }

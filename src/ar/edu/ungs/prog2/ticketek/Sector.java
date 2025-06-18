@@ -1,8 +1,5 @@
 package ar.edu.ungs.prog2.ticketek;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Sector {
 	private String nombre;
     private int capacidad;

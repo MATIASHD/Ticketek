@@ -4,7 +4,6 @@ import org.junit.*;
 import org.junit.runners.MethodSorters;
 
 import static org.junit.Assert.*;
-
 import java.util.List;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -66,6 +65,7 @@ public class TicketekTest{
         ticketek.venderEntrada("Stand up Comedy", "10/04/25", "javierm@campus.ungs.edu.ar", "1234", "VIP", new int[]{1, 2, 3, 4});
         ticketek.venderEntrada("Stand up Comedy", "10/04/25", "nores@campus.ungs.edu.ar", "1234", "VIP", new int[]{11, 12, 13, 14});
         ticketek.venderEntrada("Ballet Clásico", "01/03/25", "nores@campus.ungs.edu.ar", "1234", "Baja", new int[]{1, 2, 3, 4});
+        System.out.println("Anulando entrada: " + entradasJavierColdplay.toString());
     }
 
    
@@ -81,7 +81,6 @@ public class TicketekTest{
     public void ej01_registrarSedeRegistrada() {
         ticketek.registrarSede("El monumental", "calle 1", 100);
     }
-
     //el email del usuario no puede repetirse.
     @Test(expected = RuntimeException.class)
     public void ej02_registrarUsuarioRegistrado() {

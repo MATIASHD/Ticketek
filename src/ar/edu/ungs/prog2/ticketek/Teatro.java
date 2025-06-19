@@ -20,10 +20,6 @@ public class Teatro extends EstadiosConSecciones{
 		return super.obtenerCapcidadMaxima();
 	}
 
-	@Override
-	public String[] obtenerSectores() {
-		return super.obtenerSectores();
-	}
 
 	@Override
 	public int[] obtenerCapacidadOriginal() {
@@ -51,9 +47,10 @@ public class Teatro extends EstadiosConSecciones{
 	}
 
 	@Override
-	public int obtenerPorcentajeAdicionalSector(String sector) {
-		return super.obtenerPorcentajeAdicionalSector(sector);
+	public int porcentajeDeRecargoSector(String sector) {
+		return super.porcentajeDeRecargoSector(sector);
 	}
+
 
 	
 

@@ -9,7 +9,6 @@ public class Estadio extends Sede {
         this.capacidadOriginal = capacidadMaxima;
         this.sector = "CAMPO";
     }
-	
 
     @Override
 	public int obtenerCapcidadMaxima() {
@@ -36,9 +35,14 @@ public class Estadio extends Sede {
 		int entradaVendida =  ((vendida %  super.obtenerCapcidadMaxima() + super.obtenerCapcidadMaxima()) % super.obtenerCapcidadMaxima());
 		return this.sector + ": " + entradaVendida + "/" + capacidadOriginal; 
 	}
-	
-	public String obtenerSector() {
+
+
+	@Override
+	public String estadosSectores() {
 		return this.sector;
 	}
-    
+	@Override
+	public int porcentajeDeRecargoSector(String sector) {
+		return 1;
+	}
 }

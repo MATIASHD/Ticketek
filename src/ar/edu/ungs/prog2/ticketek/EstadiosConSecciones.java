@@ -21,35 +21,16 @@ public abstract class EstadiosConSecciones extends Sede {
 		this.asientoPorFila = asientoPorFila;
 	}
 	
-	public void descontarAsiento(String sector, int[] asientos) {
-		String[] sec = this.sectores;
-		int[] cantPorSector = this.capacidadPorSector;
-		
-		for (int i = 0; i < sec.length; i++) {
-			if (sec[i].equals(sector) && cantPorSector.length == asientos.length) {
-				for (int j = 0; j < cantPorSector.length; j++) {
-					cantPorSector[j] -= asientos[j];
-				}
-			}
-		}
-	}
-	public int obtenerPorcentajeAdicionalSector(String sector) {
+	@Override
+	public int porcentajeDeRecargoSector(String sector) {
 		for (int i = 0; i < this.sectores.length; i++) {
 			if (this.sectores[i].equals(sector)) {
 				return this.porcentajeAdicional[i];
 			}
 		}
-		throw new RuntimeException("Sector no encontrado");
+		return 1;
 	}
-	public int obtenerRecargo(String sector) {
-		for (int i = 0; i < this.sectores.length; i++) {
-			if (this.sectores[i].equals(sector)) {
-				return this.porcentajeAdicional[i];
-			}
-		}
-		throw new RuntimeException("Sector no encontrado");
-	}
-	
+
 	@Override
 	public String obtenerNombre() {
 		return super.obtenerNombre();
@@ -63,10 +44,6 @@ public abstract class EstadiosConSecciones extends Sede {
 	@Override
 	public int obtenerCapcidadMaxima() {
 		return super.obtenerCapcidadMaxima();
-	}
-	
-	public String[] obtenerSectores() {
-		return this.sectores;
 	}
 	
 	public int[] obtenerCapacidadOriginal() {
@@ -97,7 +74,4 @@ public abstract class EstadiosConSecciones extends Sede {
 		int entradaVendida =  ((vendida %  capacidadPorSector[index] + capacidadPorSector[index]) % capacidadPorSector[index]);
 		return "Platea " + this.sectores[index] + ": " + entradaVendida + "/" + capacidadOriginal[index] + " "; 
 	}
-	
-	
-	
 }

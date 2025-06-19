@@ -26,5 +26,8 @@ public abstract class Sede {
 	public int obtenerCapcidadMaxima() {
 		return this.capacidadMaxima;
 	}
+	public abstract String estadosSectores();
+	
+	public abstract int porcentajeDeRecargoSector(String sector);
 
 }

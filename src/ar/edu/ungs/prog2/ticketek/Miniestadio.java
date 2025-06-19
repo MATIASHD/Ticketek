@@ -28,13 +28,6 @@ public class Miniestadio extends EstadiosConSecciones{
 		return super.obtenerCapcidadMaxima();
 	}
 
-
-	@Override
-	public String[] obtenerSectores() {
-		return super.obtenerSectores();
-	}
-
-
 	@Override
 	public int[] obtenerCapacidadOriginal() {
 		return super.obtenerCapacidadOriginal();
@@ -71,10 +64,10 @@ public class Miniestadio extends EstadiosConSecciones{
 	}
 
 	@Override
-	public int obtenerPorcentajeAdicionalSector(String sector) {
-		// TODO Auto-generated method stub
-		return super.obtenerPorcentajeAdicionalSector(sector);
+	public int porcentajeDeRecargoSector(String sector) {
+		return super.porcentajeDeRecargoSector(sector);
 	}
+	
 	
 	
 }

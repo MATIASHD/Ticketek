@@ -20,16 +20,6 @@ public abstract class EstadiosConSecciones extends Sede {
 		this.porcentajeAdicional = porcentajeAdicional.clone();
 		this.asientoPorFila = asientoPorFila;
 	}
-	
-	@Override
-	public int porcentajeDeRecargoSector(String sector) {
-		for (int i = 0; i < this.sectores.length; i++) {
-			if (this.sectores[i].equals(sector)) {
-				return this.porcentajeAdicional[i];
-			}
-		}
-		return 1;
-	}
 
 	@Override
 	public String obtenerNombre() {
@@ -62,6 +52,17 @@ public abstract class EstadiosConSecciones extends Sede {
 		return this.asientoPorFila;
 	}
 	
+	
+	@Override
+	public int recargo(String sector) {
+		for (int i = 0; i < sectores.length; i++) {
+			if (sectores[i].equals(sector)) {
+				return porcentajeAdicional[i];
+			}
+		}
+		throw new RuntimeException("Error no se encontro sector");
+	}
+
 	public String estadosSectores() {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < this.sectores.length; i++) {
@@ -74,4 +75,19 @@ public abstract class EstadiosConSecciones extends Sede {
 		int entradaVendida =  ((vendida %  capacidadPorSector[index] + capacidadPorSector[index]) % capacidadPorSector[index]);
 		return "Platea " + this.sectores[index] + ": " + entradaVendida + "/" + capacidadOriginal[index] + " "; 
 	}
+
+	public double costoDeLaEntrada(double precioBase,String sector) {
+		for (int i = 0; i < sectores.length; i++) {
+			if (sectores[i].equals(sector)) {
+				return super.costoDeLaEntrada(precioBase) + calcularPorcentaje(precioBase, porcentajeAdicional[i]);
+			}
+		}
+		throw new RuntimeException("Error no se encontro sector");
+	}
+	
+	private double calcularPorcentaje(double valor, double porcentaje) {
+		double adicional = porcentaje;
+		return valor * adicional / 100.00;
+	}
+	
 }

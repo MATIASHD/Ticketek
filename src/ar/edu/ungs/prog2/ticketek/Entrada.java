@@ -10,7 +10,7 @@ public class Entrada implements IEntrada{
     private int asiento;
     private boolean activa;
     private double costoEntrada;
-    public Entrada(String espectaculo, String fecha, String sector, int asiento, String nombreSede, int fila, String usuario, int codEntrada, double costoEntrada) {
+    public Entrada(String espectaculo, String fecha, String sector, int asiento, String nombreSede, int fila, String usuario, int codEntrada, double precio) {
 		if (espectaculo.isEmpty()) {
 			throw new RuntimeException("El nombre del espectáculo no puede ser nulo o vacío");
 		}
@@ -35,6 +35,9 @@ public class Entrada implements IEntrada{
 		if (codEntrada < 0) {
 			throw new RuntimeException("El código de entrada no puede ser negativo");
 		}
+		if (precio <= 0) {
+			throw new RuntimeException("No puede ser negativo el precio");
+		}
     	this.codEntrada = codEntrada;
     	this.usuario = usuario;
         this.espectaculo = espectaculo;
@@ -44,15 +47,27 @@ public class Entrada implements IEntrada{
         this.nombreSede = nombreSede;
         this.fila = (asiento - 1) / fila + 1;
         this.activa = true;
-        this.costoEntrada = costoEntrada;
+        this.costoEntrada = precio;
     }
     
-    public Entrada(String espectaculo, String fecha, String sede, String usuario, int codEntrada, double costoEntrada) {
+    public Entrada(String espectaculo, String fecha, String sede, String usuario, int codEntrada, double precio) {
     	if (espectaculo == null || espectaculo.isEmpty()) {
 			throw new RuntimeException("El nombre del espectáculo no puede ser nulo o vacío");
 		}
 		if (fecha == null) {
 			throw new RuntimeException("La fecha no puede ser nula");
+		}
+		if (sede.isEmpty()) {
+			throw new RuntimeException("El nombre de la sede no puede ser nulo o vacío");
+		}
+		if (usuario == null || usuario.isEmpty()) {
+			throw new RuntimeException("El usuario no puede ser nulo o vacío");
+		}
+		if (codEntrada < 0) {
+			throw new RuntimeException("El código de entrada no puede ser negativo");
+		}
+		if (precio <= 0) {
+			throw new RuntimeException("No puede ser negativo el precio");
 		}
     	this.codEntrada = codEntrada;
     	this.usuario = usuario;
@@ -62,13 +77,13 @@ public class Entrada implements IEntrada{
         this.sector = "CAMPO";
         this.asiento = 0;
         this.activa = true;
-        this.costoEntrada = costoEntrada;
+        this.costoEntrada = precio;
     }
     
 	@Override
 	public double precio() {
 		return this.costoEntrada;
-	}
+    }
 	
 	public boolean estadoEntrada() {
 		return this.activa;
@@ -164,17 +179,21 @@ public class Entrada implements IEntrada{
 	
 	public String obtenerFuncion() {
 		StringBuilder sb = new StringBuilder();
-	      sb.append("- (").append(this.fecha)
-	        .append(") ").append(this.nombreSede);
-	      return sb.toString().trim();
+	    sb.append("- (").append(this.fecha)
+	    .append(") ").append(this.nombreSede);
+	    return sb.toString().trim();
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-	    if (this == obj) return true;
-	    if (obj == null || getClass() != obj.getClass()) return false;
-	    Entrada other = (Entrada) obj;
-	    return this.codEntrada == other.codEntrada;
+	    if (this == obj) {
+	    	return true;
+	    }
+	    if (obj == null || getClass() != obj.getClass()) {
+	    	return false;
+	    }
+	    Entrada pass = (Entrada) obj;
+	    return this.codEntrada == pass.codEntrada;
 	}
 
 	@Override

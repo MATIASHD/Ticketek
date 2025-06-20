@@ -1,25 +1,20 @@
 package ar.edu.ungs.prog2.ticketek;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class Ticketek implements ITicketek {
 	private Map<String, Sede> sedes;
-	private Map<String, Funcion> funcion;
-	private Set<String> espectaculos;
+	private Map<String, Espectaculo> espectaculos;
 	private Map<String, Usuario> usuarios;
 	private Map<Integer,IEntrada> entradas;
 	private int codEntrada;
 	public Ticketek() {
 		this.sedes = new HashMap<String, Sede>();
         this.usuarios = new HashMap<String,Usuario>(); 
-        this.espectaculos = new HashSet<String>();
+        this.espectaculos = new HashMap<String, Espectaculo>();
         this.entradas = new HashMap<Integer,IEntrada>();
-        this.funcion = new HashMap<String, Funcion>();
         this.codEntrada = 0;
 	}
 
@@ -30,6 +25,7 @@ public class Ticketek implements ITicketek {
 		}
 		sedes.put(nombre, new Estadio(nombre, direccion, capacidadMaxima));
 	}
+	
 	@Override
 	public void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila,
 			String[] sectores, int[] capacidad, int[] porcentajeAdicional) {
@@ -59,83 +55,74 @@ public class Ticketek implements ITicketek {
 
 	@Override
 	public void registrarEspectaculo(String nombre) {
-		if (this.espectaculos.contains(nombre)) {
+		if (this.espectaculos.containsKey(nombre)) {
 			throw new RuntimeException("Espectáculo ya registrado");
 		}
-		espectaculos.add(nombre);
+		espectaculos.put(nombre, new Espectaculo(nombre));
 	}
 	
 	@Override
 	public void agregarFuncion(String nombreEspectaculo, String fecha, String sede, double precioBase) {
-		  for (Funcion event : funcion.values()) {
-		        if (event.obtenerSede().equals(sede) && event.obtenerFecha().equals(fecha)) {
-		            throw new RuntimeException("Ya existe un evento en esa sede y fecha");
-		        }
-		    }
-		funcion.put(nombreEspectaculo, new Funcion(nombreEspectaculo, fecha, sede, precioBase));
+		if (espectaculos.get(nombreEspectaculo).checkFecha(fecha)) {
+			throw new RuntimeException("Ya existe un evento en esa sede y fecha");
+		}
+		espectaculos.get(nombreEspectaculo).agregarFuncion(nombreEspectaculo, fecha, sede, precioBase);
 	}
 
 	@Override
 	public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia,int cantidadEntradas) {
 		List<IEntrada> nuevasEntradas = new ArrayList<IEntrada>();
-		Funcion show = funcion.get(nombreEspectaculo);
-		if (nombreEspectaculo.isEmpty() || !espectaculos.contains(nombreEspectaculo)) {
+		
+		Espectaculo evento = espectaculos.get(nombreEspectaculo);
+		Funcion show = evento.obtenerLaFuncion(fecha);
+
+		if (nombreEspectaculo.isEmpty() || !espectaculos.containsKey(nombreEspectaculo)) {
 			throw new RuntimeException("Espectáculo no registrado");
 		}
 		if(!validarContrasenia(email, contrasenia)) {
 			throw new RuntimeException("Usuario no registrado o contraseña incorrecta");
 		}
-		/*if(!existeFuncion(nombreEspectaculo, fecha)) {
-			throw new RuntimeException("Función no registrada");
-		}*/
 		for (int i = 0; i < cantidadEntradas; i++) {
 			codEntrada++;
-			IEntrada entrada = new Entrada(nombreEspectaculo, fecha, show.obtenerSede(), email, codEntrada,show.obtenerPrecioBase());
+			IEntrada entrada = new Entrada(nombreEspectaculo, fecha, show.obtenerSede(), email, codEntrada, show.obtenerPrecioBase());
 			nuevasEntradas.add(entrada);
+			usuarios.get(email).agregarEntrada(entrada);
 			entradas.put(codEntrada,entrada);	
 		}
 		return nuevasEntradas;
 	}
 	
-	private boolean existeFuncion(String nombreEspectaculo, String fecha) {
-		for (Funcion show : funcion.values()) {
-			if (show.obtenerNombre().equals(nombreEspectaculo) && new Fecha(show.obtenerFecha()).compararFecha(fecha)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	@Override
 	public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia,
 			String sector, int[] asientos) {
-		if (!espectaculos.contains(nombreEspectaculo) || nombreEspectaculo.isEmpty()) {
+		List<IEntrada> nuevasEntradas = new ArrayList<>();
+		Espectaculo evento = espectaculos.get(nombreEspectaculo);
+		Funcion show = evento.obtenerLaFuncion(fecha);
+
+		if (!espectaculos.containsKey(nombreEspectaculo) || nombreEspectaculo.isEmpty()) {
 			throw new RuntimeException("Espectáculo no registrado");
 		}
 		if (!usuarios.containsKey(email)) {
 			throw new RuntimeException("Usuario no registrado");
 		}
-		if (!usuarios.get(email).validarContrasenia(contrasenia)) {
+		if (!validarContrasenia(email, contrasenia)) {
 			throw new RuntimeException("Contraseña incorrecta");
 		}
-		List<IEntrada> nuevasEntradas = new ArrayList<>();
+		double precio = 0;
+		Sede predio = sedes.get(evento.obtenerNombreSede(fecha));
 		
-		for (int i = 0; i < asientos.length; i++) {
-			for (Funcion show : funcion.values()) {
-				
-					Sede sede = sedes.get(show.obtenerSede());
-	                int fila = 1;
-	                if (sede instanceof EstadiosConSecciones) {
-	                    int asientosPorFila = ((EstadiosConSecciones) sede).obtenerAsientoPorFila();
-	                    fila = ((asientos[i] - 1) / asientosPorFila) + 1;
-	                }
-	                codEntrada++;
-					Entrada entrada = new Entrada(nombreEspectaculo, fecha, sector, asientos[i], show.obtenerSede(),fila, email, codEntrada, 0);
-					nuevasEntradas.add(entrada);
-					entradas.put(codEntrada, entrada);
-				}
+		
+		if (predio instanceof EstadiosConSecciones) {
+			EstadiosConSecciones lugar = (EstadiosConSecciones) predio;
+			precio = lugar.costoDeLaEntrada(show.obtenerPrecioBase(), sector);
 		}
 		
+		for (int i = 0; i < asientos.length; i++) {
+			codEntrada++;
+			IEntrada entrada = new Entrada(nombreEspectaculo, fecha, sector, asientos[i], show.obtenerSede(),1, email, codEntrada, precio);
+			usuarios.get(email).agregarEntrada(entrada);
+			entradas.put(codEntrada,entrada);			
+		}
 		return nuevasEntradas;
 	}
 	
@@ -145,31 +132,32 @@ public class Ticketek implements ITicketek {
 			throw new RuntimeException("Espectáculo no debe estar vacío");
 		}
 		StringBuilder sb = new StringBuilder();
-	    for (Funcion show : funcion.values()) {
+		Map<String, Funcion> event = espectaculos.get(nombreEspectaculo).obtenerLista();
+		
+	    for (Funcion show : event.values()) {
 	       if (show.obtenerNombre().equals(nombreEspectaculo)) {
 	            Sede sede = sedes.get(show.obtenerSede());
 	            sb.append("- (").append(show.obtenerFecha()).append(") ").append(show.obtenerSede()).append(" - ");
-	            sb.append(sede.estadosSectores());
+	            sb.append(sede.estadosSectores()).substring(0, sb.length() - 1);
+	            sb.append("\n");
 	       }
 	    }
-	   
-	    return sb.substring(0, sb.length() - 1).toString().trim();
-	    
+	    return sb.toString().trim();
 	}
 	
 	@Override
 	public List<IEntrada> listarEntradasEspectaculo(String nombreEspectaculo) {
-		if (!espectaculos.contains(nombreEspectaculo)) {
+		if (!espectaculos.containsKey(nombreEspectaculo)) {
 			throw new RuntimeException("Espectáculo no registrado");
 		}
 		List<IEntrada> entradasVendidas = new ArrayList<>();
 		for (IEntrada entrada : entradas.values()) {
 			Entrada ticket = (Entrada) entrada;
 			if (ticket.obtenerEspectaculo().equals(nombreEspectaculo) && ticket.estadoEntrada()) {
-			entradasVendidas.add(entrada);
+				entradasVendidas.add(entrada);
 			}
 		}
-			return entradasVendidas;
+		return entradasVendidas;
 	}
 	
 	@Override
@@ -181,23 +169,21 @@ public class Ticketek implements ITicketek {
 		for (IEntrada entrada : entradas.values()) {
 			Entrada ticket = (Entrada) entrada;
 			if (new Fecha(ticket.obtenerFecha()).esFutura() && ticket.estadoEntrada()) {
-				entradasVendidas.add(entrada);
-				
+				entradasVendidas.add(entrada);	
 			}
 		}
-		
 		return entradasVendidas;
 	}
 	
 	@Override
 	public List<IEntrada> listarTodasLasEntradasDelUsuario(String email, String contrasenia) {
-		if (!usuarios.get(email).validarContrasenia(contrasenia)) {
+		if (!validarContrasenia(email,contrasenia)) {
 			throw new RuntimeException("Contraseña incorrecta");
 		}
 		List<IEntrada> resultado = new ArrayList<>();
 		for (IEntrada entrada : entradas.values()) {
 			Entrada ticket = (Entrada) entrada;
-			if (ticket.validarUsuario(email)) {
+			if (ticket.obtenerUsuario().equals(email)) {
 				resultado.add(entrada);
 		    }
 		}
@@ -206,17 +192,21 @@ public class Ticketek implements ITicketek {
 
 	@Override
 	public boolean anularEntrada(IEntrada entrada, String contrasenia) {
-		Entrada ticket = (Entrada) entrada;
-		if(entrada == null) {
+		if (entrada == null) {
 			throw new RuntimeException("La entrada no es válida");
-	    }
-	    
-	    if (!validarContrasenia(ticket.obtenerUsuario(), contrasenia)) {
-	        throw new RuntimeException("La entrada ya está anulada");
-	    }
-	    ticket.anularEntrada();
-	    entradas.remove(ticket.obtenerCodigoEntrada());
-	    return true;
+		}    
+		Entrada ticket = (Entrada) entrada;
+		for (IEntrada pass : entradas.values()) {
+			if (pass.equals(ticket)) {
+				if (!validarContrasenia(ticket.obtenerUsuario(), contrasenia)) {
+					throw new RuntimeException("La entrada ya está anulada");
+		        }
+		        ticket.anularEntrada();
+		        entradas.remove(ticket.obtenerCodigoEntrada());
+		        return true;
+		    }
+		}
+		throw new RuntimeException("La entrada no existe");
 	}
 
 	@Override
@@ -257,47 +247,54 @@ public class Ticketek implements ITicketek {
 	
 	@Override
 	public double costoEntrada(String nombreEspectaculo, String fecha) {
-		for (Funcion show : funcion.values()) {
+		Map<String, Funcion> event = obtenerFunciones(nombreEspectaculo);
+		for (Funcion show : event.values()) {
 			if(show.obtenerNombre().equals(nombreEspectaculo) && new Fecha(show.obtenerFecha()).compararFecha(fecha)) {
-				return show.obtenerPrecioBase();
+				return sedes.get(show.obtenerSede()).costoDeLaEntrada(show.obtenerPrecioBase());
 			}
 		}
 		throw new RuntimeException("Función no encontrada");
 	}
-
+	
 	@Override
 	public double costoEntrada(String nombreEspectaculo, String fecha, String sector) {
-	    for (Funcion show : funcion.values()) {
-	        if (show.obtenerNombre().equals(nombreEspectaculo) /*&& new Fecha(show.obtenerFecha()).compararFecha(fecha)*/) {
-	        	return funcion.get(nombreEspectaculo).obtenerPrecioBase() + (funcion.get(nombreEspectaculo).obtenerPrecioBase() * sedes.get(funcion.get(nombreEspectaculo).obtenerSede()).porcentajeDeRecargoSector(sector) / 100.0);
-	        }
+		Map<String, Funcion> event = espectaculos.get(nombreEspectaculo).obtenerLista();
+	    for (Funcion show : event.values()) {
+	    		if(new Fecha(show.obtenerFecha()).compararFecha(fecha)){
+	    			EstadiosConSecciones predio = (EstadiosConSecciones) sedes.get(show.obtenerSede());
+	    			return predio.costoDeLaEntrada(show.obtenerPrecioBase(),sector);
+	    		}
 	    }
-	    throw new IllegalArgumentException("Función o sector no encontrado");
+		throw new IllegalArgumentException("Función o sector no encontrado");
 	}
+	
 	
 	@Override
 	public double totalRecaudado(String nombreEspectaculo) {
 		double total = 0.0;
-		for (IEntrada entrada : listarEntradasEspectaculo(nombreEspectaculo)) {
-			Entrada ticket = (Entrada) entrada;
-			if(funcion.get(nombreEspectaculo) != null) {
-				if (ticket.obtenerSector().equals("CAMPO")) {
-					total += costoEntrada(nombreEspectaculo, ticket.obtenerFecha());
-				} else {					
-					total += costoEntrada(nombreEspectaculo, ticket.obtenerFecha(), ticket.obtenerSector());
+		for (IEntrada entrada : entradas.values()) {
+			Entrada pass = (Entrada) entrada;
+			if(pass.obtenerEspectaculo().equals(nombreEspectaculo)) {
+				if (sedes.get(pass.obtenerSede()) instanceof Estadio) {
+					total += costoEntrada(pass.obtenerEspectaculo(), pass.obtenerFecha());
+				}
+				if (sedes.get(pass.obtenerSede()) instanceof Miniestadio) {
+					total += costoEntrada(pass.obtenerEspectaculo(), pass.obtenerFecha(), pass.obtenerSector());
+				}
+				if (sedes.get(pass.obtenerSede()) instanceof Teatro) {
+					total += costoEntrada(pass.obtenerEspectaculo(), pass.obtenerFecha(), pass.obtenerSector());
 				}
 			}
 		}
-		
-		return total;
+			return total;
 	}
-
+	
 	@Override
 	public double totalRecaudadoPorSede(String nombreEspectaculo, String nombreSede) {
 		double total = 0.0;
 		for (IEntrada entrada : listarEntradasEspectaculo(nombreEspectaculo)) {
 			Entrada ticket = (Entrada) entrada;
-			if(ticket.obtenerFuncion().equals(nombreEspectaculo) && ticket.obtenerSede().equals(nombreSede)) {
+			if(ticket.obtenerSede().equals(nombreSede)) {		
 				if (ticket.obtenerSector().equals("CAMPO")) {
 					total += costoEntrada(nombreEspectaculo, ticket.obtenerFecha());
 				} else {					
@@ -305,12 +302,16 @@ public class Ticketek implements ITicketek {
 				}
 			}
 		}
-		
 		return total;
 	}
-	
+
 	private boolean validarContrasenia(String email, String contrasenia) {
 		return usuarios.containsKey(email) && usuarios.get(email).validarContrasenia(contrasenia);
 	}
 	
+	private Map<String, Funcion> obtenerFunciones(String nombreEspectaculo){
+		Map<String, Funcion> event = espectaculos.get(nombreEspectaculo).obtenerLista();
+		return event;
 	}
+	
+}

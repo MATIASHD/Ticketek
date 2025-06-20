@@ -47,9 +47,19 @@ public class Teatro extends EstadiosConSecciones{
 	}
 
 	@Override
-	public int porcentajeDeRecargoSector(String sector) {
-		return super.porcentajeDeRecargoSector(sector);
+	public double costoDeLaEntrada(double precioBase, String sector) {
+		return super.costoDeLaEntrada(precioBase, sector);
 	}
+
+	@Override
+	public int recargo(String sector) {
+		return super.recargo(sector);
+	}
+
+
+
+
+
 
 
 	

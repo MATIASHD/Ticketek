@@ -28,6 +28,9 @@ public abstract class Sede {
 	}
 	public abstract String estadosSectores();
 	
-	public abstract int porcentajeDeRecargoSector(String sector);
+	public double costoDeLaEntrada(double precioBase) {
+		return precioBase;
+	}
+	public abstract int recargo(String sector); 
 
 }

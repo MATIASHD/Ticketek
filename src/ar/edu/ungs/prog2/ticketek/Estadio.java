@@ -36,13 +36,21 @@ public class Estadio extends Sede {
 		return this.sector + ": " + entradaVendida + "/" + capacidadOriginal; 
 	}
 
-
 	@Override
 	public String estadosSectores() {
 		return this.sector;
 	}
+
 	@Override
-	public int porcentajeDeRecargoSector(String sector) {
+	public double costoDeLaEntrada(double precioBase) {
+		return super.costoDeLaEntrada(precioBase);
+	}
+
+	@Override
+	public int recargo(String sector) {
 		return 1;
 	}
+	
+
+
 }

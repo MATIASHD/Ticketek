@@ -8,7 +8,7 @@ public class Usuario {
 	private String nombre;
 	private String apellido;
 	private String contrasenia;
-	private List<Entrada> entradas;
+	private List<IEntrada> entradas;
 	
 	public Usuario(String email, String nombre, String apellido, String contrasenia) {
 		if (email == null || email.isEmpty() || nombre == null || nombre.isEmpty() ||
@@ -31,13 +31,15 @@ public class Usuario {
 	public String obtenerContrasenia() {
 	        return this.contrasenia;
 	}
-	public List<Entrada> obtenerEntradas() {
-	        return new ArrayList<>(this.entradas);
+	public List<IEntrada> obtenerEntradas() {
+	        return this.entradas;
 	}
-	
 	public boolean validarContrasenia(String contrasenia) {
         return this.contrasenia.equals(contrasenia);
     }
+	public void agregarEntrada(IEntrada entrada) {
+		this.entradas.add(entrada);
+	}
 
 
 }

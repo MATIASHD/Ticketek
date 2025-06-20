@@ -64,9 +64,20 @@ public class Miniestadio extends EstadiosConSecciones{
 	}
 
 	@Override
-	public int porcentajeDeRecargoSector(String sector) {
-		return super.porcentajeDeRecargoSector(sector);
+	public double costoDeLaEntrada(double precioBase, String sector) {
+		return super.costoDeLaEntrada(precioBase, sector) + precioConsumicion;
 	}
+
+	@Override
+	public int recargo(String sector) {
+		return super.recargo(sector);
+	}
+
+	
+	
+	
+
+
 	
 	
 	

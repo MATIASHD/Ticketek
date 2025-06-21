@@ -20,7 +20,6 @@ public class Teatro extends EstadiosConSecciones{
 		return super.obtenerCapcidadMaxima();
 	}
 
-
 	@Override
 	public int[] obtenerCapacidadOriginal() {
 		return super.obtenerCapacidadOriginal();

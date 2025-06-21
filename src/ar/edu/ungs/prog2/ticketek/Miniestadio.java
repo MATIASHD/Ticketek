@@ -72,13 +72,4 @@ public class Miniestadio extends EstadiosConSecciones{
 	public int recargo(String sector) {
 		return super.recargo(sector);
 	}
-
-	
-	
-	
-
-
-	
-	
-	
 }

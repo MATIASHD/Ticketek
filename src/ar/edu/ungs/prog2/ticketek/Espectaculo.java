@@ -42,7 +42,7 @@ public class Espectaculo {
 		return this.nombre;
    }
 	@Override
-        public String toString() {
-            return "Espectáculo: " + nombre + ", Funciones: " + funciones.size();
+   public String toString() {
+		return "Espectáculo: " + nombre + ", Funciones: " + funciones.size();
    }
 }

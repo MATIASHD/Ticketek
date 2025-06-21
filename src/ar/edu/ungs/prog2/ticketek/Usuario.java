@@ -40,7 +40,5 @@ public class Usuario {
 	public void agregarEntrada(IEntrada entrada) {
 		this.entradas.add(entrada);
 	}
-
-
 }
 	

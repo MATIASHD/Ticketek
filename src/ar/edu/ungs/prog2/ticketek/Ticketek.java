@@ -89,7 +89,9 @@ public class Ticketek implements ITicketek {
 			usuarios.get(email).agregarEntrada(entrada);
 			entradas.put(codEntrada,entrada);	
 		}
+		System.out.println(nuevasEntradas);
 		return nuevasEntradas;
+		
 	}
 	
 	@Override
@@ -111,15 +113,18 @@ public class Ticketek implements ITicketek {
 		double precio = 0;
 		Sede predio = sedes.get(evento.obtenerNombreSede(fecha));
 		
-		
-		if (predio instanceof EstadiosConSecciones) {
-			EstadiosConSecciones lugar = (EstadiosConSecciones) predio;
+		if (predio instanceof Teatro) {
+			Teatro lugar = (Teatro) predio;
+			precio = lugar.costoDeLaEntrada(show.obtenerPrecioBase(), sector);
+		} else {
+			Miniestadio lugar = (Miniestadio) predio;
 			precio = lugar.costoDeLaEntrada(show.obtenerPrecioBase(), sector);
 		}
 		
 		for (int i = 0; i < asientos.length; i++) {
 			codEntrada++;
-			IEntrada entrada = new Entrada(nombreEspectaculo, fecha, sector, asientos[i], show.obtenerSede(),1, email, codEntrada, precio);
+			IEntrada entrada = new Entrada(nombreEspectaculo, fecha, sector, asientos[i], show.obtenerSede(),1, email, codEntrada, precio );
+			nuevasEntradas.add(entrada);
 			usuarios.get(email).agregarEntrada(entrada);
 			entradas.put(codEntrada,entrada);			
 		}
@@ -131,6 +136,7 @@ public class Ticketek implements ITicketek {
 		if (nombreEspectaculo == null || nombreEspectaculo.isEmpty()) {
 			throw new RuntimeException("Espectáculo no debe estar vacío");
 		}
+		
 		StringBuilder sb = new StringBuilder();
 		Map<String, Funcion> event = espectaculos.get(nombreEspectaculo).obtenerLista();
 		
@@ -260,10 +266,10 @@ public class Ticketek implements ITicketek {
 	public double costoEntrada(String nombreEspectaculo, String fecha, String sector) {
 		Map<String, Funcion> event = espectaculos.get(nombreEspectaculo).obtenerLista();
 	    for (Funcion show : event.values()) {
-	    		if(new Fecha(show.obtenerFecha()).compararFecha(fecha)){
-	    			EstadiosConSecciones predio = (EstadiosConSecciones) sedes.get(show.obtenerSede());
-	    			return predio.costoDeLaEntrada(show.obtenerPrecioBase(),sector);
-	    		}
+	    	if(new Fecha(show.obtenerFecha()).compararFecha(fecha)){
+	    		EstadiosConSecciones predio = (EstadiosConSecciones) sedes.get(show.obtenerSede());
+	    		return predio.costoDeLaEntrada(show.obtenerPrecioBase(),sector);
+	    	}
 	    }
 		throw new IllegalArgumentException("Función o sector no encontrado");
 	}

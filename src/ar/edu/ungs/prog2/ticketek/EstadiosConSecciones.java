@@ -9,7 +9,6 @@ public abstract class EstadiosConSecciones extends Sede {
 	
 	public EstadiosConSecciones(String nombre, String direccion, int capacidadMaxima,int asientoPorFila, String[] NombresDeSectores,int[] capacidadesDeSectores, int[] porcentajeAdicional) {
 		super(nombre, direccion, capacidadMaxima);
-		
 		if(asientoPorFila <= 0 || NombresDeSectores == null || capacidadesDeSectores == null ||  porcentajeAdicional == null || 
 				NombresDeSectores.length != capacidadesDeSectores.length || capacidadesDeSectores.length != porcentajeAdicional.length) {
 			throw new RuntimeException("Datos de secciones no son validos");
@@ -52,7 +51,6 @@ public abstract class EstadiosConSecciones extends Sede {
 		return this.asientoPorFila;
 	}
 	
-	
 	@Override
 	public int recargo(String sector) {
 		for (int i = 0; i < sectores.length; i++) {
@@ -70,6 +68,7 @@ public abstract class EstadiosConSecciones extends Sede {
 		}
 		return sb.toString().trim();
 	}
+	
 	public String entradasVendidas(int index) {
 		int vendida = capacidadPorSector[index] - capacidadOriginal[index];
 		int entradaVendida =  ((vendida %  capacidadPorSector[index] + capacidadPorSector[index]) % capacidadPorSector[index]);

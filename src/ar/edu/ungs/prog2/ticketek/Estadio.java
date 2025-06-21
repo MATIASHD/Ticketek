@@ -50,7 +50,4 @@ public class Estadio extends Sede {
 	public int recargo(String sector) {
 		return 1;
 	}
-	
-
-
 }

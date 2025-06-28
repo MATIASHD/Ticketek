@@ -50,4 +50,10 @@ public class Estadio extends Sede {
 	public int recargo(String sector) {
 		return 1;
 	}
+
+	@Override
+	public double calcularCostoEntrada(String espectaculo, String fecha) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

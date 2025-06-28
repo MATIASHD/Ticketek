@@ -9,6 +9,8 @@ public class Ticketek implements ITicketek {
 	private Map<String, Espectaculo> espectaculos;
 	private Map<String, Usuario> usuarios;
 	private Map<Integer,IEntrada> entradas;
+	private Map<String, Double> totalRecaudadoPorEspectaculo;
+	private Map<String, Map<String, Double>> totalRecaudadoPorSede;
 	private int codEntrada;
 	public Ticketek() {
 		this.sedes = new HashMap<String, Sede>();
@@ -16,6 +18,8 @@ public class Ticketek implements ITicketek {
         this.espectaculos = new HashMap<String, Espectaculo>();
         this.entradas = new HashMap<Integer,IEntrada>();
         this.codEntrada = 0;
+        this.totalRecaudadoPorEspectaculo = new HashMap<String, Double>();
+        this.totalRecaudadoPorSede  = new HashMap<>();
 	}
 
 	@Override
@@ -85,14 +89,16 @@ public class Ticketek implements ITicketek {
 		for (int i = 0; i < cantidadEntradas; i++) {
 			codEntrada++;
 			IEntrada entrada = new Entrada(nombreEspectaculo, fecha, show.obtenerSede(), email, codEntrada, show.obtenerPrecioBase());
+			totalRecaudadoPorEspectaculo.put(nombreEspectaculo, totalRecaudadoPorEspectaculo.getOrDefault(nombreEspectaculo, 0.0) + show.obtenerPrecioBase());
+			recudarPorSede(nombreEspectaculo, show.obtenerSede(), show.obtenerPrecioBase());
 			nuevasEntradas.add(entrada);
 			usuarios.get(email).agregarEntrada(entrada);
 			entradas.put(codEntrada,entrada);	
 		}
-		System.out.println(nuevasEntradas);
 		return nuevasEntradas;
 		
 	}
+	
 	
 	@Override
 	public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia,
@@ -123,12 +129,22 @@ public class Ticketek implements ITicketek {
 		
 		for (int i = 0; i < asientos.length; i++) {
 			codEntrada++;
-			IEntrada entrada = new Entrada(nombreEspectaculo, fecha, sector, asientos[i], show.obtenerSede(),1, email, codEntrada, precio );
+			totalRecaudadoPorEspectaculo.put(nombreEspectaculo, totalRecaudadoPorEspectaculo.getOrDefault(nombreEspectaculo, 0.0) + precio);
+			recudarPorSede(nombreEspectaculo, show.obtenerSede(), precio);
+			IEntrada entrada = new Entrada(nombreEspectaculo, fecha, sector, asientos[i], show.obtenerSede(),1, email, codEntrada, precio);
 			nuevasEntradas.add(entrada);
 			usuarios.get(email).agregarEntrada(entrada);
 			entradas.put(codEntrada,entrada);			
 		}
 		return nuevasEntradas;
+	}
+	
+	private void recudarPorSede(String espectaculo, String sede, double precio) {
+		if(!totalRecaudadoPorSede.containsKey(espectaculo)) {
+			totalRecaudadoPorSede.put(espectaculo, new HashMap<>());
+		}
+		Map<String, Double> listaDeSedePorEspectaculo = totalRecaudadoPorSede.get(espectaculo);
+		listaDeSedePorEspectaculo.put(sede, listaDeSedePorEspectaculo.getOrDefault(sede, 0.0) + precio);
 	}
 	
 	@Override
@@ -202,17 +218,16 @@ public class Ticketek implements ITicketek {
 			throw new RuntimeException("La entrada no es válida");
 		}    
 		Entrada ticket = (Entrada) entrada;
-		for (IEntrada pass : entradas.values()) {
-			if (pass.equals(ticket)) {
-				if (!validarContrasenia(ticket.obtenerUsuario(), contrasenia)) {
-					throw new RuntimeException("La entrada ya está anulada");
-		        }
-		        ticket.anularEntrada();
-		        entradas.remove(ticket.obtenerCodigoEntrada());
-		        return true;
-		    }
+		if (!validarContrasenia(ticket.obtenerUsuario(),contrasenia)) {
+			throw new RuntimeException("Contraseña incorrecta");
 		}
-		throw new RuntimeException("La entrada no existe");
+		
+		if(!entradas.get(ticket.obtenerCodigoEntrada()).equals(ticket)) {
+			throw new RuntimeException("La entrada ya está anulada");
+		}
+	
+	    entradas.remove(ticket.obtenerCodigoEntrada());
+	    return true;
 	}
 
 	@Override
@@ -251,73 +266,67 @@ public class Ticketek implements ITicketek {
 	    return ticket;
 	}
 	
+	public IEntrada buscarEntrada(String nombreEspectaculo, String fecha) {
+	    for (IEntrada entrada : entradas.values()) {
+	    	Entrada ticket = (Entrada) entrada;
+	        if (ticket.obtenerEspectaculo().equals(nombreEspectaculo) && new Fecha(ticket.obtenerFecha()).compararFecha(fecha)) {
+	            return entrada;
+	        }
+	    }
+	    return null;
+	}
+	
 	@Override
 	public double costoEntrada(String nombreEspectaculo, String fecha) {
-		Map<String, Funcion> event = obtenerFunciones(nombreEspectaculo);
-		for (Funcion show : event.values()) {
-			if(show.obtenerNombre().equals(nombreEspectaculo) && new Fecha(show.obtenerFecha()).compararFecha(fecha)) {
-				return sedes.get(show.obtenerSede()).costoDeLaEntrada(show.obtenerPrecioBase());
-			}
-		}
-		throw new RuntimeException("Función no encontrada");
+		 IEntrada entrada = buscarEntrada(nombreEspectaculo, fecha);
+		    if (entrada == null) {
+		        throw new RuntimeException("Función no encontrada");
+		    }
+		    Entrada ticket = (Entrada) entrada;
+		    return ticket.precio();
+		
 	}
 	
 	@Override
 	public double costoEntrada(String nombreEspectaculo, String fecha, String sector) {
-		Map<String, Funcion> event = espectaculos.get(nombreEspectaculo).obtenerLista();
-	    for (Funcion show : event.values()) {
-	    	if(new Fecha(show.obtenerFecha()).compararFecha(fecha)){
-	    		EstadiosConSecciones predio = (EstadiosConSecciones) sedes.get(show.obtenerSede());
-	    		return predio.costoDeLaEntrada(show.obtenerPrecioBase(),sector);
-	    	}
+		IEntrada entrada = buscarEntrada(nombreEspectaculo, fecha);
+	    if (entrada == null) {
+	        throw new IllegalArgumentException("Función o sector no encontrado");
 	    }
-		throw new IllegalArgumentException("Función o sector no encontrado");
+	    Espectaculo evento = espectaculos.get(nombreEspectaculo);
+	    Sede predio = sedes.get(evento.obtenerNombreSede(fecha));
+	    Funcion show = evento.obtenerLaFuncion(fecha);
+	    
+		if (predio instanceof Teatro) {
+			Teatro lugar = (Teatro) predio;
+			return lugar.costoDeLaEntrada(show.obtenerPrecioBase(), sector);
+		} else {
+			Miniestadio lugar = (Miniestadio) predio;
+			return lugar.costoDeLaEntrada(show.obtenerPrecioBase(), sector);
+		}
 	}
-	
-	
+		
 	@Override
 	public double totalRecaudado(String nombreEspectaculo) {
-		double total = 0.0;
-		for (IEntrada entrada : entradas.values()) {
-			Entrada pass = (Entrada) entrada;
-			if(pass.obtenerEspectaculo().equals(nombreEspectaculo)) {
-				if (sedes.get(pass.obtenerSede()) instanceof Estadio) {
-					total += costoEntrada(pass.obtenerEspectaculo(), pass.obtenerFecha());
-				}
-				if (sedes.get(pass.obtenerSede()) instanceof Miniestadio) {
-					total += costoEntrada(pass.obtenerEspectaculo(), pass.obtenerFecha(), pass.obtenerSector());
-				}
-				if (sedes.get(pass.obtenerSede()) instanceof Teatro) {
-					total += costoEntrada(pass.obtenerEspectaculo(), pass.obtenerFecha(), pass.obtenerSector());
-				}
-			}
+		if (!espectaculos.containsKey(nombreEspectaculo)) {
+			throw new RuntimeException("Espectáculo no registrado");
 		}
-			return total;
+		return totalRecaudadoPorEspectaculo.getOrDefault(nombreEspectaculo, 0.0);
 	}
 	
 	@Override
 	public double totalRecaudadoPorSede(String nombreEspectaculo, String nombreSede) {
-		double total = 0.0;
-		for (IEntrada entrada : listarEntradasEspectaculo(nombreEspectaculo)) {
-			Entrada ticket = (Entrada) entrada;
-			if(ticket.obtenerSede().equals(nombreSede)) {		
-				if (ticket.obtenerSector().equals("CAMPO")) {
-					total += costoEntrada(nombreEspectaculo, ticket.obtenerFecha());
-				} else {					
-					total += costoEntrada(nombreEspectaculo, ticket.obtenerFecha(), ticket.obtenerSector());
-				}
-			}
-		}
-		return total;
+		
+		Map<String, Double> totalRecaudadoPorSedeEspectaculo = totalRecaudadoPorSede.get(nombreEspectaculo);
+	    if (totalRecaudadoPorSedeEspectaculo == null) {
+	        return 0.0;
+	    }
+	    return totalRecaudadoPorSedeEspectaculo.getOrDefault(nombreSede, 0.0);
 	}
 
 	private boolean validarContrasenia(String email, String contrasenia) {
 		return usuarios.containsKey(email) && usuarios.get(email).validarContrasenia(contrasenia);
 	}
 	
-	private Map<String, Funcion> obtenerFunciones(String nombreEspectaculo){
-		Map<String, Funcion> event = espectaculos.get(nombreEspectaculo).obtenerLista();
-		return event;
-	}
 	
 }

@@ -32,5 +32,7 @@ public abstract class Sede {
 		return precioBase;
 	}
 	public abstract int recargo(String sector); 
+	
+	public abstract double calcularCostoEntrada(String espectaculo, String fecha);
 
 }

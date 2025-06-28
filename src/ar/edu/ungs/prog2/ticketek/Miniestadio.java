@@ -72,4 +72,10 @@ public class Miniestadio extends EstadiosConSecciones{
 	public int recargo(String sector) {
 		return super.recargo(sector);
 	}
+
+	@Override
+	public double calcularCostoEntrada(String espectaculo, String fecha) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

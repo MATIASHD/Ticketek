@@ -55,6 +55,12 @@ public class Teatro extends EstadiosConSecciones{
 		return super.recargo(sector);
 	}
 
+	@Override
+	public double calcularCostoEntrada(String espectaculo, String fecha) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 
 
